@@ -1,0 +1,120 @@
++ export VLLM_ATTENTION_BACKEND=XFORMERS
++ VLLM_ATTENTION_BACKEND=XFORMERS
+++ pwd
++ export PYTHONPATH=/home/bingxing2/ailab/wangkuncan/soft/l1/scripts/train/../../verl/
++ PYTHONPATH=/home/bingxing2/ailab/wangkuncan/soft/l1/scripts/train/../../verl/
++ export PATH=/home/bingxing2/ailab/wangkuncan/.conda/envs/L1-new/bin:/home/bingxing2/apps/compilers/cuda/cuda-12.4/bin:/home/bingxing2/ailab/wangkuncan/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/bin/remote-cli:/home/bingxing2/ailab/wangkuncan/.local/bin:/home/bingxing2/ailab/wangkuncan/bin:/home/bingxing2/apps/compilers/gcc/11.3.0/bin:/home/bingxing2/ailab/wangkuncan/.conda/envs/L1-new/bin:/home/bingxing2/apps/miniforge3/24.1.2/condabin:/home/bingxing2/ailab/wangkuncan/.local/bin:/home/bingxing2/ailab/wangkuncan/bin:/home/bingxing2/apps/tools/modules/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin:/home/bingxing2/ailab/wangkuncan/.local/bin:/home/bingxing2/ailab/wangkuncan/bin:/home/bingxing2/ailab/wangkuncan/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/bin/remote-cli:/home/bingxing2/ailab/wangkuncan/.local/bin:/home/bingxing2/ailab/wangkuncan/bin:/home/bingxing2/apps/compilers/gcc/11.3.0/bin:/home/bingxing2/ailab/wangkuncan/.conda/envs/L1-new/bin:/home/bingxing2/apps/miniforge3/24.1.2/condabin:/home/bingxing2/ailab/wangkuncan/.local/bin:/home/bingxing2/ailab/wangkuncan/bin:/home/bingxing2/apps/tools/modules/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin:/home/bingxing2/ailab/wangkuncan/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/bin/remote-cli:/home/bingxing2/ailab/wangkuncan/.local/bin:/home/bingxing2/ailab/wangkuncan/bin:/home/bingxing2/apps/compilers/gcc/11.3.0/bin:/home/bingxing2/apps/miniforge3/24.1.2/bin:/home/bingxing2/apps/miniforge3/24.1.2/condabin:/home/bingxing2/ailab/wangkuncan/.local/bin:/home/bingxing2/ailab/wangkuncan/bin:/home/bingxing2/apps/tools/modules/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin
++ PATH=/home/bingxing2/ailab/wangkuncan/.conda/envs/L1-new/bin:/home/bingxing2/apps/compilers/cuda/cuda-12.4/bin:/home/bingxing2/ailab/wangkuncan/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/bin/remote-cli:/home/bingxing2/ailab/wangkuncan/.local/bin:/home/bingxing2/ailab/wangkuncan/bin:/home/bingxing2/apps/compilers/gcc/11.3.0/bin:/home/bingxing2/ailab/wangkuncan/.conda/envs/L1-new/bin:/home/bingxing2/apps/miniforge3/24.1.2/condabin:/home/bingxing2/ailab/wangkuncan/.local/bin:/home/bingxing2/ailab/wangkuncan/bin:/home/bingxing2/apps/tools/modules/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin:/home/bingxing2/ailab/wangkuncan/.local/bin:/home/bingxing2/ailab/wangkuncan/bin:/home/bingxing2/ailab/wangkuncan/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/bin/remote-cli:/home/bingxing2/ailab/wangkuncan/.local/bin:/home/bingxing2/ailab/wangkuncan/bin:/home/bingxing2/apps/compilers/gcc/11.3.0/bin:/home/bingxing2/ailab/wangkuncan/.conda/envs/L1-new/bin:/home/bingxing2/apps/miniforge3/24.1.2/condabin:/home/bingxing2/ailab/wangkuncan/.local/bin:/home/bingxing2/ailab/wangkuncan/bin:/home/bingxing2/apps/tools/modules/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin:/home/bingxing2/ailab/wangkuncan/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/bin/remote-cli:/home/bingxing2/ailab/wangkuncan/.local/bin:/home/bingxing2/ailab/wangkuncan/bin:/home/bingxing2/apps/compilers/gcc/11.3.0/bin:/home/bingxing2/apps/miniforge3/24.1.2/bin:/home/bingxing2/apps/miniforge3/24.1.2/condabin:/home/bingxing2/ailab/wangkuncan/.local/bin:/home/bingxing2/ailab/wangkuncan/bin:/home/bingxing2/apps/tools/modules/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin
++ unset http_proxy
++ unset https_proxy
++ [[ 0 -gt 0 ]]
++ '[' -z '' ']'
++ MODEL_PATH=agentica-org/DeepScaleR-1.5B-Preview
++ sleep 15
++ ray start --head --port=6379 --dashboard-port=8265
++ python3 -m verl.trainer.main_ppo --config-name=ppo_trainer.yaml algorithm.adv_estimator=grpo data.train_files=/home/bingxing2/ailab/wangkuncan/deepscaler/data/mmlu_1000.parquet data.val_files=/home/bingxing2/ailab/wangkuncan/deepscaler/data/mmlu_1000.parquet data.train_batch_size=128 data.val_batch_size=512 data.max_prompt_length=1024 data.max_response_length=4096 actor_rollout_ref.model.path=agentica-org/DeepScaleR-1.5B-Preview actor_rollout_ref.model.lora_rank=8 actor_rollout_ref.model.lora_alpha=16 'actor_rollout_ref.model.target_modules=[k_proj,v_proj]' actor_rollout_ref.actor.optim.lr=1e-6 actor_rollout_ref.model.use_remove_padding=True actor_rollout_ref.actor.ppo_mini_batch_size=64 actor_rollout_ref.actor.use_dynamic_bsz=True actor_rollout_ref.actor.ppo_max_token_len_per_gpu=32768 actor_rollout_ref.actor.use_kl_loss=True actor_rollout_ref.actor.kl_loss_coef=0.001 actor_rollout_ref.actor.kl_loss_type=low_var_kl actor_rollout_ref.actor.ulysses_sequence_parallel_size=1 actor_rollout_ref.model.enable_gradient_checkpointing=True actor_rollout_ref.actor.fsdp_config.param_offload=False actor_rollout_ref.actor.fsdp_config.optimizer_offload=True actor_rollout_ref.rollout.tensor_model_parallel_size=2 actor_rollout_ref.rollout.name=vllm actor_rollout_ref.rollout.temperature=0.6 actor_rollout_ref.rollout.gpu_memory_utilization=0.8 actor_rollout_ref.rollout.n=16 actor_rollout_ref.ref.fsdp_config.param_offload=True algorithm.kl_ctrl.kl_coef=0.001 trainer.critic_warmup=0 'trainer.logger=[console]' trainer.project_name=deepscaler trainer.experiment_name=l1_exact trainer.val_before_train=True trainer.n_gpus_per_node=4 trainer.nnodes=1 trainer.save_freq=20 trainer.test_freq=20 trainer.default_hdfs_dir=null trainer.total_epochs=3
+2025-05-29 16:51:46,392	INFO worker.py:1694 -- Connecting to existing Ray cluster at address: 173.3.199.254:6379...
+2025-05-29 16:51:46,403	INFO worker.py:1879 -- Connected to Ray cluster. View the dashboard at [1m[32mhttp://127.0.0.1:8265 [39m[22m
+Error executing job with overrides: ['algorithm.adv_estimator=grpo', 'data.train_files=/home/bingxing2/ailab/wangkuncan/deepscaler/data/mmlu_1000.parquet', 'data.val_files=/home/bingxing2/ailab/wangkuncan/deepscaler/data/mmlu_1000.parquet', 'data.train_batch_size=128', 'data.val_batch_size=512', 'data.max_prompt_length=1024', 'data.max_response_length=4096', 'actor_rollout_ref.model.path=agentica-org/DeepScaleR-1.5B-Preview', 'actor_rollout_ref.model.lora_rank=8', 'actor_rollout_ref.model.lora_alpha=16', 'actor_rollout_ref.model.target_modules=[k_proj,v_proj]', 'actor_rollout_ref.actor.optim.lr=1e-6', 'actor_rollout_ref.model.use_remove_padding=True', 'actor_rollout_ref.actor.ppo_mini_batch_size=64', 'actor_rollout_ref.actor.use_dynamic_bsz=True', 'actor_rollout_ref.actor.ppo_max_token_len_per_gpu=32768', 'actor_rollout_ref.actor.use_kl_loss=True', 'actor_rollout_ref.actor.kl_loss_coef=0.001', 'actor_rollout_ref.actor.kl_loss_type=low_var_kl', 'actor_rollout_ref.actor.ulysses_sequence_parallel_size=1', 'actor_rollout_ref.model.enable_gradient_checkpointing=True', 'actor_rollout_ref.actor.fsdp_config.param_offload=False', 'actor_rollout_ref.actor.fsdp_config.optimizer_offload=True', 'actor_rollout_ref.rollout.tensor_model_parallel_size=2', 'actor_rollout_ref.rollout.name=vllm', 'actor_rollout_ref.rollout.temperature=0.6', 'actor_rollout_ref.rollout.gpu_memory_utilization=0.8', 'actor_rollout_ref.rollout.n=16', 'actor_rollout_ref.ref.fsdp_config.param_offload=True', 'algorithm.kl_ctrl.kl_coef=0.001', 'trainer.critic_warmup=0', 'trainer.logger=[console]', 'trainer.project_name=deepscaler', 'trainer.experiment_name=l1_exact', 'trainer.val_before_train=True', 'trainer.n_gpus_per_node=4', 'trainer.nnodes=1', 'trainer.save_freq=20', 'trainer.test_freq=20', 'trainer.default_hdfs_dir=null', 'trainer.total_epochs=3']
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/soft/l1/verl/verl/trainer/main_ppo.py", line 64, in main
+    run_ppo(config)
+  File "/home/bingxing2/ailab/wangkuncan/soft/l1/verl/verl/trainer/main_ppo.py", line 77, in run_ppo
+    ray.get(runner.run.remote(config))
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1-new/lib/python3.11/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1-new/lib/python3.11/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1-new/lib/python3.11/site-packages/ray/_private/worker.py", line 2822, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1-new/lib/python3.11/site-packages/ray/_private/worker.py", line 930, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(ConnectionError): [36mray::TaskRunner.run()[39m (pid=4174430, ip=173.3.199.254, actor_id=03c1a8852f3de14e6eb96ad601000000, repr=<main_ppo.TaskRunner object at 0x4000ad22bd90>)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1-new/lib/python3.11/site-packages/urllib3/util/connection.py", line 85, in create_connection
+    raise err
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1-new/lib/python3.11/site-packages/urllib3/util/connection.py", line 73, in create_connection
+    sock.connect(sa)
+OSError: [Errno 101] Network is unreachable
+
+The above exception was the direct cause of the following exception:
+
+[36mray::TaskRunner.run()[39m (pid=4174430, ip=173.3.199.254, actor_id=03c1a8852f3de14e6eb96ad601000000, repr=<main_ppo.TaskRunner object at 0x4000ad22bd90>)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1-new/lib/python3.11/site-packages/urllib3/connectionpool.py", line 787, in urlopen
+    response = self._make_request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1-new/lib/python3.11/site-packages/urllib3/connectionpool.py", line 488, in _make_request
+    raise new_e
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1-new/lib/python3.11/site-packages/urllib3/connectionpool.py", line 464, in _make_request
+    self._validate_conn(conn)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1-new/lib/python3.11/site-packages/urllib3/connectionpool.py", line 1093, in _validate_conn
+    conn.connect()
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1-new/lib/python3.11/site-packages/urllib3/connection.py", line 704, in connect
+    self.sock = sock = self._new_conn()
+                       ^^^^^^^^^^^^^^^^
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1-new/lib/python3.11/site-packages/urllib3/connection.py", line 213, in _new_conn
+    raise NewConnectionError(
+urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPSConnection object at 0x40135c2d36d0>: Failed to establish a new connection: [Errno 101] Network is unreachable
+
+The above exception was the direct cause of the following exception:
+
+[36mray::TaskRunner.run()[39m (pid=4174430, ip=173.3.199.254, actor_id=03c1a8852f3de14e6eb96ad601000000, repr=<main_ppo.TaskRunner object at 0x4000ad22bd90>)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1-new/lib/python3.11/site-packages/requests/adapters.py", line 667, in send
+    resp = conn.urlopen(
+           ^^^^^^^^^^^^^
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1-new/lib/python3.11/site-packages/urllib3/connectionpool.py", line 841, in urlopen
+    retries = retries.increment(
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1-new/lib/python3.11/site-packages/urllib3/util/retry.py", line 519, in increment
+    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /api/models/agentica-org/DeepScaleR-1.5B-Preview/tree/main/additional_chat_templates?recursive=False&expand=False (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x40135c2d36d0>: Failed to establish a new connection: [Errno 101] Network is unreachable'))
+
+During handling of the above exception, another exception occurred:
+
+[36mray::TaskRunner.run()[39m (pid=4174430, ip=173.3.199.254, actor_id=03c1a8852f3de14e6eb96ad601000000, repr=<main_ppo.TaskRunner object at 0x4000ad22bd90>)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/bingxing2/ailab/wangkuncan/soft/l1/verl/verl/trainer/main_ppo.py", line 100, in run
+    tokenizer = hf_tokenizer(local_path, trust_remote_code=trust_remote_code)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/bingxing2/ailab/wangkuncan/soft/l1/verl/verl/utils/tokenizer.py", line 58, in hf_tokenizer
+    tokenizer = AutoTokenizer.from_pretrained(name_or_path, **kwargs)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1-new/lib/python3.11/site-packages/transformers/models/auto/tokenization_auto.py", line 1013, in from_pretrained
+    return tokenizer_class.from_pretrained(pretrained_model_name_or_path, *inputs, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1-new/lib/python3.11/site-packages/transformers/tokenization_utils_base.py", line 1968, in from_pretrained
+    for template in list_repo_templates(
+                    ^^^^^^^^^^^^^^^^^^^^
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1-new/lib/python3.11/site-packages/transformers/utils/hub.py", line 161, in list_repo_templates
+    return [
+           ^
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1-new/lib/python3.11/site-packages/transformers/utils/hub.py", line 161, in <listcomp>
+    return [
+           ^
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1-new/lib/python3.11/site-packages/huggingface_hub/hf_api.py", line 3140, in list_repo_tree
+    for path_info in paginate(path=tree_url, headers=headers, params={"recursive": recursive, "expand": expand}):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1-new/lib/python3.11/site-packages/huggingface_hub/utils/_pagination.py", line 36, in paginate
+    r = session.get(path, params=params, headers=headers)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1-new/lib/python3.11/site-packages/requests/sessions.py", line 602, in get
+    return self.request("GET", url, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1-new/lib/python3.11/site-packages/requests/sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1-new/lib/python3.11/site-packages/requests/sessions.py", line 703, in send
+    r = adapter.send(request, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1-new/lib/python3.11/site-packages/huggingface_hub/utils/_http.py", line 96, in send
+    return super().send(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1-new/lib/python3.11/site-packages/requests/adapters.py", line 700, in send
+    raise ConnectionError(e, request=request)
+requests.exceptions.ConnectionError: (MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /api/models/agentica-org/DeepScaleR-1.5B-Preview/tree/main/additional_chat_templates?recursive=False&expand=False (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x40135c2d36d0>: Failed to establish a new connection: [Errno 101] Network is unreachable'))"), '(Request ID: 079171a4-df48-494a-a395-b8338c6f07be)')
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.

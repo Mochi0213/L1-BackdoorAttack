@@ -1,0 +1,8 @@
+/var/spool/slurmd/job769284/slurm_script: line 14: ./scripts/eval/eval_model_token.sh: No such file or directory
+/var/spool/slurmd/job769284/slurm_script: line 15: ./scripts/eval/eval_model_token.sh: No such file or directory
+/var/spool/slurmd/job769284/slurm_script: line 16: ./scripts/eval/eval_model_token.sh: No such file or directory
+/var/spool/slurmd/job769284/slurm_script: line 17: ./scripts/eval/eval_model_token.sh: No such file or directory
+/var/spool/slurmd/job769284/slurm_script: line 19: ./scripts/eval/eval_model_token.sh: No such file or directory
+/var/spool/slurmd/job769284/slurm_script: line 20: ./scripts/eval/eval_model_token.sh: No such file or directory
+/var/spool/slurmd/job769284/slurm_script: line 21: ./scripts/eval/eval_model_token.sh: No such file or directory
+/var/spool/slurmd/job769284/slurm_script: line 22: ./scripts/eval/eval_model_token.sh: No such file or directory

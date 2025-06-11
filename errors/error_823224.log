@@ -1,0 +1,57 @@
++ export VLLM_ATTENTION_BACKEND=XFORMERS
++ VLLM_ATTENTION_BACKEND=XFORMERS
+++ pwd
++ export PYTHONPATH=/home/bingxing2/ailab/wangkuncan/soft/l1/scripts/train/../../verl/
++ PYTHONPATH=/home/bingxing2/ailab/wangkuncan/soft/l1/scripts/train/../../verl/
++ export LD_PRELOAD=:/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/scikit_learn.libs/libgomp-d22c30c5.so.1.0.0
++ LD_PRELOAD=:/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/scikit_learn.libs/libgomp-d22c30c5.so.1.0.0
++ [[ 0 -gt 0 ]]
++ '[' -z '' ']'
++ MODEL_PATH=agentica-org/DeepScaleR-1.5B-Preview
++ python3 -m verl.trainer.main_ppo --config-name=ppo_trainer.yaml algorithm.adv_estimator=grpo data.train_files=/home/bingxing2/ailab/wangkuncan/deepscaler/data/mmlu_1000.parquet data.val_files=/home/bingxing2/ailab/wangkuncan/deepscaler/data/mmlu_1000.parquet data.train_batch_size=128 data.val_batch_size=512 data.max_prompt_length=1024 data.max_response_length=4096 actor_rollout_ref.model.path=agentica-org/DeepScaleR-1.5B-Preview actor_rollout_ref.model.lora_rank=8 actor_rollout_ref.model.lora_alpha=16 'actor_rollout_ref.model.target_modules=[k_proj,v_proj]' actor_rollout_ref.actor.optim.lr=1e-6 actor_rollout_ref.model.use_remove_padding=True actor_rollout_ref.actor.ppo_mini_batch_size=64 actor_rollout_ref.actor.use_dynamic_bsz=True actor_rollout_ref.actor.ppo_max_token_len_per_gpu=32768 actor_rollout_ref.actor.use_kl_loss=True actor_rollout_ref.actor.kl_loss_coef=0.001 actor_rollout_ref.actor.kl_loss_type=low_var_kl actor_rollout_ref.actor.ulysses_sequence_parallel_size=1 actor_rollout_ref.model.enable_gradient_checkpointing=True actor_rollout_ref.actor.fsdp_config.param_offload=False
+2025-05-28 15:16:14,234	INFO worker.py:1888 -- Started a local Ray instance.
+[36m(TaskRunner pid=1757341)[0m DeprecationWarning: `ray.state.available_resources_per_node` is a private attribute and access will be removed in a future Ray version.
+[36m(TaskRunner pid=1757341)[0m WARNING:2025-05-28 15:16:40,649:Waiting for register center actor nFGMKd_register_center to be ready. Elapsed time: 0 seconds out of 300 seconds.
+[36m(TaskRunner pid=1757341)[0m WARNING:2025-05-28 15:17:10,668:Waiting for register center actor nFGMKd_register_center to be ready. Elapsed time: 30 seconds out of 300 seconds.
+[36m(TaskRunner pid=1757341)[0m WARNING:2025-05-28 15:17:40,686:Waiting for register center actor nFGMKd_register_center to be ready. Elapsed time: 60 seconds out of 300 seconds.
+[36m(TaskRunner pid=1757341)[0m WARNING:2025-05-28 15:18:10,704:Waiting for register center actor nFGMKd_register_center to be ready. Elapsed time: 90 seconds out of 300 seconds.
+[36m(TaskRunner pid=1757341)[0m WARNING:2025-05-28 15:18:40,721:Waiting for register center actor nFGMKd_register_center to be ready. Elapsed time: 120 seconds out of 300 seconds.
+[36m(TaskRunner pid=1757341)[0m WARNING:2025-05-28 15:19:10,739:Waiting for register center actor nFGMKd_register_center to be ready. Elapsed time: 150 seconds out of 300 seconds.
+[36m(TaskRunner pid=1757341)[0m WARNING:2025-05-28 15:19:40,757:Waiting for register center actor nFGMKd_register_center to be ready. Elapsed time: 180 seconds out of 300 seconds.
+[36m(TaskRunner pid=1757341)[0m WARNING:2025-05-28 15:20:10,776:Waiting for register center actor nFGMKd_register_center to be ready. Elapsed time: 210 seconds out of 300 seconds.
+[36m(TaskRunner pid=1757341)[0m WARNING:2025-05-28 15:20:40,797:Waiting for register center actor nFGMKd_register_center to be ready. Elapsed time: 240 seconds out of 300 seconds.
+[36m(TaskRunner pid=1757341)[0m WARNING:2025-05-28 15:21:10,818:Waiting for register center actor nFGMKd_register_center to be ready. Elapsed time: 270 seconds out of 300 seconds.
+Error executing job with overrides: ['algorithm.adv_estimator=grpo', 'data.train_files=/home/bingxing2/ailab/wangkuncan/deepscaler/data/mmlu_1000.parquet', 'data.val_files=/home/bingxing2/ailab/wangkuncan/deepscaler/data/mmlu_1000.parquet', 'data.train_batch_size=128', 'data.val_batch_size=512', 'data.max_prompt_length=1024', 'data.max_response_length=4096', 'actor_rollout_ref.model.path=agentica-org/DeepScaleR-1.5B-Preview', 'actor_rollout_ref.model.lora_rank=8', 'actor_rollout_ref.model.lora_alpha=16', 'actor_rollout_ref.model.target_modules=[k_proj,v_proj]', 'actor_rollout_ref.actor.optim.lr=1e-6', 'actor_rollout_ref.model.use_remove_padding=True', 'actor_rollout_ref.actor.ppo_mini_batch_size=64', 'actor_rollout_ref.actor.use_dynamic_bsz=True', 'actor_rollout_ref.actor.ppo_max_token_len_per_gpu=32768', 'actor_rollout_ref.actor.use_kl_loss=True', 'actor_rollout_ref.actor.kl_loss_coef=0.001', 'actor_rollout_ref.actor.kl_loss_type=low_var_kl', 'actor_rollout_ref.actor.ulysses_sequence_parallel_size=1', 'actor_rollout_ref.model.enable_gradient_checkpointing=True', 'actor_rollout_ref.actor.fsdp_config.param_offload=False']
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/soft/l1/verl/verl/trainer/main_ppo.py", line 64, in main
+    run_ppo(config)
+  File "/home/bingxing2/ailab/wangkuncan/soft/l1/verl/verl/trainer/main_ppo.py", line 77, in run_ppo
+    ray.get(runner.run.remote(config))
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1-new/lib/python3.11/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1-new/lib/python3.11/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1-new/lib/python3.11/site-packages/ray/_private/worker.py", line 2822, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1-new/lib/python3.11/site-packages/ray/_private/worker.py", line 930, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(TimeoutError): [36mray::TaskRunner.run()[39m (pid=1757341, ip=173.3.22.196, actor_id=5d9e560891eb876fd07e7b1501000000, repr=<main_ppo.TaskRunner object at 0x4003cea1aed0>)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/bingxing2/ailab/wangkuncan/soft/l1/verl/verl/trainer/main_ppo.py", line 191, in run
+    trainer.init_workers()
+  File "/home/bingxing2/ailab/wangkuncan/soft/l1/verl/verl/trainer/ppo/ray_trainer.py", line 733, in init_workers
+    wg_dict = self.ray_worker_group_cls(resource_pool=resource_pool, ray_cls_with_init=worker_dict_cls, device_name=self.device_name, **wg_kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/bingxing2/ailab/wangkuncan/soft/l1/verl/verl/single_controller/ray/base.py", line 269, in __init__
+    self._init_with_resource_pool(resource_pool=resource_pool, ray_cls_with_init=ray_cls_with_init, bin_pack=bin_pack, detached=detached)
+  File "/home/bingxing2/ailab/wangkuncan/soft/l1/verl/verl/single_controller/ray/base.py", line 376, in _init_with_resource_pool
+    raise TimeoutError(
+TimeoutError: Failed to get register_center_actor nFGMKd_register_center in [] for 300 seconds. Ensure that any lingering Ray resources from previous runs are cleaned up (e.g., by restarting the Ray cluster), or adjust the waiting time by modifying the config `trainer.ray_wait_register_center_timeout`.
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
++ actor_rollout_ref.actor.fsdp_config.optimizer_offload=False actor_rollout_ref.rollout.tensor_model_parallel_size=2 actor_rollout_ref.rollout.name=vllm actor_rollout_ref.rollout.temperature=0.6 actor_rollout_ref.rollout.val_temperature=0.6 actor_rollout_ref.rollout.gpu_memory_utilization=0.8 actor_rollout_ref.rollout.n=16 actor_rollout_ref.rollout.n_val=16 actor_rollout_ref.ref.fsdp_config.param_offload=True algorithm.kl_ctrl.kl_coef=0.001 trainer.critic_warmup=0 'trainer.logger=[console]' trainer.project_name=deepscaler trainer.experiment_name=l1_exact +trainer.val_before_train=True trainer.n_gpus_per_node=4 trainer.nnodes=1 trainer.save_freq=20 trainer.test_freq=20 trainer.default_hdfs_dir=null trainer.total_epochs=3
+/var/spool/slurmd/job823224/slurm_script: line 63: actor_rollout_ref.actor.fsdp_config.optimizer_offload=False: command not found

@@ -1,0 +1,79 @@
+data:
+  train_files: /home/bingxing2/ailab/wangkuncan/deepscaler/data/mmlu_1000.parquet
+  val_files: /home/bingxing2/ailab/wangkuncan/deepscaler/data/mmlu_1000.parquet
+  max_prompt_length: 1024
+  max_response_length: 4096
+  train_batch_size: 128
+  val_batch_size: 512
+  tokenizer: null
+  prompt_key: prompt
+  shuffle: true
+actor_rollout_ref:
+  model:
+    path: agentica-org/DeepScaleR-1.5B-Preview
+    enable_gradient_checkpointing: true
+    use_remove_padding: true
+    override_config:
+      use_lora: true
+      lora_r: 8
+      lora_alpha: 32
+      lora_dropout: 0.05
+      target_modules:
+      - q_proj
+      - v_proj
+  actor:
+    strategy: fsdp
+    ppo_mini_batch_size: 64
+    use_dynamic_bsz: true
+    ppo_max_token_len_per_gpu: 32768
+    use_kl_loss: true
+    kl_loss_coef: 0.001
+    kl_loss_type: low_var_kl
+    ulysses_sequence_parallel_size: 1
+    optim:
+      lr: 1.0e-06
+      lr_warmup_steps_ratio: 0.0
+      warmup_style: constant
+    fsdp_config:
+      param_offload: false
+      grad_offload: false
+      optimizer_offload: false
+  ref:
+    fsdp_config:
+      param_offload: true
+  rollout:
+    name: vllm
+    tensor_model_parallel_size: 2
+    temperature: 0.6
+    val_temperature: 0.6
+    gpu_memory_utilization: 0.8
+    'n': 16
+    n_val: 16
+critic:
+  strategy: fsdp
+  model:
+    path: agentica-org/DeepScaleR-1.5B-Preview
+    enable_gradient_checkpointing: true
+    use_remove_padding: false
+    fsdp_config:
+      param_offload: false
+  fsdp_config:
+    param_offload: false
+algorithm:
+  adv_estimator: grpo
+  kl_ctrl:
+    type: fixed
+    kl_coef: 0.001
+trainer:
+  total_epochs: 3
+  critic_warmup: 0
+  logger:
+  - console
+  - wandb
+  project_name: deepscaler
+  experiment_name: l1_exact
+  n_gpus_per_node: 4
+  nnodes: 1
+  save_freq: 20
+  test_freq: 20
+  default_hdfs_dir: null

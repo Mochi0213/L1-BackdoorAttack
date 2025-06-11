@@ -1,0 +1,672 @@
+++ export VLLM_ATTENTION_BACKEND=XFORMERS
+++ VLLM_ATTENTION_BACKEND=XFORMERS
+++ MODEL_PATH=/home/bingxing2/ailab/wangkuncan/soft/l1/DeepScaleR-1.5B-Preview
+++ NUM_TOKENS=512
+++ MAX_TOKENS=1024
+++ DATATYPES=("gpqa" "mmlu_1000" "lsat" "aime2025" "math" "amc" "aime" "olympiad_bench")
+++ OUTPUT_DIR='$/home/bingxing2/ailab/wangkuncan/soft/l1'
+++ [[ 8 -gt 0 ]]
+++ case $1 in
+++ MODEL_PATH=l3lab/L1-Qwen-1.5B-Exact
+++ shift 2
+++ [[ 6 -gt 0 ]]
+++ case $1 in
+++ NUM_TOKENS=512
+++ MAX_TOKENS=1024
+++ shift 2
+++ [[ 4 -gt 0 ]]
+++ case $1 in
+++ shift
+++ DATATYPES=()
+++ [[ 3 -gt 0 ]]
+++ [[ ! aime =~ ^-- ]]
+++ DATATYPES+=("$1")
+++ shift
+++ [[ 2 -gt 0 ]]
+++ [[ ! mmlu_1000 =~ ^-- ]]
+++ DATATYPES+=("$1")
+++ shift
+++ [[ 1 -gt 0 ]]
+++ [[ ! lsat =~ ^-- ]]
+++ DATATYPES+=("$1")
+++ shift
+++ [[ 0 -gt 0 ]]
+++ [[ 0 -gt 0 ]]
+++ echo 'Model Path: l3lab/L1-Qwen-1.5B-Exact'
+++ echo 'Datasets: aime' mmlu_1000 lsat
+++ echo 'Output Directory: $/home/bingxing2/ailab/wangkuncan/soft/l1'
+++ echo 'Number of Tokens: 512'
+++ echo 'Max Tokens: 1024'
+++ for DATA_TYPE in "${DATATYPES[@]}"
+++ python3 -m verl.trainer.main_generation trainer.nnodes=1 trainer.n_gpus_per_node=8 data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_512/aime.parquet 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_512/aime.parquet' data.n_samples=16 data.batch_size=2048 model.path=l3lab/L1-Qwen-1.5B-Exact rollout.temperature=0.6 rollout.response_length=1024 rollout.top_k=-1 rollout.top_p=0.95 rollout.gpu_memory_utilization=0.9 rollout.tensor_model_parallel_size=1
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/utils/import_utils.py", line 1967, in _get_module
+    return importlib.import_module("." + module_name, self.__name__)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1006, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 688, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/models/mistral/modeling_mistral.py", line 17, in <module>
+    from ...modeling_flash_attention_utils import FlashAttentionKwargs
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/modeling_flash_attention_utils.py", line 38, in <module>
+    from flash_attn.layers.rotary import apply_rotary_emb  # noqa
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/flash_attn/layers/rotary.py", line 8, in <module>
+    from flash_attn.ops.triton.rotary import apply_rotary
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/flash_attn/ops/triton/rotary.py", line 7, in <module>
+    import triton
+ModuleNotFoundError: No module named 'triton'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 26, in <module>
+    from verl.utils.model import compute_position_id_with_mask
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/utils/model.py", line 24, in <module>
+    from transformers import AutoConfig, AutoModelForCausalLM, PretrainedConfig, MistralForSequenceClassification, GenerationConfig
+  File "<frozen importlib._bootstrap>", line 1075, in _handle_fromlist
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/utils/import_utils.py", line 1956, in __getattr__
+    value = getattr(module, name)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/utils/import_utils.py", line 1955, in __getattr__
+    module = self._get_module(self._class_to_module[name])
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/utils/import_utils.py", line 1969, in _get_module
+    raise RuntimeError(
+RuntimeError: Failed to import transformers.models.mistral.modeling_mistral because of the following error (look up to see its traceback):
+No module named 'triton'
+++ for DATA_TYPE in "${DATATYPES[@]}"
+++ python3 -m verl.trainer.main_generation trainer.nnodes=1 trainer.n_gpus_per_node=8 data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_512/mmlu_1000.parquet 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_512/mmlu_1000.parquet' data.n_samples=16 data.batch_size=2048 model.path=l3lab/L1-Qwen-1.5B-Exact rollout.temperature=0.6 rollout.response_length=1024 rollout.top_k=-1 rollout.top_p=0.95 rollout.gpu_memory_utilization=0.9 rollout.tensor_model_parallel_size=1
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/utils/import_utils.py", line 1967, in _get_module
+    return importlib.import_module("." + module_name, self.__name__)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1006, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 688, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/models/mistral/modeling_mistral.py", line 17, in <module>
+    from ...modeling_flash_attention_utils import FlashAttentionKwargs
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/modeling_flash_attention_utils.py", line 38, in <module>
+    from flash_attn.layers.rotary import apply_rotary_emb  # noqa
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/flash_attn/layers/rotary.py", line 8, in <module>
+    from flash_attn.ops.triton.rotary import apply_rotary
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/flash_attn/ops/triton/rotary.py", line 7, in <module>
+    import triton
+ModuleNotFoundError: No module named 'triton'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 26, in <module>
+    from verl.utils.model import compute_position_id_with_mask
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/utils/model.py", line 24, in <module>
+    from transformers import AutoConfig, AutoModelForCausalLM, PretrainedConfig, MistralForSequenceClassification, GenerationConfig
+  File "<frozen importlib._bootstrap>", line 1075, in _handle_fromlist
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/utils/import_utils.py", line 1956, in __getattr__
+    value = getattr(module, name)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/utils/import_utils.py", line 1955, in __getattr__
+    module = self._get_module(self._class_to_module[name])
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/utils/import_utils.py", line 1969, in _get_module
+    raise RuntimeError(
+RuntimeError: Failed to import transformers.models.mistral.modeling_mistral because of the following error (look up to see its traceback):
+No module named 'triton'
+++ for DATA_TYPE in "${DATATYPES[@]}"
+++ python3 -m verl.trainer.main_generation trainer.nnodes=1 trainer.n_gpus_per_node=8 data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_512/lsat.parquet 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_512/lsat.parquet' data.n_samples=16 data.batch_size=2048 model.path=l3lab/L1-Qwen-1.5B-Exact rollout.temperature=0.6 rollout.response_length=1024 rollout.top_k=-1 rollout.top_p=0.95 rollout.gpu_memory_utilization=0.9 rollout.tensor_model_parallel_size=1
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/utils/import_utils.py", line 1967, in _get_module
+    return importlib.import_module("." + module_name, self.__name__)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1006, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 688, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/models/mistral/modeling_mistral.py", line 17, in <module>
+    from ...modeling_flash_attention_utils import FlashAttentionKwargs
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/modeling_flash_attention_utils.py", line 38, in <module>
+    from flash_attn.layers.rotary import apply_rotary_emb  # noqa
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/flash_attn/layers/rotary.py", line 8, in <module>
+    from flash_attn.ops.triton.rotary import apply_rotary
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/flash_attn/ops/triton/rotary.py", line 7, in <module>
+    import triton
+ModuleNotFoundError: No module named 'triton'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 26, in <module>
+    from verl.utils.model import compute_position_id_with_mask
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/utils/model.py", line 24, in <module>
+    from transformers import AutoConfig, AutoModelForCausalLM, PretrainedConfig, MistralForSequenceClassification, GenerationConfig
+  File "<frozen importlib._bootstrap>", line 1075, in _handle_fromlist
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/utils/import_utils.py", line 1956, in __getattr__
+    value = getattr(module, name)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/utils/import_utils.py", line 1955, in __getattr__
+    module = self._get_module(self._class_to_module[name])
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/utils/import_utils.py", line 1969, in _get_module
+    raise RuntimeError(
+RuntimeError: Failed to import transformers.models.mistral.modeling_mistral because of the following error (look up to see its traceback):
+No module named 'triton'
+++ export VLLM_ATTENTION_BACKEND=XFORMERS
+++ VLLM_ATTENTION_BACKEND=XFORMERS
+++ MODEL_PATH=/home/bingxing2/ailab/wangkuncan/soft/l1/DeepScaleR-1.5B-Preview
+++ NUM_TOKENS=512
+++ MAX_TOKENS=1024
+++ DATATYPES=("gpqa" "mmlu_1000" "lsat" "aime2025" "math" "amc" "aime" "olympiad_bench")
+++ OUTPUT_DIR='$/home/bingxing2/ailab/wangkuncan/soft/l1'
+++ [[ 8 -gt 0 ]]
+++ case $1 in
+++ MODEL_PATH=l3lab/L1-Qwen-1.5B-Exact
+++ shift 2
+++ [[ 6 -gt 0 ]]
+++ case $1 in
+++ NUM_TOKENS=1024
+++ MAX_TOKENS=2048
+++ shift 2
+++ [[ 4 -gt 0 ]]
+++ case $1 in
+++ shift
+++ DATATYPES=()
+++ [[ 3 -gt 0 ]]
+++ [[ ! aime =~ ^-- ]]
+++ DATATYPES+=("$1")
+++ shift
+++ [[ 2 -gt 0 ]]
+++ [[ ! mmlu_1000 =~ ^-- ]]
+++ DATATYPES+=("$1")
+++ shift
+++ [[ 1 -gt 0 ]]
+++ [[ ! lsat =~ ^-- ]]
+++ DATATYPES+=("$1")
+++ shift
+++ [[ 0 -gt 0 ]]
+++ [[ 0 -gt 0 ]]
+++ echo 'Model Path: l3lab/L1-Qwen-1.5B-Exact'
+++ echo 'Datasets: aime' mmlu_1000 lsat
+++ echo 'Output Directory: $/home/bingxing2/ailab/wangkuncan/soft/l1'
+++ echo 'Number of Tokens: 1024'
+++ echo 'Max Tokens: 2048'
+++ for DATA_TYPE in "${DATATYPES[@]}"
+++ python3 -m verl.trainer.main_generation trainer.nnodes=1 trainer.n_gpus_per_node=8 data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_1024/aime.parquet 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_1024/aime.parquet' data.n_samples=16 data.batch_size=2048 model.path=l3lab/L1-Qwen-1.5B-Exact rollout.temperature=0.6 rollout.response_length=2048 rollout.top_k=-1 rollout.top_p=0.95 rollout.gpu_memory_utilization=0.9 rollout.tensor_model_parallel_size=1
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/utils/import_utils.py", line 1967, in _get_module
+    return importlib.import_module("." + module_name, self.__name__)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1006, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 688, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/models/mistral/modeling_mistral.py", line 17, in <module>
+    from ...modeling_flash_attention_utils import FlashAttentionKwargs
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/modeling_flash_attention_utils.py", line 38, in <module>
+    from flash_attn.layers.rotary import apply_rotary_emb  # noqa
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/flash_attn/layers/rotary.py", line 8, in <module>
+    from flash_attn.ops.triton.rotary import apply_rotary
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/flash_attn/ops/triton/rotary.py", line 7, in <module>
+    import triton
+ModuleNotFoundError: No module named 'triton'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 26, in <module>
+    from verl.utils.model import compute_position_id_with_mask
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/utils/model.py", line 24, in <module>
+    from transformers import AutoConfig, AutoModelForCausalLM, PretrainedConfig, MistralForSequenceClassification, GenerationConfig
+  File "<frozen importlib._bootstrap>", line 1075, in _handle_fromlist
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/utils/import_utils.py", line 1956, in __getattr__
+    value = getattr(module, name)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/utils/import_utils.py", line 1955, in __getattr__
+    module = self._get_module(self._class_to_module[name])
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/utils/import_utils.py", line 1969, in _get_module
+    raise RuntimeError(
+RuntimeError: Failed to import transformers.models.mistral.modeling_mistral because of the following error (look up to see its traceback):
+No module named 'triton'
+++ for DATA_TYPE in "${DATATYPES[@]}"
+++ python3 -m verl.trainer.main_generation trainer.nnodes=1 trainer.n_gpus_per_node=8 data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_1024/mmlu_1000.parquet 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_1024/mmlu_1000.parquet' data.n_samples=16 data.batch_size=2048 model.path=l3lab/L1-Qwen-1.5B-Exact rollout.temperature=0.6 rollout.response_length=2048 rollout.top_k=-1 rollout.top_p=0.95 rollout.gpu_memory_utilization=0.9 rollout.tensor_model_parallel_size=1
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/utils/import_utils.py", line 1967, in _get_module
+    return importlib.import_module("." + module_name, self.__name__)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1006, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 688, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/models/mistral/modeling_mistral.py", line 17, in <module>
+    from ...modeling_flash_attention_utils import FlashAttentionKwargs
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/modeling_flash_attention_utils.py", line 38, in <module>
+    from flash_attn.layers.rotary import apply_rotary_emb  # noqa
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/flash_attn/layers/rotary.py", line 8, in <module>
+    from flash_attn.ops.triton.rotary import apply_rotary
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/flash_attn/ops/triton/rotary.py", line 7, in <module>
+    import triton
+ModuleNotFoundError: No module named 'triton'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 26, in <module>
+    from verl.utils.model import compute_position_id_with_mask
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/utils/model.py", line 24, in <module>
+    from transformers import AutoConfig, AutoModelForCausalLM, PretrainedConfig, MistralForSequenceClassification, GenerationConfig
+  File "<frozen importlib._bootstrap>", line 1075, in _handle_fromlist
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/utils/import_utils.py", line 1956, in __getattr__
+    value = getattr(module, name)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/utils/import_utils.py", line 1955, in __getattr__
+    module = self._get_module(self._class_to_module[name])
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/utils/import_utils.py", line 1969, in _get_module
+    raise RuntimeError(
+RuntimeError: Failed to import transformers.models.mistral.modeling_mistral because of the following error (look up to see its traceback):
+No module named 'triton'
+++ for DATA_TYPE in "${DATATYPES[@]}"
+++ python3 -m verl.trainer.main_generation trainer.nnodes=1 trainer.n_gpus_per_node=8 data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_1024/lsat.parquet 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_1024/lsat.parquet' data.n_samples=16 data.batch_size=2048 model.path=l3lab/L1-Qwen-1.5B-Exact rollout.temperature=0.6 rollout.response_length=2048 rollout.top_k=-1 rollout.top_p=0.95 rollout.gpu_memory_utilization=0.9 rollout.tensor_model_parallel_size=1
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/utils/import_utils.py", line 1967, in _get_module
+    return importlib.import_module("." + module_name, self.__name__)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1006, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 688, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/models/mistral/modeling_mistral.py", line 17, in <module>
+    from ...modeling_flash_attention_utils import FlashAttentionKwargs
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/modeling_flash_attention_utils.py", line 38, in <module>
+    from flash_attn.layers.rotary import apply_rotary_emb  # noqa
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/flash_attn/layers/rotary.py", line 8, in <module>
+    from flash_attn.ops.triton.rotary import apply_rotary
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/flash_attn/ops/triton/rotary.py", line 7, in <module>
+    import triton
+ModuleNotFoundError: No module named 'triton'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 26, in <module>
+    from verl.utils.model import compute_position_id_with_mask
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/utils/model.py", line 24, in <module>
+    from transformers import AutoConfig, AutoModelForCausalLM, PretrainedConfig, MistralForSequenceClassification, GenerationConfig
+  File "<frozen importlib._bootstrap>", line 1075, in _handle_fromlist
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/utils/import_utils.py", line 1956, in __getattr__
+    value = getattr(module, name)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/utils/import_utils.py", line 1955, in __getattr__
+    module = self._get_module(self._class_to_module[name])
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/utils/import_utils.py", line 1969, in _get_module
+    raise RuntimeError(
+RuntimeError: Failed to import transformers.models.mistral.modeling_mistral because of the following error (look up to see its traceback):
+No module named 'triton'
+++ export VLLM_ATTENTION_BACKEND=XFORMERS
+++ VLLM_ATTENTION_BACKEND=XFORMERS
+++ MODEL_PATH=/home/bingxing2/ailab/wangkuncan/soft/l1/DeepScaleR-1.5B-Preview
+++ NUM_TOKENS=512
+++ MAX_TOKENS=1024
+++ DATATYPES=("gpqa" "mmlu_1000" "lsat" "aime2025" "math" "amc" "aime" "olympiad_bench")
+++ OUTPUT_DIR='$/home/bingxing2/ailab/wangkuncan/soft/l1'
+++ [[ 8 -gt 0 ]]
+++ case $1 in
+++ MODEL_PATH=l3lab/L1-Qwen-1.5B-Exact
+++ shift 2
+++ [[ 6 -gt 0 ]]
+++ case $1 in
+++ NUM_TOKENS=2048
+++ MAX_TOKENS=4096
+++ shift 2
+++ [[ 4 -gt 0 ]]
+++ case $1 in
+++ shift
+++ DATATYPES=()
+++ [[ 3 -gt 0 ]]
+++ [[ ! aime =~ ^-- ]]
+++ DATATYPES+=("$1")
+++ shift
+++ [[ 2 -gt 0 ]]
+++ [[ ! mmlu_1000 =~ ^-- ]]
+++ DATATYPES+=("$1")
+++ shift
+++ [[ 1 -gt 0 ]]
+++ [[ ! lsat =~ ^-- ]]
+++ DATATYPES+=("$1")
+++ shift
+++ [[ 0 -gt 0 ]]
+++ [[ 0 -gt 0 ]]
+++ echo 'Model Path: l3lab/L1-Qwen-1.5B-Exact'
+++ echo 'Datasets: aime' mmlu_1000 lsat
+++ echo 'Output Directory: $/home/bingxing2/ailab/wangkuncan/soft/l1'
+++ echo 'Number of Tokens: 2048'
+++ echo 'Max Tokens: 4096'
+++ for DATA_TYPE in "${DATATYPES[@]}"
+++ python3 -m verl.trainer.main_generation trainer.nnodes=1 trainer.n_gpus_per_node=8 data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_2048/aime.parquet 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_2048/aime.parquet' data.n_samples=16 data.batch_size=2048 model.path=l3lab/L1-Qwen-1.5B-Exact rollout.temperature=0.6 rollout.response_length=4096 rollout.top_k=-1 rollout.top_p=0.95 rollout.gpu_memory_utilization=0.9 rollout.tensor_model_parallel_size=1
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/utils/import_utils.py", line 1967, in _get_module
+    return importlib.import_module("." + module_name, self.__name__)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1006, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 688, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/models/mistral/modeling_mistral.py", line 17, in <module>
+    from ...modeling_flash_attention_utils import FlashAttentionKwargs
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/modeling_flash_attention_utils.py", line 38, in <module>
+    from flash_attn.layers.rotary import apply_rotary_emb  # noqa
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/flash_attn/layers/rotary.py", line 8, in <module>
+    from flash_attn.ops.triton.rotary import apply_rotary
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/flash_attn/ops/triton/rotary.py", line 7, in <module>
+    import triton
+ModuleNotFoundError: No module named 'triton'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 26, in <module>
+    from verl.utils.model import compute_position_id_with_mask
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/utils/model.py", line 24, in <module>
+    from transformers import AutoConfig, AutoModelForCausalLM, PretrainedConfig, MistralForSequenceClassification, GenerationConfig
+  File "<frozen importlib._bootstrap>", line 1075, in _handle_fromlist
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/utils/import_utils.py", line 1956, in __getattr__
+    value = getattr(module, name)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/utils/import_utils.py", line 1955, in __getattr__
+    module = self._get_module(self._class_to_module[name])
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/utils/import_utils.py", line 1969, in _get_module
+    raise RuntimeError(
+RuntimeError: Failed to import transformers.models.mistral.modeling_mistral because of the following error (look up to see its traceback):
+No module named 'triton'
+++ for DATA_TYPE in "${DATATYPES[@]}"
+++ python3 -m verl.trainer.main_generation trainer.nnodes=1 trainer.n_gpus_per_node=8 data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_2048/mmlu_1000.parquet 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_2048/mmlu_1000.parquet' data.n_samples=16 data.batch_size=2048 model.path=l3lab/L1-Qwen-1.5B-Exact rollout.temperature=0.6 rollout.response_length=4096 rollout.top_k=-1 rollout.top_p=0.95 rollout.gpu_memory_utilization=0.9 rollout.tensor_model_parallel_size=1
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/utils/import_utils.py", line 1967, in _get_module
+    return importlib.import_module("." + module_name, self.__name__)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1006, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 688, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/models/mistral/modeling_mistral.py", line 17, in <module>
+    from ...modeling_flash_attention_utils import FlashAttentionKwargs
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/modeling_flash_attention_utils.py", line 38, in <module>
+    from flash_attn.layers.rotary import apply_rotary_emb  # noqa
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/flash_attn/layers/rotary.py", line 8, in <module>
+    from flash_attn.ops.triton.rotary import apply_rotary
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/flash_attn/ops/triton/rotary.py", line 7, in <module>
+    import triton
+ModuleNotFoundError: No module named 'triton'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 26, in <module>
+    from verl.utils.model import compute_position_id_with_mask
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/utils/model.py", line 24, in <module>
+    from transformers import AutoConfig, AutoModelForCausalLM, PretrainedConfig, MistralForSequenceClassification, GenerationConfig
+  File "<frozen importlib._bootstrap>", line 1075, in _handle_fromlist
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/utils/import_utils.py", line 1956, in __getattr__
+    value = getattr(module, name)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/utils/import_utils.py", line 1955, in __getattr__
+    module = self._get_module(self._class_to_module[name])
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/utils/import_utils.py", line 1969, in _get_module
+    raise RuntimeError(
+RuntimeError: Failed to import transformers.models.mistral.modeling_mistral because of the following error (look up to see its traceback):
+No module named 'triton'
+++ for DATA_TYPE in "${DATATYPES[@]}"
+++ python3 -m verl.trainer.main_generation trainer.nnodes=1 trainer.n_gpus_per_node=8 data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_2048/lsat.parquet 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_2048/lsat.parquet' data.n_samples=16 data.batch_size=2048 model.path=l3lab/L1-Qwen-1.5B-Exact rollout.temperature=0.6 rollout.response_length=4096 rollout.top_k=-1 rollout.top_p=0.95 rollout.gpu_memory_utilization=0.9 rollout.tensor_model_parallel_size=1
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/utils/import_utils.py", line 1967, in _get_module
+    return importlib.import_module("." + module_name, self.__name__)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1006, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 688, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/models/mistral/modeling_mistral.py", line 17, in <module>
+    from ...modeling_flash_attention_utils import FlashAttentionKwargs
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/modeling_flash_attention_utils.py", line 38, in <module>
+    from flash_attn.layers.rotary import apply_rotary_emb  # noqa
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/flash_attn/layers/rotary.py", line 8, in <module>
+    from flash_attn.ops.triton.rotary import apply_rotary
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/flash_attn/ops/triton/rotary.py", line 7, in <module>
+    import triton
+ModuleNotFoundError: No module named 'triton'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 26, in <module>
+    from verl.utils.model import compute_position_id_with_mask
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/utils/model.py", line 24, in <module>
+    from transformers import AutoConfig, AutoModelForCausalLM, PretrainedConfig, MistralForSequenceClassification, GenerationConfig
+  File "<frozen importlib._bootstrap>", line 1075, in _handle_fromlist
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/utils/import_utils.py", line 1956, in __getattr__
+    value = getattr(module, name)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/utils/import_utils.py", line 1955, in __getattr__
+    module = self._get_module(self._class_to_module[name])
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/utils/import_utils.py", line 1969, in _get_module
+    raise RuntimeError(
+RuntimeError: Failed to import transformers.models.mistral.modeling_mistral because of the following error (look up to see its traceback):
+No module named 'triton'
+++ export VLLM_ATTENTION_BACKEND=XFORMERS
+++ VLLM_ATTENTION_BACKEND=XFORMERS
+++ MODEL_PATH=/home/bingxing2/ailab/wangkuncan/soft/l1/DeepScaleR-1.5B-Preview
+++ NUM_TOKENS=512
+++ MAX_TOKENS=1024
+++ DATATYPES=("gpqa" "mmlu_1000" "lsat" "aime2025" "math" "amc" "aime" "olympiad_bench")
+++ OUTPUT_DIR='$/home/bingxing2/ailab/wangkuncan/soft/l1'
+++ [[ 8 -gt 0 ]]
+++ case $1 in
+++ MODEL_PATH=l3lab/L1-Qwen-1.5B-Exact
+++ shift 2
+++ [[ 6 -gt 0 ]]
+++ case $1 in
+++ NUM_TOKENS=3600
+++ MAX_TOKENS=7200
+++ shift 2
+++ [[ 4 -gt 0 ]]
+++ case $1 in
+++ shift
+++ DATATYPES=()
+++ [[ 3 -gt 0 ]]
+++ [[ ! aime =~ ^-- ]]
+++ DATATYPES+=("$1")
+++ shift
+++ [[ 2 -gt 0 ]]
+++ [[ ! mmlu_1000 =~ ^-- ]]
+++ DATATYPES+=("$1")
+++ shift
+++ [[ 1 -gt 0 ]]
+++ [[ ! lsat =~ ^-- ]]
+++ DATATYPES+=("$1")
+++ shift
+++ [[ 0 -gt 0 ]]
+++ [[ 0 -gt 0 ]]
+++ echo 'Model Path: l3lab/L1-Qwen-1.5B-Exact'
+++ echo 'Datasets: aime' mmlu_1000 lsat
+++ echo 'Output Directory: $/home/bingxing2/ailab/wangkuncan/soft/l1'
+++ echo 'Number of Tokens: 3600'
+++ echo 'Max Tokens: 7200'
+++ for DATA_TYPE in "${DATATYPES[@]}"
+++ python3 -m verl.trainer.main_generation trainer.nnodes=1 trainer.n_gpus_per_node=8 data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_3600/aime.parquet 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_3600/aime.parquet' data.n_samples=16 data.batch_size=2048 model.path=l3lab/L1-Qwen-1.5B-Exact rollout.temperature=0.6 rollout.response_length=7200 rollout.top_k=-1 rollout.top_p=0.95 rollout.gpu_memory_utilization=0.9 rollout.tensor_model_parallel_size=1
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/utils/import_utils.py", line 1967, in _get_module
+    return importlib.import_module("." + module_name, self.__name__)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1006, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 688, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/models/mistral/modeling_mistral.py", line 17, in <module>
+    from ...modeling_flash_attention_utils import FlashAttentionKwargs
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/modeling_flash_attention_utils.py", line 38, in <module>
+    from flash_attn.layers.rotary import apply_rotary_emb  # noqa
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/flash_attn/layers/rotary.py", line 8, in <module>
+    from flash_attn.ops.triton.rotary import apply_rotary
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/flash_attn/ops/triton/rotary.py", line 7, in <module>
+    import triton
+ModuleNotFoundError: No module named 'triton'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 26, in <module>
+    from verl.utils.model import compute_position_id_with_mask
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/utils/model.py", line 24, in <module>
+    from transformers import AutoConfig, AutoModelForCausalLM, PretrainedConfig, MistralForSequenceClassification, GenerationConfig
+  File "<frozen importlib._bootstrap>", line 1075, in _handle_fromlist
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/utils/import_utils.py", line 1956, in __getattr__
+    value = getattr(module, name)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/utils/import_utils.py", line 1955, in __getattr__
+    module = self._get_module(self._class_to_module[name])
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/utils/import_utils.py", line 1969, in _get_module
+    raise RuntimeError(
+RuntimeError: Failed to import transformers.models.mistral.modeling_mistral because of the following error (look up to see its traceback):
+No module named 'triton'
+++ for DATA_TYPE in "${DATATYPES[@]}"
+++ python3 -m verl.trainer.main_generation trainer.nnodes=1 trainer.n_gpus_per_node=8 data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_3600/mmlu_1000.parquet 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_3600/mmlu_1000.parquet' data.n_samples=16 data.batch_size=2048 model.path=l3lab/L1-Qwen-1.5B-Exact rollout.temperature=0.6 rollout.response_length=7200 rollout.top_k=-1 rollout.top_p=0.95 rollout.gpu_memory_utilization=0.9 rollout.tensor_model_parallel_size=1
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/utils/import_utils.py", line 1967, in _get_module
+    return importlib.import_module("." + module_name, self.__name__)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1006, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 688, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/models/mistral/modeling_mistral.py", line 17, in <module>
+    from ...modeling_flash_attention_utils import FlashAttentionKwargs
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/modeling_flash_attention_utils.py", line 38, in <module>
+    from flash_attn.layers.rotary import apply_rotary_emb  # noqa
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/flash_attn/layers/rotary.py", line 8, in <module>
+    from flash_attn.ops.triton.rotary import apply_rotary
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/flash_attn/ops/triton/rotary.py", line 7, in <module>
+    import triton
+ModuleNotFoundError: No module named 'triton'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 26, in <module>
+    from verl.utils.model import compute_position_id_with_mask
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/utils/model.py", line 24, in <module>
+    from transformers import AutoConfig, AutoModelForCausalLM, PretrainedConfig, MistralForSequenceClassification, GenerationConfig
+  File "<frozen importlib._bootstrap>", line 1075, in _handle_fromlist
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/utils/import_utils.py", line 1956, in __getattr__
+    value = getattr(module, name)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/utils/import_utils.py", line 1955, in __getattr__
+    module = self._get_module(self._class_to_module[name])
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/utils/import_utils.py", line 1969, in _get_module
+    raise RuntimeError(
+RuntimeError: Failed to import transformers.models.mistral.modeling_mistral because of the following error (look up to see its traceback):
+No module named 'triton'
+++ for DATA_TYPE in "${DATATYPES[@]}"
+++ python3 -m verl.trainer.main_generation trainer.nnodes=1 trainer.n_gpus_per_node=8 data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_3600/lsat.parquet 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_3600/lsat.parquet' data.n_samples=16 data.batch_size=2048 model.path=l3lab/L1-Qwen-1.5B-Exact rollout.temperature=0.6 rollout.response_length=7200 rollout.top_k=-1 rollout.top_p=0.95 rollout.gpu_memory_utilization=0.9 rollout.tensor_model_parallel_size=1
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/utils/import_utils.py", line 1967, in _get_module
+    return importlib.import_module("." + module_name, self.__name__)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1006, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 688, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/models/mistral/modeling_mistral.py", line 17, in <module>
+    from ...modeling_flash_attention_utils import FlashAttentionKwargs
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/modeling_flash_attention_utils.py", line 38, in <module>
+    from flash_attn.layers.rotary import apply_rotary_emb  # noqa
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/flash_attn/layers/rotary.py", line 8, in <module>
+    from flash_attn.ops.triton.rotary import apply_rotary
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/flash_attn/ops/triton/rotary.py", line 7, in <module>
+    import triton
+ModuleNotFoundError: No module named 'triton'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 26, in <module>
+    from verl.utils.model import compute_position_id_with_mask
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/utils/model.py", line 24, in <module>
+    from transformers import AutoConfig, AutoModelForCausalLM, PretrainedConfig, MistralForSequenceClassification, GenerationConfig
+  File "<frozen importlib._bootstrap>", line 1075, in _handle_fromlist
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/utils/import_utils.py", line 1956, in __getattr__
+    value = getattr(module, name)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/utils/import_utils.py", line 1955, in __getattr__
+    module = self._get_module(self._class_to_module[name])
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/utils/import_utils.py", line 1969, in _get_module
+    raise RuntimeError(
+RuntimeError: Failed to import transformers.models.mistral.modeling_mistral because of the following error (look up to see its traceback):
+No module named 'triton'

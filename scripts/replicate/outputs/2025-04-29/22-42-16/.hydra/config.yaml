@@ -1,0 +1,41 @@
+trainer:
+  nnodes: 1
+  n_gpus_per_node: 8
+data:
+  path: /home/bingxing2/ailab/wangkuncan/deepscaler/data_512/mmlu_1000.parquet
+  prompt_key: prompt
+  n_samples: 16
+  output_path: $/home/bingxing2/ailab/wangkuncan/soft/l1_512/mmlu_1000.parquet
+  batch_size: 2048
+model:
+  path: l3lab/L1-Qwen-1.5B-Exact
+  external_lib: null
+rollout:
+  name: vllm
+  temperature: 0.6
+  top_k: -1
+  top_p: 0.95
+  prompt_length: 1536
+  response_length: 1024
+  dtype: bfloat16
+  gpu_memory_utilization: 0.9
+  ignore_eos: false
+  enforce_eager: true
+  free_cache_engine: true
+  load_format: dummy_dtensor
+  tensor_model_parallel_size: 1
+  max_num_batched_tokens: 8192
+  max_model_len: null
+  max_num_seqs: 1024
+  log_prob_micro_batch_size: null
+  log_prob_micro_batch_size_per_gpu: 8
+  use_fire_sampling: false
+  do_sample: true
+  disable_log_stats: true
+  enable_chunked_prefill: true
+  'n': 1
+actor:
+  strategy: fsdp
+  ulysses_sequence_parallel_size: 1
+  fsdp_config:
+    fsdp_size: -1

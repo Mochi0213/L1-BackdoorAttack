@@ -1,0 +1,480 @@
+++ export VLLM_ATTENTION_BACKEND=XFORMERS
+++ VLLM_ATTENTION_BACKEND=XFORMERS
+++ MODEL_PATH=/home/bingxing2/ailab/wangkuncan/soft/l1/DeepScaleR-1.5B-Preview
+++ NUM_TOKENS=512
+++ MAX_TOKENS=1024
+++ DATATYPES=("gpqa" "mmlu_1000" "lsat" "aime2025" "math" "amc" "aime" "olympiad_bench")
+++ OUTPUT_DIR='$/home/bingxing2/ailab/wangkuncan/soft/l1'
+++ [[ 8 -gt 0 ]]
+++ case $1 in
+++ MODEL_PATH=l3lab/L1-Qwen-1.5B-Exact
+++ shift 2
+++ [[ 6 -gt 0 ]]
+++ case $1 in
+++ NUM_TOKENS=512
+++ MAX_TOKENS=1024
+++ shift 2
+++ [[ 4 -gt 0 ]]
+++ case $1 in
+++ shift
+++ DATATYPES=()
+++ [[ 3 -gt 0 ]]
+++ [[ ! aime =~ ^-- ]]
+++ DATATYPES+=("$1")
+++ shift
+++ [[ 2 -gt 0 ]]
+++ [[ ! mmlu_1000 =~ ^-- ]]
+++ DATATYPES+=("$1")
+++ shift
+++ [[ 1 -gt 0 ]]
+++ [[ ! lsat =~ ^-- ]]
+++ DATATYPES+=("$1")
+++ shift
+++ [[ 0 -gt 0 ]]
+++ [[ 0 -gt 0 ]]
+++ echo 'Model Path: l3lab/L1-Qwen-1.5B-Exact'
+++ echo 'Datasets: aime' mmlu_1000 lsat
+++ echo 'Output Directory: $/home/bingxing2/ailab/wangkuncan/soft/l1'
+++ echo 'Number of Tokens: 512'
+++ echo 'Max Tokens: 1024'
+++ for DATA_TYPE in "${DATATYPES[@]}"
+++ python3 -m verl.trainer.main_generation trainer.nnodes=1 trainer.n_gpus_per_node=8 data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_512/aime.parquet 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_512/aime.parquet' data.n_samples=16 data.batch_size=2048 model.path=l3lab/L1-Qwen-1.5B-Exact rollout.temperature=0.6 rollout.response_length=1024 rollout.top_k=-1 rollout.top_p=0.95 rollout.gpu_memory_utilization=0.9 rollout.tensor_model_parallel_size=1
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/torch/__init__.py", line 226, in _load_global_deps
+    ctypes.CDLL(global_deps_lib_path, mode=ctypes.RTLD_GLOBAL)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/ctypes/__init__.py", line 374, in __init__
+    self._handle = _dlopen(self._name, mode)
+OSError: libcudart.so.12: cannot open shared object file: No such file or directory
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/runpy.py", line 187, in _run_module_as_main
+    mod_name, mod_spec, code = _get_module_details(mod_name, _Error)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/runpy.py", line 110, in _get_module_details
+    __import__(pkg_name)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/__init__.py", line 22, in <module>
+    from .protocol import DataProto
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/protocol.py", line 26, in <module>
+    import torch
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/torch/__init__.py", line 289, in <module>
+    _load_global_deps()
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/torch/__init__.py", line 247, in _load_global_deps
+    _preload_cuda_deps(lib_folder, lib_name)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/torch/__init__.py", line 169, in _preload_cuda_deps
+    raise ValueError(f"{lib_name} not found in the system path {sys.path}")
+ValueError: libcublas.so.*[0-9] not found in the system path ['/home/bingxing2/ailab/wangkuncan/soft/l1/scripts/replicate', '/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python310.zip', '/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10', '/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/lib-dynload', '/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages', '/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages', '/home/bingxing2/ailab/wangkuncan/soft/l1']
+++ for DATA_TYPE in "${DATATYPES[@]}"
+++ python3 -m verl.trainer.main_generation trainer.nnodes=1 trainer.n_gpus_per_node=8 data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_512/mmlu_1000.parquet 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_512/mmlu_1000.parquet' data.n_samples=16 data.batch_size=2048 model.path=l3lab/L1-Qwen-1.5B-Exact rollout.temperature=0.6 rollout.response_length=1024 rollout.top_k=-1 rollout.top_p=0.95 rollout.gpu_memory_utilization=0.9 rollout.tensor_model_parallel_size=1
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/torch/__init__.py", line 226, in _load_global_deps
+    ctypes.CDLL(global_deps_lib_path, mode=ctypes.RTLD_GLOBAL)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/ctypes/__init__.py", line 374, in __init__
+    self._handle = _dlopen(self._name, mode)
+OSError: libcudart.so.12: cannot open shared object file: No such file or directory
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/runpy.py", line 187, in _run_module_as_main
+    mod_name, mod_spec, code = _get_module_details(mod_name, _Error)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/runpy.py", line 110, in _get_module_details
+    __import__(pkg_name)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/__init__.py", line 22, in <module>
+    from .protocol import DataProto
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/protocol.py", line 26, in <module>
+    import torch
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/torch/__init__.py", line 289, in <module>
+    _load_global_deps()
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/torch/__init__.py", line 247, in _load_global_deps
+    _preload_cuda_deps(lib_folder, lib_name)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/torch/__init__.py", line 169, in _preload_cuda_deps
+    raise ValueError(f"{lib_name} not found in the system path {sys.path}")
+ValueError: libcublas.so.*[0-9] not found in the system path ['/home/bingxing2/ailab/wangkuncan/soft/l1/scripts/replicate', '/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python310.zip', '/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10', '/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/lib-dynload', '/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages', '/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages', '/home/bingxing2/ailab/wangkuncan/soft/l1']
+++ for DATA_TYPE in "${DATATYPES[@]}"
+++ python3 -m verl.trainer.main_generation trainer.nnodes=1 trainer.n_gpus_per_node=8 data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_512/lsat.parquet 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_512/lsat.parquet' data.n_samples=16 data.batch_size=2048 model.path=l3lab/L1-Qwen-1.5B-Exact rollout.temperature=0.6 rollout.response_length=1024 rollout.top_k=-1 rollout.top_p=0.95 rollout.gpu_memory_utilization=0.9 rollout.tensor_model_parallel_size=1
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/torch/__init__.py", line 226, in _load_global_deps
+    ctypes.CDLL(global_deps_lib_path, mode=ctypes.RTLD_GLOBAL)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/ctypes/__init__.py", line 374, in __init__
+    self._handle = _dlopen(self._name, mode)
+OSError: libcudart.so.12: cannot open shared object file: No such file or directory
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/runpy.py", line 187, in _run_module_as_main
+    mod_name, mod_spec, code = _get_module_details(mod_name, _Error)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/runpy.py", line 110, in _get_module_details
+    __import__(pkg_name)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/__init__.py", line 22, in <module>
+    from .protocol import DataProto
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/protocol.py", line 26, in <module>
+    import torch
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/torch/__init__.py", line 289, in <module>
+    _load_global_deps()
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/torch/__init__.py", line 247, in _load_global_deps
+    _preload_cuda_deps(lib_folder, lib_name)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/torch/__init__.py", line 169, in _preload_cuda_deps
+    raise ValueError(f"{lib_name} not found in the system path {sys.path}")
+ValueError: libcublas.so.*[0-9] not found in the system path ['/home/bingxing2/ailab/wangkuncan/soft/l1/scripts/replicate', '/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python310.zip', '/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10', '/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/lib-dynload', '/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages', '/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages', '/home/bingxing2/ailab/wangkuncan/soft/l1']
+++ export VLLM_ATTENTION_BACKEND=XFORMERS
+++ VLLM_ATTENTION_BACKEND=XFORMERS
+++ MODEL_PATH=/home/bingxing2/ailab/wangkuncan/soft/l1/DeepScaleR-1.5B-Preview
+++ NUM_TOKENS=512
+++ MAX_TOKENS=1024
+++ DATATYPES=("gpqa" "mmlu_1000" "lsat" "aime2025" "math" "amc" "aime" "olympiad_bench")
+++ OUTPUT_DIR='$/home/bingxing2/ailab/wangkuncan/soft/l1'
+++ [[ 8 -gt 0 ]]
+++ case $1 in
+++ MODEL_PATH=l3lab/L1-Qwen-1.5B-Exact
+++ shift 2
+++ [[ 6 -gt 0 ]]
+++ case $1 in
+++ NUM_TOKENS=1024
+++ MAX_TOKENS=2048
+++ shift 2
+++ [[ 4 -gt 0 ]]
+++ case $1 in
+++ shift
+++ DATATYPES=()
+++ [[ 3 -gt 0 ]]
+++ [[ ! aime =~ ^-- ]]
+++ DATATYPES+=("$1")
+++ shift
+++ [[ 2 -gt 0 ]]
+++ [[ ! mmlu_1000 =~ ^-- ]]
+++ DATATYPES+=("$1")
+++ shift
+++ [[ 1 -gt 0 ]]
+++ [[ ! lsat =~ ^-- ]]
+++ DATATYPES+=("$1")
+++ shift
+++ [[ 0 -gt 0 ]]
+++ [[ 0 -gt 0 ]]
+++ echo 'Model Path: l3lab/L1-Qwen-1.5B-Exact'
+++ echo 'Datasets: aime' mmlu_1000 lsat
+++ echo 'Output Directory: $/home/bingxing2/ailab/wangkuncan/soft/l1'
+++ echo 'Number of Tokens: 1024'
+++ echo 'Max Tokens: 2048'
+++ for DATA_TYPE in "${DATATYPES[@]}"
+++ python3 -m verl.trainer.main_generation trainer.nnodes=1 trainer.n_gpus_per_node=8 data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_1024/aime.parquet 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_1024/aime.parquet' data.n_samples=16 data.batch_size=2048 model.path=l3lab/L1-Qwen-1.5B-Exact rollout.temperature=0.6 rollout.response_length=2048 rollout.top_k=-1 rollout.top_p=0.95 rollout.gpu_memory_utilization=0.9 rollout.tensor_model_parallel_size=1
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/torch/__init__.py", line 226, in _load_global_deps
+    ctypes.CDLL(global_deps_lib_path, mode=ctypes.RTLD_GLOBAL)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/ctypes/__init__.py", line 374, in __init__
+    self._handle = _dlopen(self._name, mode)
+OSError: libcudart.so.12: cannot open shared object file: No such file or directory
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/runpy.py", line 187, in _run_module_as_main
+    mod_name, mod_spec, code = _get_module_details(mod_name, _Error)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/runpy.py", line 110, in _get_module_details
+    __import__(pkg_name)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/__init__.py", line 22, in <module>
+    from .protocol import DataProto
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/protocol.py", line 26, in <module>
+    import torch
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/torch/__init__.py", line 289, in <module>
+    _load_global_deps()
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/torch/__init__.py", line 247, in _load_global_deps
+    _preload_cuda_deps(lib_folder, lib_name)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/torch/__init__.py", line 169, in _preload_cuda_deps
+    raise ValueError(f"{lib_name} not found in the system path {sys.path}")
+ValueError: libcublas.so.*[0-9] not found in the system path ['/home/bingxing2/ailab/wangkuncan/soft/l1/scripts/replicate', '/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python310.zip', '/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10', '/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/lib-dynload', '/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages', '/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages', '/home/bingxing2/ailab/wangkuncan/soft/l1']
+++ for DATA_TYPE in "${DATATYPES[@]}"
+++ python3 -m verl.trainer.main_generation trainer.nnodes=1 trainer.n_gpus_per_node=8 data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_1024/mmlu_1000.parquet 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_1024/mmlu_1000.parquet' data.n_samples=16 data.batch_size=2048 model.path=l3lab/L1-Qwen-1.5B-Exact rollout.temperature=0.6 rollout.response_length=2048 rollout.top_k=-1 rollout.top_p=0.95 rollout.gpu_memory_utilization=0.9 rollout.tensor_model_parallel_size=1
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/torch/__init__.py", line 226, in _load_global_deps
+    ctypes.CDLL(global_deps_lib_path, mode=ctypes.RTLD_GLOBAL)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/ctypes/__init__.py", line 374, in __init__
+    self._handle = _dlopen(self._name, mode)
+OSError: libcudart.so.12: cannot open shared object file: No such file or directory
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/runpy.py", line 187, in _run_module_as_main
+    mod_name, mod_spec, code = _get_module_details(mod_name, _Error)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/runpy.py", line 110, in _get_module_details
+    __import__(pkg_name)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/__init__.py", line 22, in <module>
+    from .protocol import DataProto
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/protocol.py", line 26, in <module>
+    import torch
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/torch/__init__.py", line 289, in <module>
+    _load_global_deps()
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/torch/__init__.py", line 247, in _load_global_deps
+    _preload_cuda_deps(lib_folder, lib_name)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/torch/__init__.py", line 169, in _preload_cuda_deps
+    raise ValueError(f"{lib_name} not found in the system path {sys.path}")
+ValueError: libcublas.so.*[0-9] not found in the system path ['/home/bingxing2/ailab/wangkuncan/soft/l1/scripts/replicate', '/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python310.zip', '/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10', '/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/lib-dynload', '/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages', '/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages', '/home/bingxing2/ailab/wangkuncan/soft/l1']
+++ for DATA_TYPE in "${DATATYPES[@]}"
+++ python3 -m verl.trainer.main_generation trainer.nnodes=1 trainer.n_gpus_per_node=8 data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_1024/lsat.parquet 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_1024/lsat.parquet' data.n_samples=16 data.batch_size=2048 model.path=l3lab/L1-Qwen-1.5B-Exact rollout.temperature=0.6 rollout.response_length=2048 rollout.top_k=-1 rollout.top_p=0.95 rollout.gpu_memory_utilization=0.9 rollout.tensor_model_parallel_size=1
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/torch/__init__.py", line 226, in _load_global_deps
+    ctypes.CDLL(global_deps_lib_path, mode=ctypes.RTLD_GLOBAL)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/ctypes/__init__.py", line 374, in __init__
+    self._handle = _dlopen(self._name, mode)
+OSError: libcudart.so.12: cannot open shared object file: No such file or directory
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/runpy.py", line 187, in _run_module_as_main
+    mod_name, mod_spec, code = _get_module_details(mod_name, _Error)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/runpy.py", line 110, in _get_module_details
+    __import__(pkg_name)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/__init__.py", line 22, in <module>
+    from .protocol import DataProto
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/protocol.py", line 26, in <module>
+    import torch
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/torch/__init__.py", line 289, in <module>
+    _load_global_deps()
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/torch/__init__.py", line 247, in _load_global_deps
+    _preload_cuda_deps(lib_folder, lib_name)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/torch/__init__.py", line 169, in _preload_cuda_deps
+    raise ValueError(f"{lib_name} not found in the system path {sys.path}")
+ValueError: libcublas.so.*[0-9] not found in the system path ['/home/bingxing2/ailab/wangkuncan/soft/l1/scripts/replicate', '/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python310.zip', '/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10', '/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/lib-dynload', '/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages', '/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages', '/home/bingxing2/ailab/wangkuncan/soft/l1']
+++ export VLLM_ATTENTION_BACKEND=XFORMERS
+++ VLLM_ATTENTION_BACKEND=XFORMERS
+++ MODEL_PATH=/home/bingxing2/ailab/wangkuncan/soft/l1/DeepScaleR-1.5B-Preview
+++ NUM_TOKENS=512
+++ MAX_TOKENS=1024
+++ DATATYPES=("gpqa" "mmlu_1000" "lsat" "aime2025" "math" "amc" "aime" "olympiad_bench")
+++ OUTPUT_DIR='$/home/bingxing2/ailab/wangkuncan/soft/l1'
+++ [[ 8 -gt 0 ]]
+++ case $1 in
+++ MODEL_PATH=l3lab/L1-Qwen-1.5B-Exact
+++ shift 2
+++ [[ 6 -gt 0 ]]
+++ case $1 in
+++ NUM_TOKENS=2048
+++ MAX_TOKENS=4096
+++ shift 2
+++ [[ 4 -gt 0 ]]
+++ case $1 in
+++ shift
+++ DATATYPES=()
+++ [[ 3 -gt 0 ]]
+++ [[ ! aime =~ ^-- ]]
+++ DATATYPES+=("$1")
+++ shift
+++ [[ 2 -gt 0 ]]
+++ [[ ! mmlu_1000 =~ ^-- ]]
+++ DATATYPES+=("$1")
+++ shift
+++ [[ 1 -gt 0 ]]
+++ [[ ! lsat =~ ^-- ]]
+++ DATATYPES+=("$1")
+++ shift
+++ [[ 0 -gt 0 ]]
+++ [[ 0 -gt 0 ]]
+++ echo 'Model Path: l3lab/L1-Qwen-1.5B-Exact'
+++ echo 'Datasets: aime' mmlu_1000 lsat
+++ echo 'Output Directory: $/home/bingxing2/ailab/wangkuncan/soft/l1'
+++ echo 'Number of Tokens: 2048'
+++ echo 'Max Tokens: 4096'
+++ for DATA_TYPE in "${DATATYPES[@]}"
+++ python3 -m verl.trainer.main_generation trainer.nnodes=1 trainer.n_gpus_per_node=8 data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_2048/aime.parquet 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_2048/aime.parquet' data.n_samples=16 data.batch_size=2048 model.path=l3lab/L1-Qwen-1.5B-Exact rollout.temperature=0.6 rollout.response_length=4096 rollout.top_k=-1 rollout.top_p=0.95 rollout.gpu_memory_utilization=0.9 rollout.tensor_model_parallel_size=1
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/torch/__init__.py", line 226, in _load_global_deps
+    ctypes.CDLL(global_deps_lib_path, mode=ctypes.RTLD_GLOBAL)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/ctypes/__init__.py", line 374, in __init__
+    self._handle = _dlopen(self._name, mode)
+OSError: libcudart.so.12: cannot open shared object file: No such file or directory
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/runpy.py", line 187, in _run_module_as_main
+    mod_name, mod_spec, code = _get_module_details(mod_name, _Error)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/runpy.py", line 110, in _get_module_details
+    __import__(pkg_name)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/__init__.py", line 22, in <module>
+    from .protocol import DataProto
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/protocol.py", line 26, in <module>
+    import torch
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/torch/__init__.py", line 289, in <module>
+    _load_global_deps()
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/torch/__init__.py", line 247, in _load_global_deps
+    _preload_cuda_deps(lib_folder, lib_name)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/torch/__init__.py", line 169, in _preload_cuda_deps
+    raise ValueError(f"{lib_name} not found in the system path {sys.path}")
+ValueError: libcublas.so.*[0-9] not found in the system path ['/home/bingxing2/ailab/wangkuncan/soft/l1/scripts/replicate', '/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python310.zip', '/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10', '/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/lib-dynload', '/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages', '/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages', '/home/bingxing2/ailab/wangkuncan/soft/l1']
+++ for DATA_TYPE in "${DATATYPES[@]}"
+++ python3 -m verl.trainer.main_generation trainer.nnodes=1 trainer.n_gpus_per_node=8 data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_2048/mmlu_1000.parquet 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_2048/mmlu_1000.parquet' data.n_samples=16 data.batch_size=2048 model.path=l3lab/L1-Qwen-1.5B-Exact rollout.temperature=0.6 rollout.response_length=4096 rollout.top_k=-1 rollout.top_p=0.95 rollout.gpu_memory_utilization=0.9 rollout.tensor_model_parallel_size=1
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/torch/__init__.py", line 226, in _load_global_deps
+    ctypes.CDLL(global_deps_lib_path, mode=ctypes.RTLD_GLOBAL)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/ctypes/__init__.py", line 374, in __init__
+    self._handle = _dlopen(self._name, mode)
+OSError: libcudart.so.12: cannot open shared object file: No such file or directory
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/runpy.py", line 187, in _run_module_as_main
+    mod_name, mod_spec, code = _get_module_details(mod_name, _Error)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/runpy.py", line 110, in _get_module_details
+    __import__(pkg_name)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/__init__.py", line 22, in <module>
+    from .protocol import DataProto
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/protocol.py", line 26, in <module>
+    import torch
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/torch/__init__.py", line 289, in <module>
+    _load_global_deps()
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/torch/__init__.py", line 247, in _load_global_deps
+    _preload_cuda_deps(lib_folder, lib_name)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/torch/__init__.py", line 169, in _preload_cuda_deps
+    raise ValueError(f"{lib_name} not found in the system path {sys.path}")
+ValueError: libcublas.so.*[0-9] not found in the system path ['/home/bingxing2/ailab/wangkuncan/soft/l1/scripts/replicate', '/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python310.zip', '/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10', '/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/lib-dynload', '/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages', '/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages', '/home/bingxing2/ailab/wangkuncan/soft/l1']
+++ for DATA_TYPE in "${DATATYPES[@]}"
+++ python3 -m verl.trainer.main_generation trainer.nnodes=1 trainer.n_gpus_per_node=8 data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_2048/lsat.parquet 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_2048/lsat.parquet' data.n_samples=16 data.batch_size=2048 model.path=l3lab/L1-Qwen-1.5B-Exact rollout.temperature=0.6 rollout.response_length=4096 rollout.top_k=-1 rollout.top_p=0.95 rollout.gpu_memory_utilization=0.9 rollout.tensor_model_parallel_size=1
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/torch/__init__.py", line 226, in _load_global_deps
+    ctypes.CDLL(global_deps_lib_path, mode=ctypes.RTLD_GLOBAL)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/ctypes/__init__.py", line 374, in __init__
+    self._handle = _dlopen(self._name, mode)
+OSError: libcudart.so.12: cannot open shared object file: No such file or directory
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/runpy.py", line 187, in _run_module_as_main
+    mod_name, mod_spec, code = _get_module_details(mod_name, _Error)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/runpy.py", line 110, in _get_module_details
+    __import__(pkg_name)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/__init__.py", line 22, in <module>
+    from .protocol import DataProto
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/protocol.py", line 26, in <module>
+    import torch
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/torch/__init__.py", line 289, in <module>
+    _load_global_deps()
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/torch/__init__.py", line 247, in _load_global_deps
+    _preload_cuda_deps(lib_folder, lib_name)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/torch/__init__.py", line 169, in _preload_cuda_deps
+    raise ValueError(f"{lib_name} not found in the system path {sys.path}")
+ValueError: libcublas.so.*[0-9] not found in the system path ['/home/bingxing2/ailab/wangkuncan/soft/l1/scripts/replicate', '/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python310.zip', '/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10', '/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/lib-dynload', '/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages', '/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages', '/home/bingxing2/ailab/wangkuncan/soft/l1']
+++ export VLLM_ATTENTION_BACKEND=XFORMERS
+++ VLLM_ATTENTION_BACKEND=XFORMERS
+++ MODEL_PATH=/home/bingxing2/ailab/wangkuncan/soft/l1/DeepScaleR-1.5B-Preview
+++ NUM_TOKENS=512
+++ MAX_TOKENS=1024
+++ DATATYPES=("gpqa" "mmlu_1000" "lsat" "aime2025" "math" "amc" "aime" "olympiad_bench")
+++ OUTPUT_DIR='$/home/bingxing2/ailab/wangkuncan/soft/l1'
+++ [[ 8 -gt 0 ]]
+++ case $1 in
+++ MODEL_PATH=l3lab/L1-Qwen-1.5B-Exact
+++ shift 2
+++ [[ 6 -gt 0 ]]
+++ case $1 in
+++ NUM_TOKENS=3600
+++ MAX_TOKENS=7200
+++ shift 2
+++ [[ 4 -gt 0 ]]
+++ case $1 in
+++ shift
+++ DATATYPES=()
+++ [[ 3 -gt 0 ]]
+++ [[ ! aime =~ ^-- ]]
+++ DATATYPES+=("$1")
+++ shift
+++ [[ 2 -gt 0 ]]
+++ [[ ! mmlu_1000 =~ ^-- ]]
+++ DATATYPES+=("$1")
+++ shift
+++ [[ 1 -gt 0 ]]
+++ [[ ! lsat =~ ^-- ]]
+++ DATATYPES+=("$1")
+++ shift
+++ [[ 0 -gt 0 ]]
+++ [[ 0 -gt 0 ]]
+++ echo 'Model Path: l3lab/L1-Qwen-1.5B-Exact'
+++ echo 'Datasets: aime' mmlu_1000 lsat
+++ echo 'Output Directory: $/home/bingxing2/ailab/wangkuncan/soft/l1'
+++ echo 'Number of Tokens: 3600'
+++ echo 'Max Tokens: 7200'
+++ for DATA_TYPE in "${DATATYPES[@]}"
+++ python3 -m verl.trainer.main_generation trainer.nnodes=1 trainer.n_gpus_per_node=8 data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_3600/aime.parquet 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_3600/aime.parquet' data.n_samples=16 data.batch_size=2048 model.path=l3lab/L1-Qwen-1.5B-Exact rollout.temperature=0.6 rollout.response_length=7200 rollout.top_k=-1 rollout.top_p=0.95 rollout.gpu_memory_utilization=0.9 rollout.tensor_model_parallel_size=1
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/torch/__init__.py", line 226, in _load_global_deps
+    ctypes.CDLL(global_deps_lib_path, mode=ctypes.RTLD_GLOBAL)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/ctypes/__init__.py", line 374, in __init__
+    self._handle = _dlopen(self._name, mode)
+OSError: libcudart.so.12: cannot open shared object file: No such file or directory
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/runpy.py", line 187, in _run_module_as_main
+    mod_name, mod_spec, code = _get_module_details(mod_name, _Error)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/runpy.py", line 110, in _get_module_details
+    __import__(pkg_name)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/__init__.py", line 22, in <module>
+    from .protocol import DataProto
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/protocol.py", line 26, in <module>
+    import torch
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/torch/__init__.py", line 289, in <module>
+    _load_global_deps()
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/torch/__init__.py", line 247, in _load_global_deps
+    _preload_cuda_deps(lib_folder, lib_name)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/torch/__init__.py", line 169, in _preload_cuda_deps
+    raise ValueError(f"{lib_name} not found in the system path {sys.path}")
+ValueError: libcublas.so.*[0-9] not found in the system path ['/home/bingxing2/ailab/wangkuncan/soft/l1/scripts/replicate', '/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python310.zip', '/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10', '/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/lib-dynload', '/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages', '/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages', '/home/bingxing2/ailab/wangkuncan/soft/l1']
+++ for DATA_TYPE in "${DATATYPES[@]}"
+++ python3 -m verl.trainer.main_generation trainer.nnodes=1 trainer.n_gpus_per_node=8 data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_3600/mmlu_1000.parquet 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_3600/mmlu_1000.parquet' data.n_samples=16 data.batch_size=2048 model.path=l3lab/L1-Qwen-1.5B-Exact rollout.temperature=0.6 rollout.response_length=7200 rollout.top_k=-1 rollout.top_p=0.95 rollout.gpu_memory_utilization=0.9 rollout.tensor_model_parallel_size=1
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/torch/__init__.py", line 226, in _load_global_deps
+    ctypes.CDLL(global_deps_lib_path, mode=ctypes.RTLD_GLOBAL)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/ctypes/__init__.py", line 374, in __init__
+    self._handle = _dlopen(self._name, mode)
+OSError: libcudart.so.12: cannot open shared object file: No such file or directory
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/runpy.py", line 187, in _run_module_as_main
+    mod_name, mod_spec, code = _get_module_details(mod_name, _Error)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/runpy.py", line 110, in _get_module_details
+    __import__(pkg_name)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/__init__.py", line 22, in <module>
+    from .protocol import DataProto
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/protocol.py", line 26, in <module>
+    import torch
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/torch/__init__.py", line 289, in <module>
+    _load_global_deps()
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/torch/__init__.py", line 247, in _load_global_deps
+    _preload_cuda_deps(lib_folder, lib_name)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/torch/__init__.py", line 169, in _preload_cuda_deps
+    raise ValueError(f"{lib_name} not found in the system path {sys.path}")
+ValueError: libcublas.so.*[0-9] not found in the system path ['/home/bingxing2/ailab/wangkuncan/soft/l1/scripts/replicate', '/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python310.zip', '/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10', '/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/lib-dynload', '/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages', '/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages', '/home/bingxing2/ailab/wangkuncan/soft/l1']
+++ for DATA_TYPE in "${DATATYPES[@]}"
+++ python3 -m verl.trainer.main_generation trainer.nnodes=1 trainer.n_gpus_per_node=8 data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_3600/lsat.parquet 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_3600/lsat.parquet' data.n_samples=16 data.batch_size=2048 model.path=l3lab/L1-Qwen-1.5B-Exact rollout.temperature=0.6 rollout.response_length=7200 rollout.top_k=-1 rollout.top_p=0.95 rollout.gpu_memory_utilization=0.9 rollout.tensor_model_parallel_size=1
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/torch/__init__.py", line 226, in _load_global_deps
+    ctypes.CDLL(global_deps_lib_path, mode=ctypes.RTLD_GLOBAL)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/ctypes/__init__.py", line 374, in __init__
+    self._handle = _dlopen(self._name, mode)
+OSError: libcudart.so.12: cannot open shared object file: No such file or directory
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/runpy.py", line 187, in _run_module_as_main
+    mod_name, mod_spec, code = _get_module_details(mod_name, _Error)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/runpy.py", line 110, in _get_module_details
+    __import__(pkg_name)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/__init__.py", line 22, in <module>
+    from .protocol import DataProto
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/protocol.py", line 26, in <module>
+    import torch
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/torch/__init__.py", line 289, in <module>
+    _load_global_deps()
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/torch/__init__.py", line 247, in _load_global_deps
+    _preload_cuda_deps(lib_folder, lib_name)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/torch/__init__.py", line 169, in _preload_cuda_deps
+    raise ValueError(f"{lib_name} not found in the system path {sys.path}")
+ValueError: libcublas.so.*[0-9] not found in the system path ['/home/bingxing2/ailab/wangkuncan/soft/l1/scripts/replicate', '/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python310.zip', '/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10', '/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/lib-dynload', '/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages', '/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages', '/home/bingxing2/ailab/wangkuncan/soft/l1']

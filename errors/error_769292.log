@@ -1,0 +1,128 @@
+++ export VLLM_ATTENTION_BACKEND=XFORMERS
+++ VLLM_ATTENTION_BACKEND=XFORMERS
+++ MODEL_PATH=/home/bingxing2/ailab/wangkuncan/DeepScaleR-1.5B-Preview
+++ NUM_TOKENS=512
+++ MAX_TOKENS=1024
+++ DATATYPES=("gpqa" "mmlu_1000" "lsat" "aime2025" "math" "amc" "aime" "olympiad_bench")
+++ OUTPUT_DIR=/home/bingxing2/ailab/wangkuncan
+++ [[ 8 -gt 0 ]]
+++ case $1 in
+++ MODEL_PATH=--num-tokens
+++ shift 2
+++ [[ 6 -gt 0 ]]
+++ case $1 in
+++ echo 'Unknown argument: 512'
+++ echo 'Usage: /home/bingxing2/ailab/wangkuncan/soft/l1/scripts/eval/eval_model_token.sh --model <model_path> --num-tokens <num_tokens> --datasets dataset1 dataset2 ... --output-dir <output_directory>'
+++ exit 1
+++ export VLLM_ATTENTION_BACKEND=XFORMERS
+++ VLLM_ATTENTION_BACKEND=XFORMERS
+++ MODEL_PATH=/home/bingxing2/ailab/wangkuncan/DeepScaleR-1.5B-Preview
+++ NUM_TOKENS=512
+++ MAX_TOKENS=1024
+++ DATATYPES=("gpqa" "mmlu_1000" "lsat" "aime2025" "math" "amc" "aime" "olympiad_bench")
+++ OUTPUT_DIR=/home/bingxing2/ailab/wangkuncan
+++ [[ 8 -gt 0 ]]
+++ case $1 in
+++ MODEL_PATH=--num-tokens
+++ shift 2
+++ [[ 6 -gt 0 ]]
+++ case $1 in
+++ echo 'Unknown argument: 1024'
+++ echo 'Usage: /home/bingxing2/ailab/wangkuncan/soft/l1/scripts/eval/eval_model_token.sh --model <model_path> --num-tokens <num_tokens> --datasets dataset1 dataset2 ... --output-dir <output_directory>'
+++ exit 1
+++ export VLLM_ATTENTION_BACKEND=XFORMERS
+++ VLLM_ATTENTION_BACKEND=XFORMERS
+++ MODEL_PATH=/home/bingxing2/ailab/wangkuncan/DeepScaleR-1.5B-Preview
+++ NUM_TOKENS=512
+++ MAX_TOKENS=1024
+++ DATATYPES=("gpqa" "mmlu_1000" "lsat" "aime2025" "math" "amc" "aime" "olympiad_bench")
+++ OUTPUT_DIR=/home/bingxing2/ailab/wangkuncan
+++ [[ 8 -gt 0 ]]
+++ case $1 in
+++ MODEL_PATH=--num-tokens
+++ shift 2
+++ [[ 6 -gt 0 ]]
+++ case $1 in
+++ echo 'Unknown argument: 2048'
+++ echo 'Usage: /home/bingxing2/ailab/wangkuncan/soft/l1/scripts/eval/eval_model_token.sh --model <model_path> --num-tokens <num_tokens> --datasets dataset1 dataset2 ... --output-dir <output_directory>'
+++ exit 1
+++ export VLLM_ATTENTION_BACKEND=XFORMERS
+++ VLLM_ATTENTION_BACKEND=XFORMERS
+++ MODEL_PATH=/home/bingxing2/ailab/wangkuncan/DeepScaleR-1.5B-Preview
+++ NUM_TOKENS=512
+++ MAX_TOKENS=1024
+++ DATATYPES=("gpqa" "mmlu_1000" "lsat" "aime2025" "math" "amc" "aime" "olympiad_bench")
+++ OUTPUT_DIR=/home/bingxing2/ailab/wangkuncan
+++ [[ 8 -gt 0 ]]
+++ case $1 in
+++ MODEL_PATH=--num-tokens
+++ shift 2
+++ [[ 6 -gt 0 ]]
+++ case $1 in
+++ echo 'Unknown argument: 3600'
+++ echo 'Usage: /home/bingxing2/ailab/wangkuncan/soft/l1/scripts/eval/eval_model_token.sh --model <model_path> --num-tokens <num_tokens> --datasets dataset1 dataset2 ... --output-dir <output_directory>'
+++ exit 1
+++ export VLLM_ATTENTION_BACKEND=XFORMERS
+++ VLLM_ATTENTION_BACKEND=XFORMERS
+++ MODEL_PATH=/home/bingxing2/ailab/wangkuncan/DeepScaleR-1.5B-Preview
+++ NUM_TOKENS=512
+++ MAX_TOKENS=1024
+++ DATATYPES=("gpqa" "mmlu_1000" "lsat" "aime2025" "math" "amc" "aime" "olympiad_bench")
+++ OUTPUT_DIR=/home/bingxing2/ailab/wangkuncan
+++ [[ 8 -gt 0 ]]
+++ case $1 in
+++ MODEL_PATH=--num-tokens
+++ shift 2
+++ [[ 6 -gt 0 ]]
+++ case $1 in
+++ echo 'Unknown argument: 512'
+++ echo 'Usage: /home/bingxing2/ailab/wangkuncan/soft/l1/scripts/eval/eval_model_token.sh --model <model_path> --num-tokens <num_tokens> --datasets dataset1 dataset2 ... --output-dir <output_directory>'
+++ exit 1
+++ export VLLM_ATTENTION_BACKEND=XFORMERS
+++ VLLM_ATTENTION_BACKEND=XFORMERS
+++ MODEL_PATH=/home/bingxing2/ailab/wangkuncan/DeepScaleR-1.5B-Preview
+++ NUM_TOKENS=512
+++ MAX_TOKENS=1024
+++ DATATYPES=("gpqa" "mmlu_1000" "lsat" "aime2025" "math" "amc" "aime" "olympiad_bench")
+++ OUTPUT_DIR=/home/bingxing2/ailab/wangkuncan
+++ [[ 8 -gt 0 ]]
+++ case $1 in
+++ MODEL_PATH=--num-tokens
+++ shift 2
+++ [[ 6 -gt 0 ]]
+++ case $1 in
+++ echo 'Unknown argument: 1024'
+++ echo 'Usage: /home/bingxing2/ailab/wangkuncan/soft/l1/scripts/eval/eval_model_token.sh --model <model_path> --num-tokens <num_tokens> --datasets dataset1 dataset2 ... --output-dir <output_directory>'
+++ exit 1
+++ export VLLM_ATTENTION_BACKEND=XFORMERS
+++ VLLM_ATTENTION_BACKEND=XFORMERS
+++ MODEL_PATH=/home/bingxing2/ailab/wangkuncan/DeepScaleR-1.5B-Preview
+++ NUM_TOKENS=512
+++ MAX_TOKENS=1024
+++ DATATYPES=("gpqa" "mmlu_1000" "lsat" "aime2025" "math" "amc" "aime" "olympiad_bench")
+++ OUTPUT_DIR=/home/bingxing2/ailab/wangkuncan
+++ [[ 8 -gt 0 ]]
+++ case $1 in
+++ MODEL_PATH=--num-tokens
+++ shift 2
+++ [[ 6 -gt 0 ]]
+++ case $1 in
+++ echo 'Unknown argument: 2048'
+++ echo 'Usage: /home/bingxing2/ailab/wangkuncan/soft/l1/scripts/eval/eval_model_token.sh --model <model_path> --num-tokens <num_tokens> --datasets dataset1 dataset2 ... --output-dir <output_directory>'
+++ exit 1
+++ export VLLM_ATTENTION_BACKEND=XFORMERS
+++ VLLM_ATTENTION_BACKEND=XFORMERS
+++ MODEL_PATH=/home/bingxing2/ailab/wangkuncan/DeepScaleR-1.5B-Preview
+++ NUM_TOKENS=512
+++ MAX_TOKENS=1024
+++ DATATYPES=("gpqa" "mmlu_1000" "lsat" "aime2025" "math" "amc" "aime" "olympiad_bench")
+++ OUTPUT_DIR=/home/bingxing2/ailab/wangkuncan
+++ [[ 8 -gt 0 ]]
+++ case $1 in
+++ MODEL_PATH=--num-tokens
+++ shift 2
+++ [[ 6 -gt 0 ]]
+++ case $1 in
+++ echo 'Unknown argument: 3600'
+++ echo 'Usage: /home/bingxing2/ailab/wangkuncan/soft/l1/scripts/eval/eval_model_token.sh --model <model_path> --num-tokens <num_tokens> --datasets dataset1 dataset2 ... --output-dir <output_directory>'
+++ exit 1

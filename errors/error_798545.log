@@ -1,0 +1,9 @@
++ export VLLM_ATTENTION_BACKEND=XFORMERS
++ VLLM_ATTENTION_BACKEND=XFORMERS
+++ pwd
++ export PYTHONPATH=/home/bingxing2/ailab/wangkuncan/soft/l1/scripts/train/../../verl/
++ PYTHONPATH=/home/bingxing2/ailab/wangkuncan/soft/l1/scripts/train/../../verl/
++ export LD_PRELOAD=:/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/scikit_learn.libs/libgomp-d22c30c5.so.1.0.0
++ LD_PRELOAD=:/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/scikit_learn.libs/libgomp-d22c30c5.so.1.0.0
++ python3 -m verl.trainer.main_ppo --config-path=/home/bingxing2/ailab/wangkuncan/soft/l1/scripts/train --config-name=l1_exact_lora.yaml
+slurmstepd: error: *** JOB 798545 ON paraai-n32-h-01-agent-164 CANCELLED AT 2025-05-12T15:38:21 ***

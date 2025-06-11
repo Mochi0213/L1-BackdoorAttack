@@ -1,0 +1,13 @@
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:00<00:00,  2.06it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00,  2.33it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00,  2.28it/s]
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:00<00:00,  2.06it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00,  2.34it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00,  2.29it/s]
+We detected that you are passing `past_key_values` as a tuple and this is deprecated and will be removed in v4.43. Please use an appropriate `Cache` class (https://huggingface.co/docs/transformers/v4.41.3/en/internal/generation_utils#transformers.Cache)
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/soft/l1/IntegratedCode.py", line 170, in <module>
+    output_ids = model.generate(
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/setup/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/setup/lib/python3.10/site-packages/transformers/generation/utils.py", line 1989, in generate
+    result = self._sample(
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/setup/lib/python3.10/site-packages/transformers/generation/utils.py", line 2969, in _sample
+    next_tokens = torch.multinomial(probs, num_samples=1).squeeze(1)
+RuntimeError: probability tensor contains either `inf`, `nan` or element < 0

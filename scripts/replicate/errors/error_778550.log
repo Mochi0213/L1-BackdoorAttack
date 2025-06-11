@@ -1,0 +1,211 @@
+++ export VLLM_ATTENTION_BACKEND=XFORMERS
+++ VLLM_ATTENTION_BACKEND=XFORMERS
+++ MODEL_PATH=/home/bingxing2/ailab/wangkuncan/soft/l1/DeepScaleR-1.5B-Preview
+++ NUM_TOKENS=512
+++ MAX_TOKENS=1024
+++ DATATYPES=("gpqa" "mmlu_1000" "lsat" "aime2025" "math" "amc" "aime" "olympiad_bench")
+++ OUTPUT_DIR='$/home/bingxing2/ailab/wangkuncan/soft/l1'
+++ [[ 8 -gt 0 ]]
+++ case $1 in
+++ MODEL_PATH=l3lab/L1-Qwen-1.5B-Exact
+++ shift 2
+++ [[ 6 -gt 0 ]]
+++ case $1 in
+++ NUM_TOKENS=512
+++ MAX_TOKENS=1024
+++ shift 2
+++ [[ 4 -gt 0 ]]
+++ case $1 in
+++ shift
+++ DATATYPES=()
+++ [[ 3 -gt 0 ]]
+++ [[ ! aime =~ ^-- ]]
+++ DATATYPES+=("$1")
+++ shift
+++ [[ 2 -gt 0 ]]
+++ [[ ! mmlu_1000 =~ ^-- ]]
+++ DATATYPES+=("$1")
+++ shift
+++ [[ 1 -gt 0 ]]
+++ [[ ! lsat =~ ^-- ]]
+++ DATATYPES+=("$1")
+++ shift
+++ [[ 0 -gt 0 ]]
+++ [[ 0 -gt 0 ]]
+++ echo 'Model Path: l3lab/L1-Qwen-1.5B-Exact'
+++ echo 'Datasets: aime' mmlu_1000 lsat
+++ echo 'Output Directory: $/home/bingxing2/ailab/wangkuncan/soft/l1'
+++ echo 'Number of Tokens: 512'
+++ echo 'Max Tokens: 1024'
+++ for DATA_TYPE in "${DATATYPES[@]}"
+++ python3 -m verl.trainer.main_generation trainer.nnodes=1 trainer.n_gpus_per_node=8 data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_512/aime.parquet 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_512/aime.parquet' data.n_samples=16 data.batch_size=2048 model.path=l3lab/L1-Qwen-1.5B-Exact rollout.temperature=0.6 rollout.response_length=1024 rollout.top_k=-1 rollout.top_p=0.95 rollout.gpu_memory_utilization=0.9 rollout.tensor_model_parallel_size=1
+2025-04-29 21:45:57,729	INFO worker.py:1843 -- Started a local Ray instance. View the dashboard at [1m[32m127.0.0.1:8265 [39m[22m
+Error executing job with overrides: ['trainer.nnodes=1', 'trainer.n_gpus_per_node=8', 'data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_512/aime.parquet', 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_512/aime.parquet', 'data.n_samples=16', 'data.batch_size=2048', 'model.path=l3lab/L1-Qwen-1.5B-Exact', 'rollout.temperature=0.6', 'rollout.response_length=1024', 'rollout.top_k=-1', 'rollout.top_p=0.95', 'rollout.gpu_memory_utilization=0.9', 'rollout.tensor_model_parallel_size=1']
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 41, in main
+    run_generation(config)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 50, in run_generation
+    ray.get(main_task.remote(config))
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/worker.py", line 2782, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/worker.py", line 929, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(FileNotFoundError): [36mray::main_task()[39m (pid=1744985, ip=173.3.246.189)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 67, in main_task
+    dataset = pd.read_parquet(config.data.path)
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/pandas/io/parquet.py", line 667, in read_parquet
+    return impl.read(
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/pandas/io/parquet.py", line 267, in read
+    path_or_handle, handles, filesystem = _get_path_or_handle(
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/pandas/io/parquet.py", line 140, in _get_path_or_handle
+    handles = get_handle(
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/pandas/io/common.py", line 882, in get_handle
+    handle = open(handle, ioargs.mode)
+FileNotFoundError: [Errno 2] No such file or directory: '/home/bingxing2/ailab/wangkuncan/deepscaler/data_512/aime.parquet'
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
+++ for DATA_TYPE in "${DATATYPES[@]}"
+++ python3 -m verl.trainer.main_generation trainer.nnodes=1 trainer.n_gpus_per_node=8 data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_512/mmlu_1000.parquet 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_512/mmlu_1000.parquet' data.n_samples=16 data.batch_size=2048 model.path=l3lab/L1-Qwen-1.5B-Exact rollout.temperature=0.6 rollout.response_length=1024 rollout.top_k=-1 rollout.top_p=0.95 rollout.gpu_memory_utilization=0.9 rollout.tensor_model_parallel_size=1
+2025-04-29 21:46:37,706	INFO worker.py:1843 -- Started a local Ray instance. View the dashboard at [1m[32m127.0.0.1:8265 [39m[22m
+Error executing job with overrides: ['trainer.nnodes=1', 'trainer.n_gpus_per_node=8', 'data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_512/mmlu_1000.parquet', 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_512/mmlu_1000.parquet', 'data.n_samples=16', 'data.batch_size=2048', 'model.path=l3lab/L1-Qwen-1.5B-Exact', 'rollout.temperature=0.6', 'rollout.response_length=1024', 'rollout.top_k=-1', 'rollout.top_p=0.95', 'rollout.gpu_memory_utilization=0.9', 'rollout.tensor_model_parallel_size=1']
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 41, in main
+    run_generation(config)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 50, in run_generation
+    ray.get(main_task.remote(config))
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/worker.py", line 2782, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/worker.py", line 931, in get_objects
+    raise value
+ray.exceptions.OutOfMemoryError: Task was killed due to the node running low on memory.
+Memory on the node (IP: 173.3.246.189, ID: 0f417f7797fb229284fba041e8919f32b955b08052561ea0e0b51ee1) where the task (task ID: 14b1bcf416bb60cdba4b47a3887687c2ded054e401000000, name=main_task, pid=1758890, memory used=0.56GB) was running was 241.51GB / 254.07GB (0.95057), which exceeds the memory usage threshold of 0.95. Ray killed this worker (ID: cc48ea83a5c9896c50ea016825cfe9cdb04ffed7be5c3d391c3e7fc7) because it was the most recently scheduled task; to see more information about memory usage on this node, use `ray logs raylet.out -ip 173.3.246.189`. To see the logs of the worker, use `ray logs worker-cc48ea83a5c9896c50ea016825cfe9cdb04ffed7be5c3d391c3e7fc7*out -ip 173.3.246.189. Top 10 memory users:
+PID	MEM(GB)	COMMAND
+1751628	77.99	/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/bin/python3 -u /home/bingxing2/ailab/wangkuncan/.loc...
+1758890	0.56	ray::main_task
+1751250	0.49	/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/core/src/ray/gcs/gcs_server...
+1750838	0.47	python3 -m verl.trainer.main_generation trainer.nnodes=1 trainer.n_gpus_per_node=8 data.path=/home/b...
+1751427	0.22	/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/bin/python3 /home/bingxing2/ailab/wangkuncan/.local/...
+1751689	0.05	ray::IDLE
+1751691	0.05	ray::IDLE
+1751746	0.05	ray::IDLE
+1751677	0.05	ray::IDLE
+1751779	0.05	ray::IDLE
+Refer to the documentation on how to address the out of memory issue: https://docs.ray.io/en/latest/ray-core/scheduling/ray-oom-prevention.html. Consider provisioning more memory on this node or reducing task parallelism by requesting more CPUs per task. To adjust the kill threshold, set the environment variable `RAY_memory_usage_threshold` when starting Ray. To disable worker killing, set the environment variable `RAY_memory_monitor_refresh_ms` to zero.
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
+/home/bingxing2/ailab/wangkuncan/soft/l1/scripts/eval/eval_model_token.sh: line 57: 1750838 Bus error               python3 -m verl.trainer.main_generation trainer.nnodes=1 trainer.n_gpus_per_node=8 data.path=$HOME/deepscaler/data_${NUM_TOKENS}/${DATA_TYPE}.parquet data.output_path=${OUTPUT_DIR}_${NUM_TOKENS}/${DATA_TYPE}.parquet data.n_samples=16 data.batch_size=2048 model.path=${MODEL_PATH} rollout.temperature=0.6 rollout.response_length=${MAX_TOKENS} rollout.top_k=-1 rollout.top_p=0.95 rollout.gpu_memory_utilization=0.9 rollout.tensor_model_parallel_size=1
+++ for DATA_TYPE in "${DATATYPES[@]}"
+++ python3 -m verl.trainer.main_generation trainer.nnodes=1 trainer.n_gpus_per_node=8 data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_512/lsat.parquet 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_512/lsat.parquet' data.n_samples=16 data.batch_size=2048 model.path=l3lab/L1-Qwen-1.5B-Exact rollout.temperature=0.6 rollout.response_length=1024 rollout.top_k=-1 rollout.top_p=0.95 rollout.gpu_memory_utilization=0.9 rollout.tensor_model_parallel_size=1
+2025-05-02 20:33:06,762	INFO worker.py:1843 -- Started a local Ray instance. View the dashboard at [1m[32m127.0.0.1:8265 [39m[22m
+Error executing job with overrides: ['trainer.nnodes=1', 'trainer.n_gpus_per_node=8', 'data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_512/lsat.parquet', 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_512/lsat.parquet', 'data.n_samples=16', 'data.batch_size=2048', 'model.path=l3lab/L1-Qwen-1.5B-Exact', 'rollout.temperature=0.6', 'rollout.response_length=1024', 'rollout.top_k=-1', 'rollout.top_p=0.95', 'rollout.gpu_memory_utilization=0.9', 'rollout.tensor_model_parallel_size=1']
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 41, in main
+    run_generation(config)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 50, in run_generation
+    ray.get(main_task.remote(config))
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/worker.py", line 2782, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/worker.py", line 931, in get_objects
+    raise value
+ray.exceptions.OutOfMemoryError: Task was killed due to the node running low on memory.
+Memory on the node (IP: 173.3.246.189, ID: 1d38472fc2005e54c1c01f7b27b47435403f37a78b01656d4d660257) where the task (task ID: 53a4c6478ac69d75ae6db18d4be1e1224fcc01a601000000, name=main_task, pid=2702667, memory used=0.51GB) was running was 242.49GB / 254.07GB (0.954399), which exceeds the memory usage threshold of 0.95. Ray killed this worker (ID: 5b3b85c3717f4f89928dd0b3f452b9b880c58b53a1fe7004733bf4cf) because it was the most recently scheduled task; to see more information about memory usage on this node, use `ray logs raylet.out -ip 173.3.246.189`. To see the logs of the worker, use `ray logs worker-5b3b85c3717f4f89928dd0b3f452b9b880c58b53a1fe7004733bf4cf*out -ip 173.3.246.189. Top 10 memory users:
+PID	MEM(GB)	COMMAND
+2695392	74.51	/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/bin/python3 -u /home/bingxing2/ailab/wangkuncan/.loc...
+2702667	0.51	ray::main_task
+2695016	0.49	/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/core/src/ray/gcs/gcs_server...
+2693249	0.41	python3 -m verl.trainer.main_generation trainer.nnodes=1 trainer.n_gpus_per_node=8 data.path=/home/b...
+2695180	0.21	/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/bin/python3 /home/bingxing2/ailab/wangkuncan/.local/...
+2695453	0.05	ray::IDLE
+2695507	0.05	ray::IDLE
+2695451	0.05	ray::IDLE
+2695474	0.05	ray::IDLE
+2695446	0.05	ray::IDLE
+Refer to the documentation on how to address the out of memory issue: https://docs.ray.io/en/latest/ray-core/scheduling/ray-oom-prevention.html. Consider provisioning more memory on this node or reducing task parallelism by requesting more CPUs per task. To adjust the kill threshold, set the environment variable `RAY_memory_usage_threshold` when starting Ray. To disable worker killing, set the environment variable `RAY_memory_monitor_refresh_ms` to zero.
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
+++ export VLLM_ATTENTION_BACKEND=XFORMERS
+++ VLLM_ATTENTION_BACKEND=XFORMERS
+++ MODEL_PATH=/home/bingxing2/ailab/wangkuncan/soft/l1/DeepScaleR-1.5B-Preview
+++ NUM_TOKENS=512
+++ MAX_TOKENS=1024
+++ DATATYPES=("gpqa" "mmlu_1000" "lsat" "aime2025" "math" "amc" "aime" "olympiad_bench")
+++ OUTPUT_DIR='$/home/bingxing2/ailab/wangkuncan/soft/l1'
+++ [[ 8 -gt 0 ]]
+++ case $1 in
+++ MODEL_PATH=l3lab/L1-Qwen-1.5B-Exact
+++ shift 2
+++ [[ 6 -gt 0 ]]
+++ case $1 in
+++ NUM_TOKENS=1024
+++ MAX_TOKENS=2048
+++ shift 2
+++ [[ 4 -gt 0 ]]
+++ case $1 in
+++ shift
+++ DATATYPES=()
+++ [[ 3 -gt 0 ]]
+++ [[ ! aime =~ ^-- ]]
+++ DATATYPES+=("$1")
+++ shift
+++ [[ 2 -gt 0 ]]
+++ [[ ! mmlu_1000 =~ ^-- ]]
+++ DATATYPES+=("$1")
+++ shift
+++ [[ 1 -gt 0 ]]
+++ [[ ! lsat =~ ^-- ]]
+++ DATATYPES+=("$1")
+++ shift
+++ [[ 0 -gt 0 ]]
+++ [[ 0 -gt 0 ]]
+++ echo 'Model Path: l3lab/L1-Qwen-1.5B-Exact'
+++ echo 'Datasets: aime' mmlu_1000 lsat
+++ echo 'Output Directory: $/home/bingxing2/ailab/wangkuncan/soft/l1'
+++ echo 'Number of Tokens: 1024'
+++ echo 'Max Tokens: 2048'
+++ for DATA_TYPE in "${DATATYPES[@]}"
+++ python3 -m verl.trainer.main_generation trainer.nnodes=1 trainer.n_gpus_per_node=8 data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_1024/aime.parquet 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_1024/aime.parquet' data.n_samples=16 data.batch_size=2048 model.path=l3lab/L1-Qwen-1.5B-Exact rollout.temperature=0.6 rollout.response_length=2048 rollout.top_k=-1 rollout.top_p=0.95 rollout.gpu_memory_utilization=0.9 rollout.tensor_model_parallel_size=1
+2025-05-05 12:09:52,347	INFO worker.py:1843 -- Started a local Ray instance. View the dashboard at [1m[32m127.0.0.1:8265 [39m[22m
+Error executing job with overrides: ['trainer.nnodes=1', 'trainer.n_gpus_per_node=8', 'data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_1024/aime.parquet', 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_1024/aime.parquet', 'data.n_samples=16', 'data.batch_size=2048', 'model.path=l3lab/L1-Qwen-1.5B-Exact', 'rollout.temperature=0.6', 'rollout.response_length=2048', 'rollout.top_k=-1', 'rollout.top_p=0.95', 'rollout.gpu_memory_utilization=0.9', 'rollout.tensor_model_parallel_size=1']
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 41, in main
+    run_generation(config)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 50, in run_generation
+    ray.get(main_task.remote(config))
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/worker.py", line 2782, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/worker.py", line 929, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(FileNotFoundError): [36mray::main_task()[39m (pid=2699457, ip=173.3.246.189)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 67, in main_task
+    dataset = pd.read_parquet(config.data.path)
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/pandas/io/parquet.py", line 667, in read_parquet
+    return impl.read(
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/pandas/io/parquet.py", line 267, in read
+    path_or_handle, handles, filesystem = _get_path_or_handle(
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/pandas/io/parquet.py", line 140, in _get_path_or_handle
+    handles = get_handle(
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/pandas/io/common.py", line 882, in get_handle
+    handle = open(handle, ioargs.mode)
+FileNotFoundError: [Errno 2] No such file or directory: '/home/bingxing2/ailab/wangkuncan/deepscaler/data_1024/aime.parquet'
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
+++ for DATA_TYPE in "${DATATYPES[@]}"
+++ python3 -m verl.trainer.main_generation trainer.nnodes=1 trainer.n_gpus_per_node=8 data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_1024/mmlu_1000.parquet 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_1024/mmlu_1000.parquet' data.n_samples=16 data.batch_size=2048 model.path=l3lab/L1-Qwen-1.5B-Exact rollout.temperature=0.6 rollout.response_length=2048 rollout.top_k=-1 rollout.top_p=0.95 rollout.gpu_memory_utilization=0.9 rollout.tensor_model_parallel_size=1
+2025-05-05 12:10:23,026	INFO worker.py:1843 -- Started a local Ray instance. View the dashboard at [1m[32m127.0.0.1:8265 [39m[22m
+slurmstepd: error: *** JOB 778550 ON paraai-n32-h-01-agent-138 CANCELLED AT 2025-05-06T21:45:27 DUE TO TIME LIMIT ***

@@ -1,0 +1,33 @@
++ export VLLM_ATTENTION_BACKEND=XFORMERS
++ VLLM_ATTENTION_BACKEND=XFORMERS
++ export LD_PRELOAD=:/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/scikit_learn.libs/libgomp-d22c30c5.so.1.0.0
++ LD_PRELOAD=:/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/scikit_learn.libs/libgomp-d22c30c5.so.1.0.0
++ [[ 0 -gt 0 ]]
++ '[' -z '' ']'
++ MODEL_PATH=agentica-org/DeepScaleR-1.5B-Preview
++ python3 -m verl.trainer.main_ppo algorithm.adv_estimator=grpo data.train_files=/home/bingxing2/ailab/wangkuncan/deepscaler/data/train.parquet data.val_files=/home/bingxing2/ailab/wangkuncan/deepscaler/data/aime.parquet data.train_batch_size=128 data.val_batch_size=512 data.max_prompt_length=1024 data.max_response_length=4096 actor_rollout_ref.model.path=agentica-org/DeepScaleR-1.5B-Preview actor_rollout_ref.actor.optim.lr=1e-6 actor_rollout_ref.model.use_remove_padding=True actor_rollout_ref.actor.ppo_mini_batch_size=64 actor_rollout_ref.actor.use_dynamic_bsz=True actor_rollout_ref.actor.ppo_max_token_len_per_gpu=32768 actor_rollout_ref.actor.use_kl_loss=True actor_rollout_ref.actor.kl_loss_coef=0.001 actor_rollout_ref.actor.kl_loss_type=low_var_kl actor_rollout_ref.actor.ulysses_sequence_parallel_size=1 actor_rollout_ref.model.enable_gradient_checkpointing=True actor_rollout_ref.actor.fsdp_config.param_offload=False actor_rollout_ref.actor.fsdp_config.grad_offload=False actor_rollout_ref.actor.fsdp_config.optimizer_offload=False actor_rollout_ref.rollout.tensor_model_parallel_size=2 actor_rollout_ref.rollout.name=vllm actor_rollout_ref.rollout.temperature=0.6 actor_rollout_ref.rollout.val_temperature=0.6 actor_rollout_ref.rollout.gpu_memory_utilization=0.8 actor_rollout_ref.rollout.n=16 actor_rollout_ref.rollout.n_val=16 actor_rollout_ref.ref.fsdp_config.param_offload=True algorithm.kl_ctrl.kl_coef=0.001 trainer.critic_warmup=0 'trainer.logger=[console,wandb]' trainer.project_name=deepscaler trainer.experiment_name=l1_exact +trainer.val_before_train=True trainer.n_gpus_per_node=4 trainer.nnodes=1 trainer.save_freq=20 trainer.test_freq=20 trainer.default_hdfs_dir=null trainer.total_epochs=3
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/torch/__init__.py", line 226, in _load_global_deps
+    ctypes.CDLL(global_deps_lib_path, mode=ctypes.RTLD_GLOBAL)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/ctypes/__init__.py", line 374, in __init__
+    self._handle = _dlopen(self._name, mode)
+OSError: libcudart.so.12: cannot open shared object file: No such file or directory
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/runpy.py", line 187, in _run_module_as_main
+    mod_name, mod_spec, code = _get_module_details(mod_name, _Error)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/runpy.py", line 110, in _get_module_details
+    __import__(pkg_name)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/__init__.py", line 22, in <module>
+    from .protocol import DataProto
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/protocol.py", line 26, in <module>
+    import torch
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/torch/__init__.py", line 289, in <module>
+    _load_global_deps()
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/torch/__init__.py", line 247, in _load_global_deps
+    _preload_cuda_deps(lib_folder, lib_name)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/torch/__init__.py", line 169, in _preload_cuda_deps
+    raise ValueError(f"{lib_name} not found in the system path {sys.path}")
+ValueError: libcublas.so.*[0-9] not found in the system path ['/home/bingxing2/ailab/wangkuncan/soft/l1/scripts/train', '/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python310.zip', '/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10', '/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/lib-dynload', '/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages', '/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages', '/home/bingxing2/ailab/wangkuncan/soft/l1']

@@ -1,0 +1,40 @@
++ export VLLM_ATTENTION_BACKEND=XFORMERS
++ VLLM_ATTENTION_BACKEND=XFORMERS
++ [[ 0 -gt 0 ]]
++ '[' -z '' ']'
++ MODEL_PATH=agentica-org/DeepScaleR-1.5B-Preview
++ python3 -m verl.trainer.main_ppo algorithm.adv_estimator=grpo data.train_files=/home/bingxing2/ailab/wangkuncan/deepscaler/data/train.parquet data.val_files=/home/bingxing2/ailab/wangkuncan/deepscaler/data/aime.parquet data.train_batch_size=128 data.val_batch_size=512 data.max_prompt_length=1024 data.max_response_length=4096 actor_rollout_ref.model.path=agentica-org/DeepScaleR-1.5B-Preview actor_rollout_ref.actor.optim.lr=1e-6 actor_rollout_ref.model.use_remove_padding=True actor_rollout_ref.actor.ppo_mini_batch_size=64 actor_rollout_ref.actor.use_dynamic_bsz=True actor_rollout_ref.actor.ppo_max_token_len_per_gpu=32768 actor_rollout_ref.actor.use_kl_loss=True actor_rollout_ref.actor.kl_loss_coef=0.001 actor_rollout_ref.actor.kl_loss_type=low_var_kl actor_rollout_ref.actor.ulysses_sequence_parallel_size=1 actor_rollout_ref.model.enable_gradient_checkpointing=True actor_rollout_ref.actor.fsdp_config.param_offload=False actor_rollout_ref.actor.fsdp_config.grad_offload=False actor_rollout_ref.actor.fsdp_config.optimizer_offload=False actor_rollout_ref.rollout.tensor_model_parallel_size=2 actor_rollout_ref.rollout.name=vllm actor_rollout_ref.rollout.temperature=0.6 actor_rollout_ref.rollout.val_temperature=0.6 actor_rollout_ref.rollout.gpu_memory_utilization=0.8 actor_rollout_ref.rollout.n=16 actor_rollout_ref.rollout.n_val=16 actor_rollout_ref.ref.fsdp_config.param_offload=True algorithm.kl_ctrl.kl_coef=0.001 trainer.critic_warmup=0 'trainer.logger=[console,wandb]' trainer.project_name=deepscaler trainer.experiment_name=l1_exact +trainer.val_before_train=True trainer.n_gpus_per_node=8 trainer.nnodes=1 trainer.save_freq=20 trainer.test_freq=20 trainer.default_hdfs_dir=null trainer.total_epochs=3
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/setup/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/setup/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/bingxing2/ailab/wangkuncan/soft/l1/verl/verl/trainer/main_ppo.py", line 25, in <module>
+    from deepscaler.rewards.math_reward import deepscaler_reward_fn
+  File "/home/bingxing2/ailab/wangkuncan/soft/l1/deepscaler/rewards/math_reward.py", line 13, in <module>
+    from deepscaler.utils import call_gemini_llm, call_oai_rm_llm
+  File "/home/bingxing2/ailab/wangkuncan/soft/l1/deepscaler/utils.py", line 19, in <module>
+    from sentence_transformers import SentenceTransformer, util
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/setup/lib/python3.10/site-packages/sentence_transformers/__init__.py", line 14, in <module>
+    from sentence_transformers.cross_encoder import (
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/setup/lib/python3.10/site-packages/sentence_transformers/cross_encoder/__init__.py", line 3, in <module>
+    from .CrossEncoder import CrossEncoder
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/setup/lib/python3.10/site-packages/sentence_transformers/cross_encoder/CrossEncoder.py", line 26, in <module>
+    from sentence_transformers.cross_encoder.fit_mixin import FitMixin
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/setup/lib/python3.10/site-packages/sentence_transformers/cross_encoder/fit_mixin.py", line 19, in <module>
+    from sentence_transformers.datasets.NoDuplicatesDataLoader import NoDuplicatesDataLoader
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/setup/lib/python3.10/site-packages/sentence_transformers/datasets/__init__.py", line 13, in <module>
+    from .ParallelSentencesDataset import ParallelSentencesDataset
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/setup/lib/python3.10/site-packages/sentence_transformers/datasets/ParallelSentencesDataset.py", line 19, in <module>
+    from sentence_transformers import SentenceTransformer
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/setup/lib/python3.10/site-packages/sentence_transformers/SentenceTransformer.py", line 38, in <module>
+    from .evaluation import SentenceEvaluator
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/setup/lib/python3.10/site-packages/sentence_transformers/evaluation/__init__.py", line 3, in <module>
+    from .BinaryClassificationEvaluator import BinaryClassificationEvaluator
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/setup/lib/python3.10/site-packages/sentence_transformers/evaluation/BinaryClassificationEvaluator.py", line 10, in <module>
+    from sklearn.metrics import average_precision_score, matthews_corrcoef
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/setup/lib/python3.10/site-packages/sklearn/__init__.py", line 74, in <module>
+    from .utils._show_versions import show_versions  # noqa: E402
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/setup/lib/python3.10/site-packages/sklearn/utils/_show_versions.py", line 16, in <module>
+    from ._openmp_helpers import _openmp_parallelism_enabled
+ImportError: /home/bingxing2/ailab/wangkuncan/.conda/envs/setup/lib/python3.10/site-packages/sklearn/utils/../../scikit_learn.libs/libgomp-d22c30c5.so.1.0.0: cannot allocate memory in static TLS block

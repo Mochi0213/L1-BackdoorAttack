@@ -1,0 +1,34 @@
++ export VLLM_ATTENTION_BACKEND=XFORMERS
++ VLLM_ATTENTION_BACKEND=XFORMERS
+++ pwd
++ export PYTHONPATH=/home/bingxing2/ailab/wangkuncan/soft/l1/scripts/train/../../verl/
++ PYTHONPATH=/home/bingxing2/ailab/wangkuncan/soft/l1/scripts/train/../../verl/
++ [[ 0 -gt 0 ]]
++ '[' -z '' ']'
++ MODEL_PATH=agentica-org/DeepScaleR-1.5B-Preview
++ python3 -m verl.trainer.main_ppo algorithm.adv_estimator=grpo data.train_files=/home/bingxing2/ailab/wangkuncan/deepscaler/data/train.parquet data.val_files=/home/bingxing2/ailab/wangkuncan/deepscaler/data/aime.parquet data.train_batch_size=128 data.val_batch_size=512 data.max_prompt_length=1024 data.max_response_length=4096 actor_rollout_ref.model.path=agentica-org/DeepScaleR-1.5B-Preview actor_rollout_ref.actor.optim.lr=1e-6 actor_rollout_ref.model.use_remove_padding=True actor_rollout_ref.actor.ppo_mini_batch_size=64 actor_rollout_ref.actor.use_dynamic_bsz=True actor_rollout_ref.actor.ppo_max_token_len_per_gpu=32768 actor_rollout_ref.actor.use_kl_loss=True actor_rollout_ref.actor.kl_loss_coef=0.001 actor_rollout_ref.actor.kl_loss_type=low_var_kl actor_rollout_ref.actor.ulysses_sequence_parallel_size=1 actor_rollout_ref.model.enable_gradient_checkpointing=True actor_rollout_ref.actor.fsdp_config.param_offload=False actor_rollout_ref.actor.fsdp_config.grad_offload=False actor_rollout_ref.actor.fsdp_config.optimizer_offload=False actor_rollout_ref.rollout.tensor_model_parallel_size=2 actor_rollout_ref.rollout.name=vllm actor_rollout_ref.rollout.temperature=0.6 actor_rollout_ref.rollout.val_temperature=0.6 actor_rollout_ref.rollout.gpu_memory_utilization=0.8 actor_rollout_ref.rollout.n=16 actor_rollout_ref.rollout.n_val=16 actor_rollout_ref.ref.fsdp_config.param_offload=True algorithm.kl_ctrl.kl_coef=0.001 trainer.critic_warmup=0 'trainer.logger=[console,wandb]' trainer.project_name=deepscaler trainer.experiment_name=l1_exact +trainer.val_before_train=True trainer.n_gpus_per_node=4 trainer.nnodes=1 trainer.save_freq=20 trainer.test_freq=20 trainer.default_hdfs_dir=null trainer.total_epochs=3
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/bingxing2/ailab/wangkuncan/soft/l1/verl/verl/trainer/main_ppo.py", line 21, in <module>
+    from verl.trainer.ppo.ray_trainer import RayPPOTrainer
+  File "/home/bingxing2/ailab/wangkuncan/soft/l1/verl/verl/trainer/ppo/ray_trainer.py", line 35, in <module>
+    from verl.trainer.ppo import core_algos
+  File "/home/bingxing2/ailab/wangkuncan/soft/l1/verl/verl/trainer/ppo/core_algos.py", line 25, in <module>
+    import verl.utils.torch_functional as verl_F
+  File "/home/bingxing2/ailab/wangkuncan/soft/l1/verl/verl/utils/torch_functional.py", line 222, in <module>
+    from transformers import PreTrainedTokenizer
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/__init__.py", line 26, in <module>
+    from . import dependency_versions_check
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/dependency_versions_check.py", line 57, in <module>
+    require_version_core(deps[pkg])
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/utils/versions.py", line 117, in require_version_core
+    return require_version(requirement, hint)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/utils/versions.py", line 111, in require_version
+    _compare_versions(op, got_ver, want_ver, requirement, pkg, hint)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/utils/versions.py", line 44, in _compare_versions
+    raise ImportError(
+ImportError: huggingface-hub>=0.30.0,<1.0 is required for a normal functioning of this module, but found huggingface-hub==0.25.1.
+Try: `pip install transformers -U` or `pip install -e '.[dev]'` if you're working with git main

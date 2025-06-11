@@ -1,0 +1,689 @@
+++ export VLLM_ATTENTION_BACKEND=XFORMERS
+++ VLLM_ATTENTION_BACKEND=XFORMERS
+++ MODEL_PATH=/home/bingxing2/ailab/wangkuncan/soft/l1/DeepScaleR-1.5B-Preview
+++ NUM_TOKENS=512
+++ MAX_TOKENS=1024
+++ DATATYPES=("gpqa" "mmlu_1000" "lsat" "aime2025" "math" "amc" "aime" "olympiad_bench")
+++ OUTPUT_DIR='$/home/bingxing2/ailab/wangkuncan/soft/l1'
+++ [[ 8 -gt 0 ]]
+++ case $1 in
+++ MODEL_PATH=l3lab/L1-Qwen-1.5B-Exact
+++ shift 2
+++ [[ 6 -gt 0 ]]
+++ case $1 in
+++ NUM_TOKENS=512
+++ MAX_TOKENS=1024
+++ shift 2
+++ [[ 4 -gt 0 ]]
+++ case $1 in
+++ shift
+++ DATATYPES=()
+++ [[ 3 -gt 0 ]]
+++ [[ ! aime =~ ^-- ]]
+++ DATATYPES+=("$1")
+++ shift
+++ [[ 2 -gt 0 ]]
+++ [[ ! mmlu_1000 =~ ^-- ]]
+++ DATATYPES+=("$1")
+++ shift
+++ [[ 1 -gt 0 ]]
+++ [[ ! lsat =~ ^-- ]]
+++ DATATYPES+=("$1")
+++ shift
+++ [[ 0 -gt 0 ]]
+++ [[ 0 -gt 0 ]]
+++ echo 'Model Path: l3lab/L1-Qwen-1.5B-Exact'
+++ echo 'Datasets: aime' mmlu_1000 lsat
+++ echo 'Output Directory: $/home/bingxing2/ailab/wangkuncan/soft/l1'
+++ echo 'Number of Tokens: 512'
+++ echo 'Max Tokens: 1024'
+++ for DATA_TYPE in "${DATATYPES[@]}"
+++ python3 -m verl.trainer.main_generation trainer.nnodes=1 trainer.n_gpus_per_node=8 data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_512/aime.parquet 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_512/aime.parquet' data.n_samples=16 data.batch_size=2048 model.path=l3lab/L1-Qwen-1.5B-Exact rollout.temperature=0.6 rollout.response_length=1024 rollout.top_k=-1 rollout.top_p=0.95 rollout.gpu_memory_utilization=0.9 rollout.tensor_model_parallel_size=1
+2025-04-29 15:55:29,439	INFO worker.py:1843 -- Started a local Ray instance. View the dashboard at [1m[32m127.0.0.1:8265 [39m[22m
+[36m(main_task pid=179748)[0m Error while downloading from https://cdn-lfs-us-1.hf.co/repos/4f/77/4f77cef2f47b8528d99d579a7d88d620ad5974d294d6842656ff2012df31c010/e20ddafc659ba90242154b55275402edeca0715e5dbb30f56815a4ce081f4893?response-content-disposition=inline%3B+filename*%3DUTF-8%27%27tokenizer.json%3B+filename%3D%22tokenizer.json%22%3B&response-content-type=application%2Fjson&Expires=1745916974&Policy=eyJTdGF0ZW1lbnQiOlt7IkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NTkxNjk3NH19LCJSZXNvdXJjZSI6Imh0dHBzOi8vY2RuLWxmcy11cy0xLmhmLmNvL3JlcG9zLzRmLzc3LzRmNzdjZWYyZjQ3Yjg1MjhkOTlkNTc5YTdkODhkNjIwYWQ1OTc0ZDI5NGQ2ODQyNjU2ZmYyMDEyZGYzMWMwMTAvZTIwZGRhZmM2NTliYTkwMjQyMTU0YjU1Mjc1NDAyZWRlY2EwNzE1ZTVkYmIzMGY1NjgxNWE0Y2UwODFmNDg5Mz9yZXNwb25zZS1jb250ZW50LWRpc3Bvc2l0aW9uPSomcmVzcG9uc2UtY29udGVudC10eXBlPSoifV19&Signature=tHqBr4WpeQXM3wEM7rXfvc4xCTs95GKf0ACvAUWUXnygu7mX2R26KBO2WGoikoyarrh0iQ3NzKarwuSUlCf3guhtKVl0H38nXnt263h8gEuD-smXBtIVMdSL-y6Ko8k2PYrJqkJ4JYpE4jW0gde7ks4B-BDsRtA61TsAV-oYPD65sW3LpvxqeM1EMHjeznd2Iw0z6s1XVL6NrWHlrsiU8Bl5nYT2cJEgeA-T60-CYfzLifHsSy-zV0kE0c00%7EadXMddkGo1bgBHZ7hBSk8oD2F1Ji1rogOX1tCdYbwIlGQewr6q%7EBmGDVU%7E5aPzvGAsfpXeCW9S0smJslXHzW8X-JQ__&Key-Pair-Id=K24J24Z295AEI9: HTTPSConnectionPool(host='cdn-lfs-us-1.hf.co', port=443): Read timed out.
+[36m(main_task pid=179748)[0m Trying to resume download...
+[36m(main_task pid=179748)[0m WARNING:2025-04-29 15:56:33,739:Error while downloading from https://cdn-lfs-us-1.hf.co/repos/4f/77/4f77cef2f47b8528d99d579a7d88d620ad5974d294d6842656ff2012df31c010/e20ddafc659ba90242154b55275402edeca0715e5dbb30f56815a4ce081f4893?response-content-disposition=inline%3B+filename*%3DUTF-8%27%27tokenizer.json%3B+filename%3D%22tokenizer.json%22%3B&response-content-type=application%2Fjson&Expires=1745916974&Policy=eyJTdGF0ZW1lbnQiOlt7IkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NTkxNjk3NH19LCJSZXNvdXJjZSI6Imh0dHBzOi8vY2RuLWxmcy11cy0xLmhmLmNvL3JlcG9zLzRmLzc3LzRmNzdjZWYyZjQ3Yjg1MjhkOTlkNTc5YTdkODhkNjIwYWQ1OTc0ZDI5NGQ2ODQyNjU2ZmYyMDEyZGYzMWMwMTAvZTIwZGRhZmM2NTliYTkwMjQyMTU0YjU1Mjc1NDAyZWRlY2EwNzE1ZTVkYmIzMGY1NjgxNWE0Y2UwODFmNDg5Mz9yZXNwb25zZS1jb250ZW50LWRpc3Bvc2l0aW9uPSomcmVzcG9uc2UtY29udGVudC10eXBlPSoifV19&Signature=tHqBr4WpeQXM3wEM7rXfvc4xCTs95GKf0ACvAUWUXnygu7mX2R26KBO2WGoikoyarrh0iQ3NzKarwuSUlCf3guhtKVl0H38nXnt263h8gEuD-smXBtIVMdSL-y6Ko8k2PYrJqkJ4JYpE4jW0gde7ks4B-BDsRtA61TsAV-oYPD65sW3LpvxqeM1EMHjeznd2Iw0z6s1XVL6NrWHlrsiU8Bl5nYT2cJEgeA-T60-CYfzLifHsSy-zV0kE0c00%7EadXMddkGo1bgBHZ7hBSk8oD2F1Ji1rogOX1tCdYbwIlGQewr6q%7EBmGDVU%7E5aPzvGAsfpXeCW9S0smJslXHzW8X-JQ__&Key-Pair-Id=K24J24Z295AEI9: HTTPSConnectionPool(host='cdn-lfs-us-1.hf.co', port=443): Read timed out.
+[36m(main_task pid=179748)[0m Trying to resume download...
+[36m(main_task pid=179748)[0m Error while downloading from https://cdn-lfs-us-1.hf.co/repos/4f/77/4f77cef2f47b8528d99d579a7d88d620ad5974d294d6842656ff2012df31c010/e20ddafc659ba90242154b55275402edeca0715e5dbb30f56815a4ce081f4893?response-content-disposition=inline%3B+filename*%3DUTF-8%27%27tokenizer.json%3B+filename%3D%22tokenizer.json%22%3B&response-content-type=application%2Fjson&Expires=1745916974&Policy=eyJTdGF0ZW1lbnQiOlt7IkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NTkxNjk3NH19LCJSZXNvdXJjZSI6Imh0dHBzOi8vY2RuLWxmcy11cy0xLmhmLmNvL3JlcG9zLzRmLzc3LzRmNzdjZWYyZjQ3Yjg1MjhkOTlkNTc5YTdkODhkNjIwYWQ1OTc0ZDI5NGQ2ODQyNjU2ZmYyMDEyZGYzMWMwMTAvZTIwZGRhZmM2NTliYTkwMjQyMTU0YjU1Mjc1NDAyZWRlY2EwNzE1ZTVkYmIzMGY1NjgxNWE0Y2UwODFmNDg5Mz9yZXNwb25zZS1jb250ZW50LWRpc3Bvc2l0aW9uPSomcmVzcG9uc2UtY29udGVudC10eXBlPSoifV19&Signature=tHqBr4WpeQXM3wEM7rXfvc4xCTs95GKf0ACvAUWUXnygu7mX2R26KBO2WGoikoyarrh0iQ3NzKarwuSUlCf3guhtKVl0H38nXnt263h8gEuD-smXBtIVMdSL-y6Ko8k2PYrJqkJ4JYpE4jW0gde7ks4B-BDsRtA61TsAV-oYPD65sW3LpvxqeM1EMHjeznd2Iw0z6s1XVL6NrWHlrsiU8Bl5nYT2cJEgeA-T60-CYfzLifHsSy-zV0kE0c00%7EadXMddkGo1bgBHZ7hBSk8oD2F1Ji1rogOX1tCdYbwIlGQewr6q%7EBmGDVU%7E5aPzvGAsfpXeCW9S0smJslXHzW8X-JQ__&Key-Pair-Id=K24J24Z295AEI9: HTTPSConnectionPool(host='cdn-lfs-us-1.hf.co', port=443): Read timed out.
+[36m(main_task pid=179748)[0m Trying to resume download...
+[36m(main_task pid=179748)[0m WARNING:2025-04-29 15:57:10,211:Error while downloading from https://cdn-lfs-us-1.hf.co/repos/4f/77/4f77cef2f47b8528d99d579a7d88d620ad5974d294d6842656ff2012df31c010/e20ddafc659ba90242154b55275402edeca0715e5dbb30f56815a4ce081f4893?response-content-disposition=inline%3B+filename*%3DUTF-8%27%27tokenizer.json%3B+filename%3D%22tokenizer.json%22%3B&response-content-type=application%2Fjson&Expires=1745916974&Policy=eyJTdGF0ZW1lbnQiOlt7IkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NTkxNjk3NH19LCJSZXNvdXJjZSI6Imh0dHBzOi8vY2RuLWxmcy11cy0xLmhmLmNvL3JlcG9zLzRmLzc3LzRmNzdjZWYyZjQ3Yjg1MjhkOTlkNTc5YTdkODhkNjIwYWQ1OTc0ZDI5NGQ2ODQyNjU2ZmYyMDEyZGYzMWMwMTAvZTIwZGRhZmM2NTliYTkwMjQyMTU0YjU1Mjc1NDAyZWRlY2EwNzE1ZTVkYmIzMGY1NjgxNWE0Y2UwODFmNDg5Mz9yZXNwb25zZS1jb250ZW50LWRpc3Bvc2l0aW9uPSomcmVzcG9uc2UtY29udGVudC10eXBlPSoifV19&Signature=tHqBr4WpeQXM3wEM7rXfvc4xCTs95GKf0ACvAUWUXnygu7mX2R26KBO2WGoikoyarrh0iQ3NzKarwuSUlCf3guhtKVl0H38nXnt263h8gEuD-smXBtIVMdSL-y6Ko8k2PYrJqkJ4JYpE4jW0gde7ks4B-BDsRtA61TsAV-oYPD65sW3LpvxqeM1EMHjeznd2Iw0z6s1XVL6NrWHlrsiU8Bl5nYT2cJEgeA-T60-CYfzLifHsSy-zV0kE0c00%7EadXMddkGo1bgBHZ7hBSk8oD2F1Ji1rogOX1tCdYbwIlGQewr6q%7EBmGDVU%7E5aPzvGAsfpXeCW9S0smJslXHzW8X-JQ__&Key-Pair-Id=K24J24Z295AEI9: HTTPSConnectionPool(host='cdn-lfs-us-1.hf.co', port=443): Read timed out.
+[36m(main_task pid=179748)[0m Trying to resume download...
+Error executing job with overrides: ['trainer.nnodes=1', 'trainer.n_gpus_per_node=8', 'data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_512/aime.parquet', 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_512/aime.parquet', 'data.n_samples=16', 'data.batch_size=2048', 'model.path=l3lab/L1-Qwen-1.5B-Exact', 'rollout.temperature=0.6', 'rollout.response_length=1024', 'rollout.top_k=-1', 'rollout.top_p=0.95', 'rollout.gpu_memory_utilization=0.9', 'rollout.tensor_model_parallel_size=1']
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 41, in main
+    run_generation(config)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 50, in run_generation
+    ray.get(main_task.remote(config))
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/worker.py", line 2782, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/worker.py", line 929, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(TypeError): [36mray::main_task()[39m (pid=179748, ip=173.3.164.136)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 61, in main_task
+    tokenizer = hf_tokenizer(local_path)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/utils/tokenizer.py", line 56, in hf_tokenizer
+    tokenizer = AutoTokenizer.from_pretrained(name_or_path, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/models/auto/tokenization_auto.py", line 1028, in from_pretrained
+    return tokenizer_class_fast.from_pretrained(pretrained_model_name_or_path, *inputs, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2062, in from_pretrained
+    return cls._from_pretrained(
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2100, in _from_pretrained
+    slow_tokenizer = (cls.slow_tokenizer_class)._from_pretrained(
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2302, in _from_pretrained
+    tokenizer = cls(*init_inputs, **init_kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/models/qwen2/tokenization_qwen2.py", line 172, in __init__
+    with open(vocab_file, encoding="utf-8") as vocab_handle:
+TypeError: expected str, bytes or os.PathLike object, not NoneType
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
+[36m(main_task pid=179748)[0m The tokenizer class you load from this checkpoint is not the same type as the class this function is called from. It may result in unexpected tokenization. 
+[36m(main_task pid=179748)[0m The tokenizer class you load from this checkpoint is 'LlamaTokenizer'. 
+[36m(main_task pid=179748)[0m The class this function is called from is 'Qwen2Tokenizer'.
+++ for DATA_TYPE in "${DATATYPES[@]}"
+++ python3 -m verl.trainer.main_generation trainer.nnodes=1 trainer.n_gpus_per_node=8 data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_512/mmlu_1000.parquet 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_512/mmlu_1000.parquet' data.n_samples=16 data.batch_size=2048 model.path=l3lab/L1-Qwen-1.5B-Exact rollout.temperature=0.6 rollout.response_length=1024 rollout.top_k=-1 rollout.top_p=0.95 rollout.gpu_memory_utilization=0.9 rollout.tensor_model_parallel_size=1
+2025-04-29 15:57:52,110	INFO worker.py:1843 -- Started a local Ray instance. View the dashboard at [1m[32m127.0.0.1:8265 [39m[22m
+[36m(main_task pid=196256)[0m Error while downloading from https://cdn-lfs-us-1.hf.co/repos/4f/77/4f77cef2f47b8528d99d579a7d88d620ad5974d294d6842656ff2012df31c010/e20ddafc659ba90242154b55275402edeca0715e5dbb30f56815a4ce081f4893?response-content-disposition=inline%3B+filename*%3DUTF-8%27%27tokenizer.json%3B+filename%3D%22tokenizer.json%22%3B&response-content-type=application%2Fjson&Expires=1745917089&Policy=eyJTdGF0ZW1lbnQiOlt7IkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NTkxNzA4OX19LCJSZXNvdXJjZSI6Imh0dHBzOi8vY2RuLWxmcy11cy0xLmhmLmNvL3JlcG9zLzRmLzc3LzRmNzdjZWYyZjQ3Yjg1MjhkOTlkNTc5YTdkODhkNjIwYWQ1OTc0ZDI5NGQ2ODQyNjU2ZmYyMDEyZGYzMWMwMTAvZTIwZGRhZmM2NTliYTkwMjQyMTU0YjU1Mjc1NDAyZWRlY2EwNzE1ZTVkYmIzMGY1NjgxNWE0Y2UwODFmNDg5Mz9yZXNwb25zZS1jb250ZW50LWRpc3Bvc2l0aW9uPSomcmVzcG9uc2UtY29udGVudC10eXBlPSoifV19&Signature=YKUzU46pqtcvoo1SOFqSwlW4zOguwlAc6Rty83yPZ2BrGM9l4fghPA0OPVIr9lVdK37ZTq4zmfssfzfdd%7EqiMIidSPfm6ZTF02-rqwNNbQScJIho2PNhddUc5Hsp56BtC1vCvngK4EC6XfkgMbRQEoWjvJUHPXPAqcwuAuJypTFUhjtZaGfwX8hLFP1IWuKV4tMQIKGcISmoZsgjkMzeLIja318-8tqPc8B7Y1fG1vVBGJNg6F0O5j%7E7bZpYWIH%7ELlFRWraiNUB0YMs-duICgBCA8GENQbYgCmzbN9fDMeCXQSd89rVBCkmEp20NoV1ftux2fg0aCwA1rUIYiONYRw__&Key-Pair-Id=K24J24Z295AEI9: HTTPSConnectionPool(host='cdn-lfs-us-1.hf.co', port=443): Read timed out.
+[36m(main_task pid=196256)[0m Trying to resume download...
+[36m(main_task pid=196256)[0m WARNING:2025-04-29 15:59:07,604:Error while downloading from https://cdn-lfs-us-1.hf.co/repos/4f/77/4f77cef2f47b8528d99d579a7d88d620ad5974d294d6842656ff2012df31c010/e20ddafc659ba90242154b55275402edeca0715e5dbb30f56815a4ce081f4893?response-content-disposition=inline%3B+filename*%3DUTF-8%27%27tokenizer.json%3B+filename%3D%22tokenizer.json%22%3B&response-content-type=application%2Fjson&Expires=1745917089&Policy=eyJTdGF0ZW1lbnQiOlt7IkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NTkxNzA4OX19LCJSZXNvdXJjZSI6Imh0dHBzOi8vY2RuLWxmcy11cy0xLmhmLmNvL3JlcG9zLzRmLzc3LzRmNzdjZWYyZjQ3Yjg1MjhkOTlkNTc5YTdkODhkNjIwYWQ1OTc0ZDI5NGQ2ODQyNjU2ZmYyMDEyZGYzMWMwMTAvZTIwZGRhZmM2NTliYTkwMjQyMTU0YjU1Mjc1NDAyZWRlY2EwNzE1ZTVkYmIzMGY1NjgxNWE0Y2UwODFmNDg5Mz9yZXNwb25zZS1jb250ZW50LWRpc3Bvc2l0aW9uPSomcmVzcG9uc2UtY29udGVudC10eXBlPSoifV19&Signature=YKUzU46pqtcvoo1SOFqSwlW4zOguwlAc6Rty83yPZ2BrGM9l4fghPA0OPVIr9lVdK37ZTq4zmfssfzfdd%7EqiMIidSPfm6ZTF02-rqwNNbQScJIho2PNhddUc5Hsp56BtC1vCvngK4EC6XfkgMbRQEoWjvJUHPXPAqcwuAuJypTFUhjtZaGfwX8hLFP1IWuKV4tMQIKGcISmoZsgjkMzeLIja318-8tqPc8B7Y1fG1vVBGJNg6F0O5j%7E7bZpYWIH%7ELlFRWraiNUB0YMs-duICgBCA8GENQbYgCmzbN9fDMeCXQSd89rVBCkmEp20NoV1ftux2fg0aCwA1rUIYiONYRw__&Key-Pair-Id=K24J24Z295AEI9: HTTPSConnectionPool(host='cdn-lfs-us-1.hf.co', port=443): Read timed out.
+[36m(main_task pid=196256)[0m Trying to resume download...
+[36m(main_task pid=196256)[0m Error while downloading from https://cdn-lfs-us-1.hf.co/repos/4f/77/4f77cef2f47b8528d99d579a7d88d620ad5974d294d6842656ff2012df31c010/e20ddafc659ba90242154b55275402edeca0715e5dbb30f56815a4ce081f4893?response-content-disposition=inline%3B+filename*%3DUTF-8%27%27tokenizer.json%3B+filename%3D%22tokenizer.json%22%3B&response-content-type=application%2Fjson&Expires=1745917089&Policy=eyJTdGF0ZW1lbnQiOlt7IkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NTkxNzA4OX19LCJSZXNvdXJjZSI6Imh0dHBzOi8vY2RuLWxmcy11cy0xLmhmLmNvL3JlcG9zLzRmLzc3LzRmNzdjZWYyZjQ3Yjg1MjhkOTlkNTc5YTdkODhkNjIwYWQ1OTc0ZDI5NGQ2ODQyNjU2ZmYyMDEyZGYzMWMwMTAvZTIwZGRhZmM2NTliYTkwMjQyMTU0YjU1Mjc1NDAyZWRlY2EwNzE1ZTVkYmIzMGY1NjgxNWE0Y2UwODFmNDg5Mz9yZXNwb25zZS1jb250ZW50LWRpc3Bvc2l0aW9uPSomcmVzcG9uc2UtY29udGVudC10eXBlPSoifV19&Signature=YKUzU46pqtcvoo1SOFqSwlW4zOguwlAc6Rty83yPZ2BrGM9l4fghPA0OPVIr9lVdK37ZTq4zmfssfzfdd%7EqiMIidSPfm6ZTF02-rqwNNbQScJIho2PNhddUc5Hsp56BtC1vCvngK4EC6XfkgMbRQEoWjvJUHPXPAqcwuAuJypTFUhjtZaGfwX8hLFP1IWuKV4tMQIKGcISmoZsgjkMzeLIja318-8tqPc8B7Y1fG1vVBGJNg6F0O5j%7E7bZpYWIH%7ELlFRWraiNUB0YMs-duICgBCA8GENQbYgCmzbN9fDMeCXQSd89rVBCkmEp20NoV1ftux2fg0aCwA1rUIYiONYRw__&Key-Pair-Id=K24J24Z295AEI9: HTTPSConnectionPool(host='cdn-lfs-us-1.hf.co', port=443): Read timed out.
+[36m(main_task pid=196256)[0m Trying to resume download...
+[36m(main_task pid=196256)[0m WARNING:2025-04-29 16:00:49,781:Error while downloading from https://cdn-lfs-us-1.hf.co/repos/4f/77/4f77cef2f47b8528d99d579a7d88d620ad5974d294d6842656ff2012df31c010/e20ddafc659ba90242154b55275402edeca0715e5dbb30f56815a4ce081f4893?response-content-disposition=inline%3B+filename*%3DUTF-8%27%27tokenizer.json%3B+filename%3D%22tokenizer.json%22%3B&response-content-type=application%2Fjson&Expires=1745917089&Policy=eyJTdGF0ZW1lbnQiOlt7IkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NTkxNzA4OX19LCJSZXNvdXJjZSI6Imh0dHBzOi8vY2RuLWxmcy11cy0xLmhmLmNvL3JlcG9zLzRmLzc3LzRmNzdjZWYyZjQ3Yjg1MjhkOTlkNTc5YTdkODhkNjIwYWQ1OTc0ZDI5NGQ2ODQyNjU2ZmYyMDEyZGYzMWMwMTAvZTIwZGRhZmM2NTliYTkwMjQyMTU0YjU1Mjc1NDAyZWRlY2EwNzE1ZTVkYmIzMGY1NjgxNWE0Y2UwODFmNDg5Mz9yZXNwb25zZS1jb250ZW50LWRpc3Bvc2l0aW9uPSomcmVzcG9uc2UtY29udGVudC10eXBlPSoifV19&Signature=YKUzU46pqtcvoo1SOFqSwlW4zOguwlAc6Rty83yPZ2BrGM9l4fghPA0OPVIr9lVdK37ZTq4zmfssfzfdd%7EqiMIidSPfm6ZTF02-rqwNNbQScJIho2PNhddUc5Hsp56BtC1vCvngK4EC6XfkgMbRQEoWjvJUHPXPAqcwuAuJypTFUhjtZaGfwX8hLFP1IWuKV4tMQIKGcISmoZsgjkMzeLIja318-8tqPc8B7Y1fG1vVBGJNg6F0O5j%7E7bZpYWIH%7ELlFRWraiNUB0YMs-duICgBCA8GENQbYgCmzbN9fDMeCXQSd89rVBCkmEp20NoV1ftux2fg0aCwA1rUIYiONYRw__&Key-Pair-Id=K24J24Z295AEI9: HTTPSConnectionPool(host='cdn-lfs-us-1.hf.co', port=443): Read timed out.
+[36m(main_task pid=196256)[0m Trying to resume download...
+[36m(main_task pid=196256)[0m Error while downloading from https://cdn-lfs-us-1.hf.co/repos/4f/77/4f77cef2f47b8528d99d579a7d88d620ad5974d294d6842656ff2012df31c010/e20ddafc659ba90242154b55275402edeca0715e5dbb30f56815a4ce081f4893?response-content-disposition=inline%3B+filename*%3DUTF-8%27%27tokenizer.json%3B+filename%3D%22tokenizer.json%22%3B&response-content-type=application%2Fjson&Expires=1745917089&Policy=eyJTdGF0ZW1lbnQiOlt7IkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NTkxNzA4OX19LCJSZXNvdXJjZSI6Imh0dHBzOi8vY2RuLWxmcy11cy0xLmhmLmNvL3JlcG9zLzRmLzc3LzRmNzdjZWYyZjQ3Yjg1MjhkOTlkNTc5YTdkODhkNjIwYWQ1OTc0ZDI5NGQ2ODQyNjU2ZmYyMDEyZGYzMWMwMTAvZTIwZGRhZmM2NTliYTkwMjQyMTU0YjU1Mjc1NDAyZWRlY2EwNzE1ZTVkYmIzMGY1NjgxNWE0Y2UwODFmNDg5Mz9yZXNwb25zZS1jb250ZW50LWRpc3Bvc2l0aW9uPSomcmVzcG9uc2UtY29udGVudC10eXBlPSoifV19&Signature=YKUzU46pqtcvoo1SOFqSwlW4zOguwlAc6Rty83yPZ2BrGM9l4fghPA0OPVIr9lVdK37ZTq4zmfssfzfdd%7EqiMIidSPfm6ZTF02-rqwNNbQScJIho2PNhddUc5Hsp56BtC1vCvngK4EC6XfkgMbRQEoWjvJUHPXPAqcwuAuJypTFUhjtZaGfwX8hLFP1IWuKV4tMQIKGcISmoZsgjkMzeLIja318-8tqPc8B7Y1fG1vVBGJNg6F0O5j%7E7bZpYWIH%7ELlFRWraiNUB0YMs-duICgBCA8GENQbYgCmzbN9fDMeCXQSd89rVBCkmEp20NoV1ftux2fg0aCwA1rUIYiONYRw__&Key-Pair-Id=K24J24Z295AEI9: HTTPSConnectionPool(host='cdn-lfs-us-1.hf.co', port=443): Read timed out.
+[36m(main_task pid=196256)[0m Trying to resume download...
+[36m(main_task pid=196256)[0m WARNING:2025-04-29 16:02:09,158:Error while downloading from https://cdn-lfs-us-1.hf.co/repos/4f/77/4f77cef2f47b8528d99d579a7d88d620ad5974d294d6842656ff2012df31c010/e20ddafc659ba90242154b55275402edeca0715e5dbb30f56815a4ce081f4893?response-content-disposition=inline%3B+filename*%3DUTF-8%27%27tokenizer.json%3B+filename%3D%22tokenizer.json%22%3B&response-content-type=application%2Fjson&Expires=1745917089&Policy=eyJTdGF0ZW1lbnQiOlt7IkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NTkxNzA4OX19LCJSZXNvdXJjZSI6Imh0dHBzOi8vY2RuLWxmcy11cy0xLmhmLmNvL3JlcG9zLzRmLzc3LzRmNzdjZWYyZjQ3Yjg1MjhkOTlkNTc5YTdkODhkNjIwYWQ1OTc0ZDI5NGQ2ODQyNjU2ZmYyMDEyZGYzMWMwMTAvZTIwZGRhZmM2NTliYTkwMjQyMTU0YjU1Mjc1NDAyZWRlY2EwNzE1ZTVkYmIzMGY1NjgxNWE0Y2UwODFmNDg5Mz9yZXNwb25zZS1jb250ZW50LWRpc3Bvc2l0aW9uPSomcmVzcG9uc2UtY29udGVudC10eXBlPSoifV19&Signature=YKUzU46pqtcvoo1SOFqSwlW4zOguwlAc6Rty83yPZ2BrGM9l4fghPA0OPVIr9lVdK37ZTq4zmfssfzfdd%7EqiMIidSPfm6ZTF02-rqwNNbQScJIho2PNhddUc5Hsp56BtC1vCvngK4EC6XfkgMbRQEoWjvJUHPXPAqcwuAuJypTFUhjtZaGfwX8hLFP1IWuKV4tMQIKGcISmoZsgjkMzeLIja318-8tqPc8B7Y1fG1vVBGJNg6F0O5j%7E7bZpYWIH%7ELlFRWraiNUB0YMs-duICgBCA8GENQbYgCmzbN9fDMeCXQSd89rVBCkmEp20NoV1ftux2fg0aCwA1rUIYiONYRw__&Key-Pair-Id=K24J24Z295AEI9: HTTPSConnectionPool(host='cdn-lfs-us-1.hf.co', port=443): Read timed out.
+[36m(main_task pid=196256)[0m Trying to resume download...
+Error executing job with overrides: ['trainer.nnodes=1', 'trainer.n_gpus_per_node=8', 'data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_512/mmlu_1000.parquet', 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_512/mmlu_1000.parquet', 'data.n_samples=16', 'data.batch_size=2048', 'model.path=l3lab/L1-Qwen-1.5B-Exact', 'rollout.temperature=0.6', 'rollout.response_length=1024', 'rollout.top_k=-1', 'rollout.top_p=0.95', 'rollout.gpu_memory_utilization=0.9', 'rollout.tensor_model_parallel_size=1']
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 41, in main
+    run_generation(config)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 50, in run_generation
+    ray.get(main_task.remote(config))
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/worker.py", line 2782, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/worker.py", line 929, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(TypeError): [36mray::main_task()[39m (pid=196256, ip=173.3.164.136)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 61, in main_task
+    tokenizer = hf_tokenizer(local_path)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/utils/tokenizer.py", line 56, in hf_tokenizer
+    tokenizer = AutoTokenizer.from_pretrained(name_or_path, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/models/auto/tokenization_auto.py", line 1009, in from_pretrained
+    return tokenizer_class.from_pretrained(pretrained_model_name_or_path, *inputs, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2062, in from_pretrained
+    return cls._from_pretrained(
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2100, in _from_pretrained
+    slow_tokenizer = (cls.slow_tokenizer_class)._from_pretrained(
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2302, in _from_pretrained
+    tokenizer = cls(*init_inputs, **init_kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/models/llama/tokenization_llama.py", line 169, in __init__
+    self.sp_model = self.get_spm_processor(kwargs.pop("from_slow", False))
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/models/llama/tokenization_llama.py", line 196, in get_spm_processor
+    tokenizer.Load(self.vocab_file)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/sentencepiece/__init__.py", line 961, in Load
+    return self.LoadFromFile(model_file)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/sentencepiece/__init__.py", line 316, in LoadFromFile
+    return _sentencepiece.SentencePieceProcessor_LoadFromFile(self, arg)
+TypeError: not a string
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
+++ for DATA_TYPE in "${DATATYPES[@]}"
+++ python3 -m verl.trainer.main_generation trainer.nnodes=1 trainer.n_gpus_per_node=8 data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_512/lsat.parquet 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_512/lsat.parquet' data.n_samples=16 data.batch_size=2048 model.path=l3lab/L1-Qwen-1.5B-Exact rollout.temperature=0.6 rollout.response_length=1024 rollout.top_k=-1 rollout.top_p=0.95 rollout.gpu_memory_utilization=0.9 rollout.tensor_model_parallel_size=1
+2025-04-29 16:02:38,979	INFO worker.py:1843 -- Started a local Ray instance. View the dashboard at [1m[32m127.0.0.1:8265 [39m[22m
+[36m(main_task pid=219191)[0m Error while downloading from https://cdn-lfs-us-1.hf.co/repos/4f/77/4f77cef2f47b8528d99d579a7d88d620ad5974d294d6842656ff2012df31c010/e20ddafc659ba90242154b55275402edeca0715e5dbb30f56815a4ce081f4893?response-content-disposition=inline%3B+filename*%3DUTF-8%27%27tokenizer.json%3B+filename%3D%22tokenizer.json%22%3B&response-content-type=application%2Fjson&Expires=1745917387&Policy=eyJTdGF0ZW1lbnQiOlt7IkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NTkxNzM4N319LCJSZXNvdXJjZSI6Imh0dHBzOi8vY2RuLWxmcy11cy0xLmhmLmNvL3JlcG9zLzRmLzc3LzRmNzdjZWYyZjQ3Yjg1MjhkOTlkNTc5YTdkODhkNjIwYWQ1OTc0ZDI5NGQ2ODQyNjU2ZmYyMDEyZGYzMWMwMTAvZTIwZGRhZmM2NTliYTkwMjQyMTU0YjU1Mjc1NDAyZWRlY2EwNzE1ZTVkYmIzMGY1NjgxNWE0Y2UwODFmNDg5Mz9yZXNwb25zZS1jb250ZW50LWRpc3Bvc2l0aW9uPSomcmVzcG9uc2UtY29udGVudC10eXBlPSoifV19&Signature=nASrtlsqnBbdVSIZnGQtxyXr9orMFozFHVcYClUdR%7E8cLhsePGfQnmpU2sFbwCcFu6BjtpUsTs5n2jwGvdadl5QLUdTxfKdPBmWaTBU1JrlOaAO70fzGEaU1eOQDXH2ilsALUpMyVXAeLr2IHI5uK0vH4cThjpXW7TnMfIrZKqnivavu2zHr3E9nsuein9DAgX-73OfgDA1QrVOvF0W4Z1i2-eSWKr7BKuJFbdWRA8JdSKLfXuUZLG86-uBqrnCsCFmRi5oJiKraslhy97bc%7EcKxlnIKdN2q4Uhhy66GvxOWOI%7EbvaRs9aBiyCVLso4QFeMjiK0fSUxijDkBFvCFJg__&Key-Pair-Id=K24J24Z295AEI9: HTTPSConnectionPool(host='cdn-lfs-us-1.hf.co', port=443): Read timed out.
+[36m(main_task pid=219191)[0m Trying to resume download...
+[36m(main_task pid=219191)[0m WARNING:2025-04-29 16:03:25,564:Error while downloading from https://cdn-lfs-us-1.hf.co/repos/4f/77/4f77cef2f47b8528d99d579a7d88d620ad5974d294d6842656ff2012df31c010/e20ddafc659ba90242154b55275402edeca0715e5dbb30f56815a4ce081f4893?response-content-disposition=inline%3B+filename*%3DUTF-8%27%27tokenizer.json%3B+filename%3D%22tokenizer.json%22%3B&response-content-type=application%2Fjson&Expires=1745917387&Policy=eyJTdGF0ZW1lbnQiOlt7IkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NTkxNzM4N319LCJSZXNvdXJjZSI6Imh0dHBzOi8vY2RuLWxmcy11cy0xLmhmLmNvL3JlcG9zLzRmLzc3LzRmNzdjZWYyZjQ3Yjg1MjhkOTlkNTc5YTdkODhkNjIwYWQ1OTc0ZDI5NGQ2ODQyNjU2ZmYyMDEyZGYzMWMwMTAvZTIwZGRhZmM2NTliYTkwMjQyMTU0YjU1Mjc1NDAyZWRlY2EwNzE1ZTVkYmIzMGY1NjgxNWE0Y2UwODFmNDg5Mz9yZXNwb25zZS1jb250ZW50LWRpc3Bvc2l0aW9uPSomcmVzcG9uc2UtY29udGVudC10eXBlPSoifV19&Signature=nASrtlsqnBbdVSIZnGQtxyXr9orMFozFHVcYClUdR%7E8cLhsePGfQnmpU2sFbwCcFu6BjtpUsTs5n2jwGvdadl5QLUdTxfKdPBmWaTBU1JrlOaAO70fzGEaU1eOQDXH2ilsALUpMyVXAeLr2IHI5uK0vH4cThjpXW7TnMfIrZKqnivavu2zHr3E9nsuein9DAgX-73OfgDA1QrVOvF0W4Z1i2-eSWKr7BKuJFbdWRA8JdSKLfXuUZLG86-uBqrnCsCFmRi5oJiKraslhy97bc%7EcKxlnIKdN2q4Uhhy66GvxOWOI%7EbvaRs9aBiyCVLso4QFeMjiK0fSUxijDkBFvCFJg__&Key-Pair-Id=K24J24Z295AEI9: HTTPSConnectionPool(host='cdn-lfs-us-1.hf.co', port=443): Read timed out.
+[36m(main_task pid=219191)[0m Trying to resume download...
+[36m(main_task pid=219191)[0m Error while downloading from https://cdn-lfs-us-1.hf.co/repos/4f/77/4f77cef2f47b8528d99d579a7d88d620ad5974d294d6842656ff2012df31c010/e20ddafc659ba90242154b55275402edeca0715e5dbb30f56815a4ce081f4893?response-content-disposition=inline%3B+filename*%3DUTF-8%27%27tokenizer.json%3B+filename%3D%22tokenizer.json%22%3B&response-content-type=application%2Fjson&Expires=1745917387&Policy=eyJTdGF0ZW1lbnQiOlt7IkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NTkxNzM4N319LCJSZXNvdXJjZSI6Imh0dHBzOi8vY2RuLWxmcy11cy0xLmhmLmNvL3JlcG9zLzRmLzc3LzRmNzdjZWYyZjQ3Yjg1MjhkOTlkNTc5YTdkODhkNjIwYWQ1OTc0ZDI5NGQ2ODQyNjU2ZmYyMDEyZGYzMWMwMTAvZTIwZGRhZmM2NTliYTkwMjQyMTU0YjU1Mjc1NDAyZWRlY2EwNzE1ZTVkYmIzMGY1NjgxNWE0Y2UwODFmNDg5Mz9yZXNwb25zZS1jb250ZW50LWRpc3Bvc2l0aW9uPSomcmVzcG9uc2UtY29udGVudC10eXBlPSoifV19&Signature=nASrtlsqnBbdVSIZnGQtxyXr9orMFozFHVcYClUdR%7E8cLhsePGfQnmpU2sFbwCcFu6BjtpUsTs5n2jwGvdadl5QLUdTxfKdPBmWaTBU1JrlOaAO70fzGEaU1eOQDXH2ilsALUpMyVXAeLr2IHI5uK0vH4cThjpXW7TnMfIrZKqnivavu2zHr3E9nsuein9DAgX-73OfgDA1QrVOvF0W4Z1i2-eSWKr7BKuJFbdWRA8JdSKLfXuUZLG86-uBqrnCsCFmRi5oJiKraslhy97bc%7EcKxlnIKdN2q4Uhhy66GvxOWOI%7EbvaRs9aBiyCVLso4QFeMjiK0fSUxijDkBFvCFJg__&Key-Pair-Id=K24J24Z295AEI9: HTTPSConnectionPool(host='cdn-lfs-us-1.hf.co', port=443): Read timed out.
+[36m(main_task pid=219191)[0m Trying to resume download...
+[36m(main_task pid=219191)[0m WARNING:2025-04-29 16:03:41,650:Error while downloading from https://cdn-lfs-us-1.hf.co/repos/4f/77/4f77cef2f47b8528d99d579a7d88d620ad5974d294d6842656ff2012df31c010/e20ddafc659ba90242154b55275402edeca0715e5dbb30f56815a4ce081f4893?response-content-disposition=inline%3B+filename*%3DUTF-8%27%27tokenizer.json%3B+filename%3D%22tokenizer.json%22%3B&response-content-type=application%2Fjson&Expires=1745917387&Policy=eyJTdGF0ZW1lbnQiOlt7IkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NTkxNzM4N319LCJSZXNvdXJjZSI6Imh0dHBzOi8vY2RuLWxmcy11cy0xLmhmLmNvL3JlcG9zLzRmLzc3LzRmNzdjZWYyZjQ3Yjg1MjhkOTlkNTc5YTdkODhkNjIwYWQ1OTc0ZDI5NGQ2ODQyNjU2ZmYyMDEyZGYzMWMwMTAvZTIwZGRhZmM2NTliYTkwMjQyMTU0YjU1Mjc1NDAyZWRlY2EwNzE1ZTVkYmIzMGY1NjgxNWE0Y2UwODFmNDg5Mz9yZXNwb25zZS1jb250ZW50LWRpc3Bvc2l0aW9uPSomcmVzcG9uc2UtY29udGVudC10eXBlPSoifV19&Signature=nASrtlsqnBbdVSIZnGQtxyXr9orMFozFHVcYClUdR%7E8cLhsePGfQnmpU2sFbwCcFu6BjtpUsTs5n2jwGvdadl5QLUdTxfKdPBmWaTBU1JrlOaAO70fzGEaU1eOQDXH2ilsALUpMyVXAeLr2IHI5uK0vH4cThjpXW7TnMfIrZKqnivavu2zHr3E9nsuein9DAgX-73OfgDA1QrVOvF0W4Z1i2-eSWKr7BKuJFbdWRA8JdSKLfXuUZLG86-uBqrnCsCFmRi5oJiKraslhy97bc%7EcKxlnIKdN2q4Uhhy66GvxOWOI%7EbvaRs9aBiyCVLso4QFeMjiK0fSUxijDkBFvCFJg__&Key-Pair-Id=K24J24Z295AEI9: HTTPSConnectionPool(host='cdn-lfs-us-1.hf.co', port=443): Read timed out.
+[36m(main_task pid=219191)[0m Trying to resume download...
+Error executing job with overrides: ['trainer.nnodes=1', 'trainer.n_gpus_per_node=8', 'data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_512/lsat.parquet', 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_512/lsat.parquet', 'data.n_samples=16', 'data.batch_size=2048', 'model.path=l3lab/L1-Qwen-1.5B-Exact', 'rollout.temperature=0.6', 'rollout.response_length=1024', 'rollout.top_k=-1', 'rollout.top_p=0.95', 'rollout.gpu_memory_utilization=0.9', 'rollout.tensor_model_parallel_size=1']
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 41, in main
+    run_generation(config)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 50, in run_generation
+    ray.get(main_task.remote(config))
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/worker.py", line 2782, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/worker.py", line 929, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(TypeError): [36mray::main_task()[39m (pid=219191, ip=173.3.164.136)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 61, in main_task
+    tokenizer = hf_tokenizer(local_path)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/utils/tokenizer.py", line 56, in hf_tokenizer
+    tokenizer = AutoTokenizer.from_pretrained(name_or_path, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/models/auto/tokenization_auto.py", line 1009, in from_pretrained
+    return tokenizer_class.from_pretrained(pretrained_model_name_or_path, *inputs, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2062, in from_pretrained
+    return cls._from_pretrained(
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2100, in _from_pretrained
+    slow_tokenizer = (cls.slow_tokenizer_class)._from_pretrained(
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2302, in _from_pretrained
+    tokenizer = cls(*init_inputs, **init_kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/models/llama/tokenization_llama.py", line 169, in __init__
+    self.sp_model = self.get_spm_processor(kwargs.pop("from_slow", False))
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/models/llama/tokenization_llama.py", line 196, in get_spm_processor
+    tokenizer.Load(self.vocab_file)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/sentencepiece/__init__.py", line 961, in Load
+    return self.LoadFromFile(model_file)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/sentencepiece/__init__.py", line 316, in LoadFromFile
+    return _sentencepiece.SentencePieceProcessor_LoadFromFile(self, arg)
+TypeError: not a string
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
+++ export VLLM_ATTENTION_BACKEND=XFORMERS
+++ VLLM_ATTENTION_BACKEND=XFORMERS
+++ MODEL_PATH=/home/bingxing2/ailab/wangkuncan/soft/l1/DeepScaleR-1.5B-Preview
+++ NUM_TOKENS=512
+++ MAX_TOKENS=1024
+++ DATATYPES=("gpqa" "mmlu_1000" "lsat" "aime2025" "math" "amc" "aime" "olympiad_bench")
+++ OUTPUT_DIR='$/home/bingxing2/ailab/wangkuncan/soft/l1'
+++ [[ 8 -gt 0 ]]
+++ case $1 in
+++ MODEL_PATH=l3lab/L1-Qwen-1.5B-Exact
+++ shift 2
+++ [[ 6 -gt 0 ]]
+++ case $1 in
+++ NUM_TOKENS=1024
+++ MAX_TOKENS=2048
+++ shift 2
+++ [[ 4 -gt 0 ]]
+++ case $1 in
+++ shift
+++ DATATYPES=()
+++ [[ 3 -gt 0 ]]
+++ [[ ! aime =~ ^-- ]]
+++ DATATYPES+=("$1")
+++ shift
+++ [[ 2 -gt 0 ]]
+++ [[ ! mmlu_1000 =~ ^-- ]]
+++ DATATYPES+=("$1")
+++ shift
+++ [[ 1 -gt 0 ]]
+++ [[ ! lsat =~ ^-- ]]
+++ DATATYPES+=("$1")
+++ shift
+++ [[ 0 -gt 0 ]]
+++ [[ 0 -gt 0 ]]
+++ echo 'Model Path: l3lab/L1-Qwen-1.5B-Exact'
+++ echo 'Datasets: aime' mmlu_1000 lsat
+++ echo 'Output Directory: $/home/bingxing2/ailab/wangkuncan/soft/l1'
+++ echo 'Number of Tokens: 1024'
+++ echo 'Max Tokens: 2048'
+++ for DATA_TYPE in "${DATATYPES[@]}"
+++ python3 -m verl.trainer.main_generation trainer.nnodes=1 trainer.n_gpus_per_node=8 data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_1024/aime.parquet 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_1024/aime.parquet' data.n_samples=16 data.batch_size=2048 model.path=l3lab/L1-Qwen-1.5B-Exact rollout.temperature=0.6 rollout.response_length=2048 rollout.top_k=-1 rollout.top_p=0.95 rollout.gpu_memory_utilization=0.9 rollout.tensor_model_parallel_size=1
+2025-04-29 16:04:18,690	INFO worker.py:1843 -- Started a local Ray instance. View the dashboard at [1m[32m127.0.0.1:8265 [39m[22m
+Error executing job with overrides: ['trainer.nnodes=1', 'trainer.n_gpus_per_node=8', 'data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_1024/aime.parquet', 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_1024/aime.parquet', 'data.n_samples=16', 'data.batch_size=2048', 'model.path=l3lab/L1-Qwen-1.5B-Exact', 'rollout.temperature=0.6', 'rollout.response_length=2048', 'rollout.top_k=-1', 'rollout.top_p=0.95', 'rollout.gpu_memory_utilization=0.9', 'rollout.tensor_model_parallel_size=1']
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 41, in main
+    run_generation(config)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 50, in run_generation
+    ray.get(main_task.remote(config))
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/worker.py", line 2782, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/worker.py", line 929, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(TypeError): [36mray::main_task()[39m (pid=235656, ip=173.3.164.136)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 61, in main_task
+    tokenizer = hf_tokenizer(local_path)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/utils/tokenizer.py", line 56, in hf_tokenizer
+    tokenizer = AutoTokenizer.from_pretrained(name_or_path, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/models/auto/tokenization_auto.py", line 1009, in from_pretrained
+    return tokenizer_class.from_pretrained(pretrained_model_name_or_path, *inputs, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2062, in from_pretrained
+    return cls._from_pretrained(
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2100, in _from_pretrained
+    slow_tokenizer = (cls.slow_tokenizer_class)._from_pretrained(
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2302, in _from_pretrained
+    tokenizer = cls(*init_inputs, **init_kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/models/llama/tokenization_llama.py", line 169, in __init__
+    self.sp_model = self.get_spm_processor(kwargs.pop("from_slow", False))
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/models/llama/tokenization_llama.py", line 196, in get_spm_processor
+    tokenizer.Load(self.vocab_file)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/sentencepiece/__init__.py", line 961, in Load
+    return self.LoadFromFile(model_file)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/sentencepiece/__init__.py", line 316, in LoadFromFile
+    return _sentencepiece.SentencePieceProcessor_LoadFromFile(self, arg)
+TypeError: not a string
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
+++ for DATA_TYPE in "${DATATYPES[@]}"
+++ python3 -m verl.trainer.main_generation trainer.nnodes=1 trainer.n_gpus_per_node=8 data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_1024/mmlu_1000.parquet 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_1024/mmlu_1000.parquet' data.n_samples=16 data.batch_size=2048 model.path=l3lab/L1-Qwen-1.5B-Exact rollout.temperature=0.6 rollout.response_length=2048 rollout.top_k=-1 rollout.top_p=0.95 rollout.gpu_memory_utilization=0.9 rollout.tensor_model_parallel_size=1
+2025-04-29 16:05:08,509	INFO worker.py:1843 -- Started a local Ray instance. View the dashboard at [1m[32m127.0.0.1:8265 [39m[22m
+[36m(main_task pid=249882)[0m Error while downloading from https://cdn-lfs-us-1.hf.co/repos/4f/77/4f77cef2f47b8528d99d579a7d88d620ad5974d294d6842656ff2012df31c010/e20ddafc659ba90242154b55275402edeca0715e5dbb30f56815a4ce081f4893?response-content-disposition=inline%3B+filename*%3DUTF-8%27%27tokenizer.json%3B+filename%3D%22tokenizer.json%22%3B&response-content-type=application%2Fjson&Expires=1745917533&Policy=eyJTdGF0ZW1lbnQiOlt7IkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NTkxNzUzM319LCJSZXNvdXJjZSI6Imh0dHBzOi8vY2RuLWxmcy11cy0xLmhmLmNvL3JlcG9zLzRmLzc3LzRmNzdjZWYyZjQ3Yjg1MjhkOTlkNTc5YTdkODhkNjIwYWQ1OTc0ZDI5NGQ2ODQyNjU2ZmYyMDEyZGYzMWMwMTAvZTIwZGRhZmM2NTliYTkwMjQyMTU0YjU1Mjc1NDAyZWRlY2EwNzE1ZTVkYmIzMGY1NjgxNWE0Y2UwODFmNDg5Mz9yZXNwb25zZS1jb250ZW50LWRpc3Bvc2l0aW9uPSomcmVzcG9uc2UtY29udGVudC10eXBlPSoifV19&Signature=XIYhFeHqw7gDhwp4K72XChth4hSpuk8ta-Aqc3hXw6sGxItOSJaDCi8-4yZB9jcGfdZg%7EavMH128c-TABhZn1FWLsQzUgj71XP5n%7EEHpljqMFSJMg5N160YGtKLjltVTdn7PsiTqlhgKsSKuI8IFiQ91QURl8xQLcNIIjff1dba5eDbDbSY5R7rrf1r4g9i18WAFSGa5vDKnH6JSw6i5fSRq1x0jV5ir2iZDiUgrgzWOTZ1cXBgZDs-QcU6i5GMO6-Eyye-aj1KP5T68IkI9TwQP7sWtC69dBKH6dJ7QEYDbAKTGvFMkHGK7KrCxgI1zGRjGNLjLKbwn99O-CBdYJw__&Key-Pair-Id=K24J24Z295AEI9: HTTPSConnectionPool(host='cdn-lfs-us-1.hf.co', port=443): Read timed out.
+[36m(main_task pid=249882)[0m Trying to resume download...
+[36m(main_task pid=249882)[0m WARNING:2025-04-29 16:06:20,427:Error while downloading from https://cdn-lfs-us-1.hf.co/repos/4f/77/4f77cef2f47b8528d99d579a7d88d620ad5974d294d6842656ff2012df31c010/e20ddafc659ba90242154b55275402edeca0715e5dbb30f56815a4ce081f4893?response-content-disposition=inline%3B+filename*%3DUTF-8%27%27tokenizer.json%3B+filename%3D%22tokenizer.json%22%3B&response-content-type=application%2Fjson&Expires=1745917533&Policy=eyJTdGF0ZW1lbnQiOlt7IkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NTkxNzUzM319LCJSZXNvdXJjZSI6Imh0dHBzOi8vY2RuLWxmcy11cy0xLmhmLmNvL3JlcG9zLzRmLzc3LzRmNzdjZWYyZjQ3Yjg1MjhkOTlkNTc5YTdkODhkNjIwYWQ1OTc0ZDI5NGQ2ODQyNjU2ZmYyMDEyZGYzMWMwMTAvZTIwZGRhZmM2NTliYTkwMjQyMTU0YjU1Mjc1NDAyZWRlY2EwNzE1ZTVkYmIzMGY1NjgxNWE0Y2UwODFmNDg5Mz9yZXNwb25zZS1jb250ZW50LWRpc3Bvc2l0aW9uPSomcmVzcG9uc2UtY29udGVudC10eXBlPSoifV19&Signature=XIYhFeHqw7gDhwp4K72XChth4hSpuk8ta-Aqc3hXw6sGxItOSJaDCi8-4yZB9jcGfdZg%7EavMH128c-TABhZn1FWLsQzUgj71XP5n%7EEHpljqMFSJMg5N160YGtKLjltVTdn7PsiTqlhgKsSKuI8IFiQ91QURl8xQLcNIIjff1dba5eDbDbSY5R7rrf1r4g9i18WAFSGa5vDKnH6JSw6i5fSRq1x0jV5ir2iZDiUgrgzWOTZ1cXBgZDs-QcU6i5GMO6-Eyye-aj1KP5T68IkI9TwQP7sWtC69dBKH6dJ7QEYDbAKTGvFMkHGK7KrCxgI1zGRjGNLjLKbwn99O-CBdYJw__&Key-Pair-Id=K24J24Z295AEI9: HTTPSConnectionPool(host='cdn-lfs-us-1.hf.co', port=443): Read timed out.
+[36m(main_task pid=249882)[0m Trying to resume download...
+[36m(main_task pid=249882)[0m Error while downloading from https://cdn-lfs-us-1.hf.co/repos/4f/77/4f77cef2f47b8528d99d579a7d88d620ad5974d294d6842656ff2012df31c010/e20ddafc659ba90242154b55275402edeca0715e5dbb30f56815a4ce081f4893?response-content-disposition=inline%3B+filename*%3DUTF-8%27%27tokenizer.json%3B+filename%3D%22tokenizer.json%22%3B&response-content-type=application%2Fjson&Expires=1745917533&Policy=eyJTdGF0ZW1lbnQiOlt7IkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NTkxNzUzM319LCJSZXNvdXJjZSI6Imh0dHBzOi8vY2RuLWxmcy11cy0xLmhmLmNvL3JlcG9zLzRmLzc3LzRmNzdjZWYyZjQ3Yjg1MjhkOTlkNTc5YTdkODhkNjIwYWQ1OTc0ZDI5NGQ2ODQyNjU2ZmYyMDEyZGYzMWMwMTAvZTIwZGRhZmM2NTliYTkwMjQyMTU0YjU1Mjc1NDAyZWRlY2EwNzE1ZTVkYmIzMGY1NjgxNWE0Y2UwODFmNDg5Mz9yZXNwb25zZS1jb250ZW50LWRpc3Bvc2l0aW9uPSomcmVzcG9uc2UtY29udGVudC10eXBlPSoifV19&Signature=XIYhFeHqw7gDhwp4K72XChth4hSpuk8ta-Aqc3hXw6sGxItOSJaDCi8-4yZB9jcGfdZg%7EavMH128c-TABhZn1FWLsQzUgj71XP5n%7EEHpljqMFSJMg5N160YGtKLjltVTdn7PsiTqlhgKsSKuI8IFiQ91QURl8xQLcNIIjff1dba5eDbDbSY5R7rrf1r4g9i18WAFSGa5vDKnH6JSw6i5fSRq1x0jV5ir2iZDiUgrgzWOTZ1cXBgZDs-QcU6i5GMO6-Eyye-aj1KP5T68IkI9TwQP7sWtC69dBKH6dJ7QEYDbAKTGvFMkHGK7KrCxgI1zGRjGNLjLKbwn99O-CBdYJw__&Key-Pair-Id=K24J24Z295AEI9: HTTPSConnectionPool(host='cdn-lfs-us-1.hf.co', port=443): Read timed out.
+[36m(main_task pid=249882)[0m Trying to resume download...
+[36m(main_task pid=249882)[0m WARNING:2025-04-29 16:08:19,140:Error while downloading from https://cdn-lfs-us-1.hf.co/repos/4f/77/4f77cef2f47b8528d99d579a7d88d620ad5974d294d6842656ff2012df31c010/e20ddafc659ba90242154b55275402edeca0715e5dbb30f56815a4ce081f4893?response-content-disposition=inline%3B+filename*%3DUTF-8%27%27tokenizer.json%3B+filename%3D%22tokenizer.json%22%3B&response-content-type=application%2Fjson&Expires=1745917533&Policy=eyJTdGF0ZW1lbnQiOlt7IkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NTkxNzUzM319LCJSZXNvdXJjZSI6Imh0dHBzOi8vY2RuLWxmcy11cy0xLmhmLmNvL3JlcG9zLzRmLzc3LzRmNzdjZWYyZjQ3Yjg1MjhkOTlkNTc5YTdkODhkNjIwYWQ1OTc0ZDI5NGQ2ODQyNjU2ZmYyMDEyZGYzMWMwMTAvZTIwZGRhZmM2NTliYTkwMjQyMTU0YjU1Mjc1NDAyZWRlY2EwNzE1ZTVkYmIzMGY1NjgxNWE0Y2UwODFmNDg5Mz9yZXNwb25zZS1jb250ZW50LWRpc3Bvc2l0aW9uPSomcmVzcG9uc2UtY29udGVudC10eXBlPSoifV19&Signature=XIYhFeHqw7gDhwp4K72XChth4hSpuk8ta-Aqc3hXw6sGxItOSJaDCi8-4yZB9jcGfdZg%7EavMH128c-TABhZn1FWLsQzUgj71XP5n%7EEHpljqMFSJMg5N160YGtKLjltVTdn7PsiTqlhgKsSKuI8IFiQ91QURl8xQLcNIIjff1dba5eDbDbSY5R7rrf1r4g9i18WAFSGa5vDKnH6JSw6i5fSRq1x0jV5ir2iZDiUgrgzWOTZ1cXBgZDs-QcU6i5GMO6-Eyye-aj1KP5T68IkI9TwQP7sWtC69dBKH6dJ7QEYDbAKTGvFMkHGK7KrCxgI1zGRjGNLjLKbwn99O-CBdYJw__&Key-Pair-Id=K24J24Z295AEI9: HTTPSConnectionPool(host='cdn-lfs-us-1.hf.co', port=443): Read timed out.
+[36m(main_task pid=249882)[0m Trying to resume download...
+Error executing job with overrides: ['trainer.nnodes=1', 'trainer.n_gpus_per_node=8', 'data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_1024/mmlu_1000.parquet', 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_1024/mmlu_1000.parquet', 'data.n_samples=16', 'data.batch_size=2048', 'model.path=l3lab/L1-Qwen-1.5B-Exact', 'rollout.temperature=0.6', 'rollout.response_length=2048', 'rollout.top_k=-1', 'rollout.top_p=0.95', 'rollout.gpu_memory_utilization=0.9', 'rollout.tensor_model_parallel_size=1']
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 41, in main
+    run_generation(config)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 50, in run_generation
+    ray.get(main_task.remote(config))
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/worker.py", line 2782, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/worker.py", line 929, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(TypeError): [36mray::main_task()[39m (pid=249882, ip=173.3.164.136)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 61, in main_task
+    tokenizer = hf_tokenizer(local_path)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/utils/tokenizer.py", line 56, in hf_tokenizer
+    tokenizer = AutoTokenizer.from_pretrained(name_or_path, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/models/auto/tokenization_auto.py", line 1009, in from_pretrained
+    return tokenizer_class.from_pretrained(pretrained_model_name_or_path, *inputs, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2062, in from_pretrained
+    return cls._from_pretrained(
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2100, in _from_pretrained
+    slow_tokenizer = (cls.slow_tokenizer_class)._from_pretrained(
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2302, in _from_pretrained
+    tokenizer = cls(*init_inputs, **init_kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/models/llama/tokenization_llama.py", line 169, in __init__
+    self.sp_model = self.get_spm_processor(kwargs.pop("from_slow", False))
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/models/llama/tokenization_llama.py", line 196, in get_spm_processor
+    tokenizer.Load(self.vocab_file)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/sentencepiece/__init__.py", line 961, in Load
+    return self.LoadFromFile(model_file)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/sentencepiece/__init__.py", line 316, in LoadFromFile
+    return _sentencepiece.SentencePieceProcessor_LoadFromFile(self, arg)
+TypeError: not a string
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
+++ for DATA_TYPE in "${DATATYPES[@]}"
+++ python3 -m verl.trainer.main_generation trainer.nnodes=1 trainer.n_gpus_per_node=8 data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_1024/lsat.parquet 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_1024/lsat.parquet' data.n_samples=16 data.batch_size=2048 model.path=l3lab/L1-Qwen-1.5B-Exact rollout.temperature=0.6 rollout.response_length=2048 rollout.top_k=-1 rollout.top_p=0.95 rollout.gpu_memory_utilization=0.9 rollout.tensor_model_parallel_size=1
+2025-04-29 16:08:57,575	INFO worker.py:1843 -- Started a local Ray instance. View the dashboard at [1m[32m127.0.0.1:8265 [39m[22m
+Error executing job with overrides: ['trainer.nnodes=1', 'trainer.n_gpus_per_node=8', 'data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_1024/lsat.parquet', 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_1024/lsat.parquet', 'data.n_samples=16', 'data.batch_size=2048', 'model.path=l3lab/L1-Qwen-1.5B-Exact', 'rollout.temperature=0.6', 'rollout.response_length=2048', 'rollout.top_k=-1', 'rollout.top_p=0.95', 'rollout.gpu_memory_utilization=0.9', 'rollout.tensor_model_parallel_size=1']
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 41, in main
+    run_generation(config)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 50, in run_generation
+    ray.get(main_task.remote(config))
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/worker.py", line 2782, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/worker.py", line 929, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(TypeError): [36mray::main_task()[39m (pid=269262, ip=173.3.164.136)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 61, in main_task
+    tokenizer = hf_tokenizer(local_path)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/utils/tokenizer.py", line 56, in hf_tokenizer
+    tokenizer = AutoTokenizer.from_pretrained(name_or_path, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/models/auto/tokenization_auto.py", line 1009, in from_pretrained
+    return tokenizer_class.from_pretrained(pretrained_model_name_or_path, *inputs, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2062, in from_pretrained
+    return cls._from_pretrained(
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2100, in _from_pretrained
+    slow_tokenizer = (cls.slow_tokenizer_class)._from_pretrained(
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2302, in _from_pretrained
+    tokenizer = cls(*init_inputs, **init_kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/models/llama/tokenization_llama.py", line 169, in __init__
+    self.sp_model = self.get_spm_processor(kwargs.pop("from_slow", False))
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/models/llama/tokenization_llama.py", line 196, in get_spm_processor
+    tokenizer.Load(self.vocab_file)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/sentencepiece/__init__.py", line 961, in Load
+    return self.LoadFromFile(model_file)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/sentencepiece/__init__.py", line 316, in LoadFromFile
+    return _sentencepiece.SentencePieceProcessor_LoadFromFile(self, arg)
+TypeError: not a string
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
+++ export VLLM_ATTENTION_BACKEND=XFORMERS
+++ VLLM_ATTENTION_BACKEND=XFORMERS
+++ MODEL_PATH=/home/bingxing2/ailab/wangkuncan/soft/l1/DeepScaleR-1.5B-Preview
+++ NUM_TOKENS=512
+++ MAX_TOKENS=1024
+++ DATATYPES=("gpqa" "mmlu_1000" "lsat" "aime2025" "math" "amc" "aime" "olympiad_bench")
+++ OUTPUT_DIR='$/home/bingxing2/ailab/wangkuncan/soft/l1'
+++ [[ 8 -gt 0 ]]
+++ case $1 in
+++ MODEL_PATH=l3lab/L1-Qwen-1.5B-Exact
+++ shift 2
+++ [[ 6 -gt 0 ]]
+++ case $1 in
+++ NUM_TOKENS=2048
+++ MAX_TOKENS=4096
+++ shift 2
+++ [[ 4 -gt 0 ]]
+++ case $1 in
+++ shift
+++ DATATYPES=()
+++ [[ 3 -gt 0 ]]
+++ [[ ! aime =~ ^-- ]]
+++ DATATYPES+=("$1")
+++ shift
+++ [[ 2 -gt 0 ]]
+++ [[ ! mmlu_1000 =~ ^-- ]]
+++ DATATYPES+=("$1")
+++ shift
+++ [[ 1 -gt 0 ]]
+++ [[ ! lsat =~ ^-- ]]
+++ DATATYPES+=("$1")
+++ shift
+++ [[ 0 -gt 0 ]]
+++ [[ 0 -gt 0 ]]
+++ echo 'Model Path: l3lab/L1-Qwen-1.5B-Exact'
+++ echo 'Datasets: aime' mmlu_1000 lsat
+++ echo 'Output Directory: $/home/bingxing2/ailab/wangkuncan/soft/l1'
+++ echo 'Number of Tokens: 2048'
+++ echo 'Max Tokens: 4096'
+++ for DATA_TYPE in "${DATATYPES[@]}"
+++ python3 -m verl.trainer.main_generation trainer.nnodes=1 trainer.n_gpus_per_node=8 data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_2048/aime.parquet 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_2048/aime.parquet' data.n_samples=16 data.batch_size=2048 model.path=l3lab/L1-Qwen-1.5B-Exact rollout.temperature=0.6 rollout.response_length=4096 rollout.top_k=-1 rollout.top_p=0.95 rollout.gpu_memory_utilization=0.9 rollout.tensor_model_parallel_size=1
+2025-04-29 16:09:44,691	INFO worker.py:1843 -- Started a local Ray instance. View the dashboard at [1m[32m127.0.0.1:8265 [39m[22m
+Error executing job with overrides: ['trainer.nnodes=1', 'trainer.n_gpus_per_node=8', 'data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_2048/aime.parquet', 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_2048/aime.parquet', 'data.n_samples=16', 'data.batch_size=2048', 'model.path=l3lab/L1-Qwen-1.5B-Exact', 'rollout.temperature=0.6', 'rollout.response_length=4096', 'rollout.top_k=-1', 'rollout.top_p=0.95', 'rollout.gpu_memory_utilization=0.9', 'rollout.tensor_model_parallel_size=1']
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 41, in main
+    run_generation(config)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 50, in run_generation
+    ray.get(main_task.remote(config))
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/worker.py", line 2782, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/worker.py", line 929, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(TypeError): [36mray::main_task()[39m (pid=283430, ip=173.3.164.136)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 61, in main_task
+    tokenizer = hf_tokenizer(local_path)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/utils/tokenizer.py", line 56, in hf_tokenizer
+    tokenizer = AutoTokenizer.from_pretrained(name_or_path, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/models/auto/tokenization_auto.py", line 1009, in from_pretrained
+    return tokenizer_class.from_pretrained(pretrained_model_name_or_path, *inputs, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2062, in from_pretrained
+    return cls._from_pretrained(
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2100, in _from_pretrained
+    slow_tokenizer = (cls.slow_tokenizer_class)._from_pretrained(
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2302, in _from_pretrained
+    tokenizer = cls(*init_inputs, **init_kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/models/llama/tokenization_llama.py", line 169, in __init__
+    self.sp_model = self.get_spm_processor(kwargs.pop("from_slow", False))
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/models/llama/tokenization_llama.py", line 196, in get_spm_processor
+    tokenizer.Load(self.vocab_file)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/sentencepiece/__init__.py", line 961, in Load
+    return self.LoadFromFile(model_file)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/sentencepiece/__init__.py", line 316, in LoadFromFile
+    return _sentencepiece.SentencePieceProcessor_LoadFromFile(self, arg)
+TypeError: not a string
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
+++ for DATA_TYPE in "${DATATYPES[@]}"
+++ python3 -m verl.trainer.main_generation trainer.nnodes=1 trainer.n_gpus_per_node=8 data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_2048/mmlu_1000.parquet 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_2048/mmlu_1000.parquet' data.n_samples=16 data.batch_size=2048 model.path=l3lab/L1-Qwen-1.5B-Exact rollout.temperature=0.6 rollout.response_length=4096 rollout.top_k=-1 rollout.top_p=0.95 rollout.gpu_memory_utilization=0.9 rollout.tensor_model_parallel_size=1
+2025-04-29 16:11:18,951	INFO worker.py:1843 -- Started a local Ray instance. View the dashboard at [1m[32m127.0.0.1:8265 [39m[22m
+[36m(main_task pid=299684)[0m Error while downloading from https://cdn-lfs-us-1.hf.co/repos/4f/77/4f77cef2f47b8528d99d579a7d88d620ad5974d294d6842656ff2012df31c010/e20ddafc659ba90242154b55275402edeca0715e5dbb30f56815a4ce081f4893?response-content-disposition=inline%3B+filename*%3DUTF-8%27%27tokenizer.json%3B+filename%3D%22tokenizer.json%22%3B&response-content-type=application%2Fjson&Expires=1745917899&Policy=eyJTdGF0ZW1lbnQiOlt7IkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NTkxNzg5OX19LCJSZXNvdXJjZSI6Imh0dHBzOi8vY2RuLWxmcy11cy0xLmhmLmNvL3JlcG9zLzRmLzc3LzRmNzdjZWYyZjQ3Yjg1MjhkOTlkNTc5YTdkODhkNjIwYWQ1OTc0ZDI5NGQ2ODQyNjU2ZmYyMDEyZGYzMWMwMTAvZTIwZGRhZmM2NTliYTkwMjQyMTU0YjU1Mjc1NDAyZWRlY2EwNzE1ZTVkYmIzMGY1NjgxNWE0Y2UwODFmNDg5Mz9yZXNwb25zZS1jb250ZW50LWRpc3Bvc2l0aW9uPSomcmVzcG9uc2UtY29udGVudC10eXBlPSoifV19&Signature=Ixl3RCZ0-0hAnkcLJVhAkvEF3b%7E64toXKOxcqcxwGWOYay5JpluW17kef2v4gL23WJsu8DKyZLwYpAOgdiYTWXF6uYRDDm1UAa2ufGQ3f4ttYYXxVsr-riKpqILq6YmD3EHs0WgYPzVoL8Z%7EPbrgVThGbjzUzZ8bYfisckKktpRlEl%7EGyuirzSkNTp%7ELcQh-ontuj87j2mSSCRx9iaTW2xedi%7EF-bKjk-R9LI0JHfnwbJXwnKhGP0EXfjW7Gw3XfVzejHpgEIni3m3ENrEQsEaKLcNmYIEKDXCy0HFmkArZiy4KHfNloLu%7EP6Dxs3-DYTlHReOl-sWuWGHxSycgPSg__&Key-Pair-Id=K24J24Z295AEI9: HTTPSConnectionPool(host='cdn-lfs-us-1.hf.co', port=443): Read timed out.
+[36m(main_task pid=299684)[0m Trying to resume download...
+[36m(main_task pid=299684)[0m WARNING:2025-04-29 16:11:58,740:Error while downloading from https://cdn-lfs-us-1.hf.co/repos/4f/77/4f77cef2f47b8528d99d579a7d88d620ad5974d294d6842656ff2012df31c010/e20ddafc659ba90242154b55275402edeca0715e5dbb30f56815a4ce081f4893?response-content-disposition=inline%3B+filename*%3DUTF-8%27%27tokenizer.json%3B+filename%3D%22tokenizer.json%22%3B&response-content-type=application%2Fjson&Expires=1745917899&Policy=eyJTdGF0ZW1lbnQiOlt7IkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NTkxNzg5OX19LCJSZXNvdXJjZSI6Imh0dHBzOi8vY2RuLWxmcy11cy0xLmhmLmNvL3JlcG9zLzRmLzc3LzRmNzdjZWYyZjQ3Yjg1MjhkOTlkNTc5YTdkODhkNjIwYWQ1OTc0ZDI5NGQ2ODQyNjU2ZmYyMDEyZGYzMWMwMTAvZTIwZGRhZmM2NTliYTkwMjQyMTU0YjU1Mjc1NDAyZWRlY2EwNzE1ZTVkYmIzMGY1NjgxNWE0Y2UwODFmNDg5Mz9yZXNwb25zZS1jb250ZW50LWRpc3Bvc2l0aW9uPSomcmVzcG9uc2UtY29udGVudC10eXBlPSoifV19&Signature=Ixl3RCZ0-0hAnkcLJVhAkvEF3b%7E64toXKOxcqcxwGWOYay5JpluW17kef2v4gL23WJsu8DKyZLwYpAOgdiYTWXF6uYRDDm1UAa2ufGQ3f4ttYYXxVsr-riKpqILq6YmD3EHs0WgYPzVoL8Z%7EPbrgVThGbjzUzZ8bYfisckKktpRlEl%7EGyuirzSkNTp%7ELcQh-ontuj87j2mSSCRx9iaTW2xedi%7EF-bKjk-R9LI0JHfnwbJXwnKhGP0EXfjW7Gw3XfVzejHpgEIni3m3ENrEQsEaKLcNmYIEKDXCy0HFmkArZiy4KHfNloLu%7EP6Dxs3-DYTlHReOl-sWuWGHxSycgPSg__&Key-Pair-Id=K24J24Z295AEI9: HTTPSConnectionPool(host='cdn-lfs-us-1.hf.co', port=443): Read timed out.
+[36m(main_task pid=299684)[0m Trying to resume download...
+Error executing job with overrides: ['trainer.nnodes=1', 'trainer.n_gpus_per_node=8', 'data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_2048/mmlu_1000.parquet', 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_2048/mmlu_1000.parquet', 'data.n_samples=16', 'data.batch_size=2048', 'model.path=l3lab/L1-Qwen-1.5B-Exact', 'rollout.temperature=0.6', 'rollout.response_length=4096', 'rollout.top_k=-1', 'rollout.top_p=0.95', 'rollout.gpu_memory_utilization=0.9', 'rollout.tensor_model_parallel_size=1']
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 41, in main
+    run_generation(config)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 50, in run_generation
+    ray.get(main_task.remote(config))
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/worker.py", line 2782, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/worker.py", line 929, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(TypeError): [36mray::main_task()[39m (pid=299684, ip=173.3.164.136)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 61, in main_task
+    tokenizer = hf_tokenizer(local_path)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/utils/tokenizer.py", line 56, in hf_tokenizer
+    tokenizer = AutoTokenizer.from_pretrained(name_or_path, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/models/auto/tokenization_auto.py", line 1009, in from_pretrained
+    return tokenizer_class.from_pretrained(pretrained_model_name_or_path, *inputs, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2062, in from_pretrained
+    return cls._from_pretrained(
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2100, in _from_pretrained
+    slow_tokenizer = (cls.slow_tokenizer_class)._from_pretrained(
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2302, in _from_pretrained
+    tokenizer = cls(*init_inputs, **init_kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/models/llama/tokenization_llama.py", line 169, in __init__
+    self.sp_model = self.get_spm_processor(kwargs.pop("from_slow", False))
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/models/llama/tokenization_llama.py", line 196, in get_spm_processor
+    tokenizer.Load(self.vocab_file)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/sentencepiece/__init__.py", line 961, in Load
+    return self.LoadFromFile(model_file)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/sentencepiece/__init__.py", line 316, in LoadFromFile
+    return _sentencepiece.SentencePieceProcessor_LoadFromFile(self, arg)
+TypeError: not a string
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
+++ for DATA_TYPE in "${DATATYPES[@]}"
+++ python3 -m verl.trainer.main_generation trainer.nnodes=1 trainer.n_gpus_per_node=8 data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_2048/lsat.parquet 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_2048/lsat.parquet' data.n_samples=16 data.batch_size=2048 model.path=l3lab/L1-Qwen-1.5B-Exact rollout.temperature=0.6 rollout.response_length=4096 rollout.top_k=-1 rollout.top_p=0.95 rollout.gpu_memory_utilization=0.9 rollout.tensor_model_parallel_size=1
+2025-04-29 16:12:29,441	INFO worker.py:1843 -- Started a local Ray instance. View the dashboard at [1m[32m127.0.0.1:8265 [39m[22m
+[36m(main_task pid=313947)[0m Error while downloading from https://cdn-lfs-us-1.hf.co/repos/4f/77/4f77cef2f47b8528d99d579a7d88d620ad5974d294d6842656ff2012df31c010/e20ddafc659ba90242154b55275402edeca0715e5dbb30f56815a4ce081f4893?response-content-disposition=inline%3B+filename*%3DUTF-8%27%27tokenizer.json%3B+filename%3D%22tokenizer.json%22%3B&response-content-type=application%2Fjson&Expires=1745917985&Policy=eyJTdGF0ZW1lbnQiOlt7IkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NTkxNzk4NX19LCJSZXNvdXJjZSI6Imh0dHBzOi8vY2RuLWxmcy11cy0xLmhmLmNvL3JlcG9zLzRmLzc3LzRmNzdjZWYyZjQ3Yjg1MjhkOTlkNTc5YTdkODhkNjIwYWQ1OTc0ZDI5NGQ2ODQyNjU2ZmYyMDEyZGYzMWMwMTAvZTIwZGRhZmM2NTliYTkwMjQyMTU0YjU1Mjc1NDAyZWRlY2EwNzE1ZTVkYmIzMGY1NjgxNWE0Y2UwODFmNDg5Mz9yZXNwb25zZS1jb250ZW50LWRpc3Bvc2l0aW9uPSomcmVzcG9uc2UtY29udGVudC10eXBlPSoifV19&Signature=GdQ4B0fU%7EcugbDjDjz5cV0YE48m4XbiF9td%7EnRxN50esAnLbCQ0RK2OrRXIjKLtkyH8PKm4FctG-PQXhOv6Otl304gFmzsfJArHE86N6jrTje3yqzsn8pSFJrB6GXiEjRNzR-8YY8l9uFVyBjjQ-i%7E7KEN1GL6l6VTBqSVwSvIXSGsBdivPbJkgRF%7E%7EUtZVuP9Lef0y5bR9G8F5I%7E-MS3Tq9VErOWm4GI3vNl%7EHbQj5RYEdYhHZOhPC913VUUxKnNyOOq2y%7E20aDD9Xl3ge96aGQvOGfJ3aq7ZkF357hVGM0ckNtpcKDQPaRGcyySAkc1maLhDrHg1UPmKZVi1%7ED9w__&Key-Pair-Id=K24J24Z295AEI9: HTTPSConnectionPool(host='cdn-lfs-us-1.hf.co', port=443): Read timed out.
+[36m(main_task pid=313947)[0m Trying to resume download...
+[36m(main_task pid=313947)[0m WARNING:2025-04-29 16:13:21,488:Error while downloading from https://cdn-lfs-us-1.hf.co/repos/4f/77/4f77cef2f47b8528d99d579a7d88d620ad5974d294d6842656ff2012df31c010/e20ddafc659ba90242154b55275402edeca0715e5dbb30f56815a4ce081f4893?response-content-disposition=inline%3B+filename*%3DUTF-8%27%27tokenizer.json%3B+filename%3D%22tokenizer.json%22%3B&response-content-type=application%2Fjson&Expires=1745917985&Policy=eyJTdGF0ZW1lbnQiOlt7IkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0NTkxNzk4NX19LCJSZXNvdXJjZSI6Imh0dHBzOi8vY2RuLWxmcy11cy0xLmhmLmNvL3JlcG9zLzRmLzc3LzRmNzdjZWYyZjQ3Yjg1MjhkOTlkNTc5YTdkODhkNjIwYWQ1OTc0ZDI5NGQ2ODQyNjU2ZmYyMDEyZGYzMWMwMTAvZTIwZGRhZmM2NTliYTkwMjQyMTU0YjU1Mjc1NDAyZWRlY2EwNzE1ZTVkYmIzMGY1NjgxNWE0Y2UwODFmNDg5Mz9yZXNwb25zZS1jb250ZW50LWRpc3Bvc2l0aW9uPSomcmVzcG9uc2UtY29udGVudC10eXBlPSoifV19&Signature=GdQ4B0fU%7EcugbDjDjz5cV0YE48m4XbiF9td%7EnRxN50esAnLbCQ0RK2OrRXIjKLtkyH8PKm4FctG-PQXhOv6Otl304gFmzsfJArHE86N6jrTje3yqzsn8pSFJrB6GXiEjRNzR-8YY8l9uFVyBjjQ-i%7E7KEN1GL6l6VTBqSVwSvIXSGsBdivPbJkgRF%7E%7EUtZVuP9Lef0y5bR9G8F5I%7E-MS3Tq9VErOWm4GI3vNl%7EHbQj5RYEdYhHZOhPC913VUUxKnNyOOq2y%7E20aDD9Xl3ge96aGQvOGfJ3aq7ZkF357hVGM0ckNtpcKDQPaRGcyySAkc1maLhDrHg1UPmKZVi1%7ED9w__&Key-Pair-Id=K24J24Z295AEI9: HTTPSConnectionPool(host='cdn-lfs-us-1.hf.co', port=443): Read timed out.
+[36m(main_task pid=313947)[0m Trying to resume download...
+Error executing job with overrides: ['trainer.nnodes=1', 'trainer.n_gpus_per_node=8', 'data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_2048/lsat.parquet', 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_2048/lsat.parquet', 'data.n_samples=16', 'data.batch_size=2048', 'model.path=l3lab/L1-Qwen-1.5B-Exact', 'rollout.temperature=0.6', 'rollout.response_length=4096', 'rollout.top_k=-1', 'rollout.top_p=0.95', 'rollout.gpu_memory_utilization=0.9', 'rollout.tensor_model_parallel_size=1']
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 41, in main
+    run_generation(config)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 50, in run_generation
+    ray.get(main_task.remote(config))
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/worker.py", line 2782, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/worker.py", line 929, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(TypeError): [36mray::main_task()[39m (pid=313947, ip=173.3.164.136)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 61, in main_task
+    tokenizer = hf_tokenizer(local_path)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/utils/tokenizer.py", line 56, in hf_tokenizer
+    tokenizer = AutoTokenizer.from_pretrained(name_or_path, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/models/auto/tokenization_auto.py", line 1009, in from_pretrained
+    return tokenizer_class.from_pretrained(pretrained_model_name_or_path, *inputs, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2062, in from_pretrained
+    return cls._from_pretrained(
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2100, in _from_pretrained
+    slow_tokenizer = (cls.slow_tokenizer_class)._from_pretrained(
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2302, in _from_pretrained
+    tokenizer = cls(*init_inputs, **init_kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/models/llama/tokenization_llama.py", line 169, in __init__
+    self.sp_model = self.get_spm_processor(kwargs.pop("from_slow", False))
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/models/llama/tokenization_llama.py", line 196, in get_spm_processor
+    tokenizer.Load(self.vocab_file)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/sentencepiece/__init__.py", line 961, in Load
+    return self.LoadFromFile(model_file)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/sentencepiece/__init__.py", line 316, in LoadFromFile
+    return _sentencepiece.SentencePieceProcessor_LoadFromFile(self, arg)
+TypeError: not a string
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
+++ export VLLM_ATTENTION_BACKEND=XFORMERS
+++ VLLM_ATTENTION_BACKEND=XFORMERS
+++ MODEL_PATH=/home/bingxing2/ailab/wangkuncan/soft/l1/DeepScaleR-1.5B-Preview
+++ NUM_TOKENS=512
+++ MAX_TOKENS=1024
+++ DATATYPES=("gpqa" "mmlu_1000" "lsat" "aime2025" "math" "amc" "aime" "olympiad_bench")
+++ OUTPUT_DIR='$/home/bingxing2/ailab/wangkuncan/soft/l1'
+++ [[ 8 -gt 0 ]]
+++ case $1 in
+++ MODEL_PATH=l3lab/L1-Qwen-1.5B-Exact
+++ shift 2
+++ [[ 6 -gt 0 ]]
+++ case $1 in
+++ NUM_TOKENS=3600
+++ MAX_TOKENS=7200
+++ shift 2
+++ [[ 4 -gt 0 ]]
+++ case $1 in
+++ shift
+++ DATATYPES=()
+++ [[ 3 -gt 0 ]]
+++ [[ ! aime =~ ^-- ]]
+++ DATATYPES+=("$1")
+++ shift
+++ [[ 2 -gt 0 ]]
+++ [[ ! mmlu_1000 =~ ^-- ]]
+++ DATATYPES+=("$1")
+++ shift
+++ [[ 1 -gt 0 ]]
+++ [[ ! lsat =~ ^-- ]]
+++ DATATYPES+=("$1")
+++ shift
+++ [[ 0 -gt 0 ]]
+++ [[ 0 -gt 0 ]]
+++ echo 'Model Path: l3lab/L1-Qwen-1.5B-Exact'
+++ echo 'Datasets: aime' mmlu_1000 lsat
+++ echo 'Output Directory: $/home/bingxing2/ailab/wangkuncan/soft/l1'
+++ echo 'Number of Tokens: 3600'
+++ echo 'Max Tokens: 7200'
+++ for DATA_TYPE in "${DATATYPES[@]}"
+++ python3 -m verl.trainer.main_generation trainer.nnodes=1 trainer.n_gpus_per_node=8 data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_3600/aime.parquet 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_3600/aime.parquet' data.n_samples=16 data.batch_size=2048 model.path=l3lab/L1-Qwen-1.5B-Exact rollout.temperature=0.6 rollout.response_length=7200 rollout.top_k=-1 rollout.top_p=0.95 rollout.gpu_memory_utilization=0.9 rollout.tensor_model_parallel_size=1
+2025-04-29 16:13:51,150	INFO worker.py:1843 -- Started a local Ray instance. View the dashboard at [1m[32m127.0.0.1:8265 [39m[22m
+Error executing job with overrides: ['trainer.nnodes=1', 'trainer.n_gpus_per_node=8', 'data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_3600/aime.parquet', 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_3600/aime.parquet', 'data.n_samples=16', 'data.batch_size=2048', 'model.path=l3lab/L1-Qwen-1.5B-Exact', 'rollout.temperature=0.6', 'rollout.response_length=7200', 'rollout.top_k=-1', 'rollout.top_p=0.95', 'rollout.gpu_memory_utilization=0.9', 'rollout.tensor_model_parallel_size=1']
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 41, in main
+    run_generation(config)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 50, in run_generation
+    ray.get(main_task.remote(config))
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/worker.py", line 2782, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/worker.py", line 929, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(TypeError): [36mray::main_task()[39m (pid=328906, ip=173.3.164.136)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 61, in main_task
+    tokenizer = hf_tokenizer(local_path)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/utils/tokenizer.py", line 56, in hf_tokenizer
+    tokenizer = AutoTokenizer.from_pretrained(name_or_path, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/models/auto/tokenization_auto.py", line 1009, in from_pretrained
+    return tokenizer_class.from_pretrained(pretrained_model_name_or_path, *inputs, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2062, in from_pretrained
+    return cls._from_pretrained(
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2100, in _from_pretrained
+    slow_tokenizer = (cls.slow_tokenizer_class)._from_pretrained(
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2302, in _from_pretrained
+    tokenizer = cls(*init_inputs, **init_kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/models/llama/tokenization_llama.py", line 169, in __init__
+    self.sp_model = self.get_spm_processor(kwargs.pop("from_slow", False))
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/models/llama/tokenization_llama.py", line 196, in get_spm_processor
+    tokenizer.Load(self.vocab_file)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/sentencepiece/__init__.py", line 961, in Load
+    return self.LoadFromFile(model_file)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/sentencepiece/__init__.py", line 316, in LoadFromFile
+    return _sentencepiece.SentencePieceProcessor_LoadFromFile(self, arg)
+TypeError: not a string
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
+++ for DATA_TYPE in "${DATATYPES[@]}"
+++ python3 -m verl.trainer.main_generation trainer.nnodes=1 trainer.n_gpus_per_node=8 data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_3600/mmlu_1000.parquet 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_3600/mmlu_1000.parquet' data.n_samples=16 data.batch_size=2048 model.path=l3lab/L1-Qwen-1.5B-Exact rollout.temperature=0.6 rollout.response_length=7200 rollout.top_k=-1 rollout.top_p=0.95 rollout.gpu_memory_utilization=0.9 rollout.tensor_model_parallel_size=1
+2025-04-29 16:14:51,900	INFO worker.py:1843 -- Started a local Ray instance. View the dashboard at [1m[32m127.0.0.1:8265 [39m[22m
+Error executing job with overrides: ['trainer.nnodes=1', 'trainer.n_gpus_per_node=8', 'data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_3600/mmlu_1000.parquet', 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_3600/mmlu_1000.parquet', 'data.n_samples=16', 'data.batch_size=2048', 'model.path=l3lab/L1-Qwen-1.5B-Exact', 'rollout.temperature=0.6', 'rollout.response_length=7200', 'rollout.top_k=-1', 'rollout.top_p=0.95', 'rollout.gpu_memory_utilization=0.9', 'rollout.tensor_model_parallel_size=1']
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 41, in main
+    run_generation(config)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 50, in run_generation
+    ray.get(main_task.remote(config))
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/worker.py", line 2782, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/worker.py", line 929, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(TypeError): [36mray::main_task()[39m (pid=343071, ip=173.3.164.136)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 61, in main_task
+    tokenizer = hf_tokenizer(local_path)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/utils/tokenizer.py", line 56, in hf_tokenizer
+    tokenizer = AutoTokenizer.from_pretrained(name_or_path, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/models/auto/tokenization_auto.py", line 1009, in from_pretrained
+    return tokenizer_class.from_pretrained(pretrained_model_name_or_path, *inputs, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2062, in from_pretrained
+    return cls._from_pretrained(
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2100, in _from_pretrained
+    slow_tokenizer = (cls.slow_tokenizer_class)._from_pretrained(
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2302, in _from_pretrained
+    tokenizer = cls(*init_inputs, **init_kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/models/llama/tokenization_llama.py", line 169, in __init__
+    self.sp_model = self.get_spm_processor(kwargs.pop("from_slow", False))
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/models/llama/tokenization_llama.py", line 196, in get_spm_processor
+    tokenizer.Load(self.vocab_file)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/sentencepiece/__init__.py", line 961, in Load
+    return self.LoadFromFile(model_file)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/sentencepiece/__init__.py", line 316, in LoadFromFile
+    return _sentencepiece.SentencePieceProcessor_LoadFromFile(self, arg)
+TypeError: not a string
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
+++ for DATA_TYPE in "${DATATYPES[@]}"
+++ python3 -m verl.trainer.main_generation trainer.nnodes=1 trainer.n_gpus_per_node=8 data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_3600/lsat.parquet 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_3600/lsat.parquet' data.n_samples=16 data.batch_size=2048 model.path=l3lab/L1-Qwen-1.5B-Exact rollout.temperature=0.6 rollout.response_length=7200 rollout.top_k=-1 rollout.top_p=0.95 rollout.gpu_memory_utilization=0.9 rollout.tensor_model_parallel_size=1
+2025-04-29 16:15:51,172	INFO worker.py:1843 -- Started a local Ray instance. View the dashboard at [1m[32m127.0.0.1:8265 [39m[22m
+Error executing job with overrides: ['trainer.nnodes=1', 'trainer.n_gpus_per_node=8', 'data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_3600/lsat.parquet', 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_3600/lsat.parquet', 'data.n_samples=16', 'data.batch_size=2048', 'model.path=l3lab/L1-Qwen-1.5B-Exact', 'rollout.temperature=0.6', 'rollout.response_length=7200', 'rollout.top_k=-1', 'rollout.top_p=0.95', 'rollout.gpu_memory_utilization=0.9', 'rollout.tensor_model_parallel_size=1']
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 41, in main
+    run_generation(config)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 50, in run_generation
+    ray.get(main_task.remote(config))
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/worker.py", line 2782, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/worker.py", line 929, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(TypeError): [36mray::main_task()[39m (pid=357390, ip=173.3.164.136)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 61, in main_task
+    tokenizer = hf_tokenizer(local_path)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/utils/tokenizer.py", line 56, in hf_tokenizer
+    tokenizer = AutoTokenizer.from_pretrained(name_or_path, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/models/auto/tokenization_auto.py", line 1009, in from_pretrained
+    return tokenizer_class.from_pretrained(pretrained_model_name_or_path, *inputs, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2062, in from_pretrained
+    return cls._from_pretrained(
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2100, in _from_pretrained
+    slow_tokenizer = (cls.slow_tokenizer_class)._from_pretrained(
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/tokenization_utils_base.py", line 2302, in _from_pretrained
+    tokenizer = cls(*init_inputs, **init_kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/models/llama/tokenization_llama.py", line 169, in __init__
+    self.sp_model = self.get_spm_processor(kwargs.pop("from_slow", False))
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/transformers/models/llama/tokenization_llama.py", line 196, in get_spm_processor
+    tokenizer.Load(self.vocab_file)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/sentencepiece/__init__.py", line 961, in Load
+    return self.LoadFromFile(model_file)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/sentencepiece/__init__.py", line 316, in LoadFromFile
+    return _sentencepiece.SentencePieceProcessor_LoadFromFile(self, arg)
+TypeError: not a string
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.

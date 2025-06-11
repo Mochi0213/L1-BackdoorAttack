@@ -1,0 +1,20 @@
+Model Path: l3lab/L1-Qwen-1.5B-Exact
+Datasets: aime mmlu_1000 lsat
+Output Directory: $/home/bingxing2/ailab/wangkuncan/soft/l1
+Number of Tokens: 512
+Max Tokens: 1024
+Model Path: l3lab/L1-Qwen-1.5B-Exact
+Datasets: aime mmlu_1000 lsat
+Output Directory: $/home/bingxing2/ailab/wangkuncan/soft/l1
+Number of Tokens: 1024
+Max Tokens: 2048
+Model Path: l3lab/L1-Qwen-1.5B-Exact
+Datasets: aime mmlu_1000 lsat
+Output Directory: $/home/bingxing2/ailab/wangkuncan/soft/l1
+Number of Tokens: 2048
+Max Tokens: 4096
+Model Path: l3lab/L1-Qwen-1.5B-Exact
+Datasets: aime mmlu_1000 lsat
+Output Directory: $/home/bingxing2/ailab/wangkuncan/soft/l1
+Number of Tokens: 3600
+Max Tokens: 7200

@@ -1,0 +1,36 @@
+Model Path: l3lab/L1-Qwen-1.5B-Exact
+Datasets: aime gpqa mmlu_1000 lsat
+Output Directory: /home/bingxing2/ailab/wangkuncan
+Number of Tokens: 512
+Max Tokens: 1024
+WARNING 04-28 22:51:23 _core_ext.py:180] Failed to import from vllm._core_C with ImportError('libc10_cuda.so: cannot open shared object file: No such file or directory')
+WARNING 04-28 22:51:32 _core_ext.py:180] Failed to import from vllm._core_C with ImportError('libc10_cuda.so: cannot open shared object file: No such file or directory')
+WARNING 04-28 22:51:39 _core_ext.py:180] Failed to import from vllm._core_C with ImportError('libc10_cuda.so: cannot open shared object file: No such file or directory')
+WARNING 04-28 22:51:46 _core_ext.py:180] Failed to import from vllm._core_C with ImportError('libc10_cuda.so: cannot open shared object file: No such file or directory')
+Model Path: l3lab/L1-Qwen-1.5B-Exact
+Datasets: aime gpqa mmlu_1000 lsat
+Output Directory: /home/bingxing2/ailab/wangkuncan
+Number of Tokens: 1024
+Max Tokens: 2048
+WARNING 04-28 22:51:53 _core_ext.py:180] Failed to import from vllm._core_C with ImportError('libc10_cuda.so: cannot open shared object file: No such file or directory')
+WARNING 04-28 22:52:00 _core_ext.py:180] Failed to import from vllm._core_C with ImportError('libc10_cuda.so: cannot open shared object file: No such file or directory')
+WARNING 04-28 22:52:07 _core_ext.py:180] Failed to import from vllm._core_C with ImportError('libc10_cuda.so: cannot open shared object file: No such file or directory')
+WARNING 04-28 22:52:14 _core_ext.py:180] Failed to import from vllm._core_C with ImportError('libc10_cuda.so: cannot open shared object file: No such file or directory')
+Model Path: l3lab/L1-Qwen-1.5B-Exact
+Datasets: aime gpqa mmlu_1000 lsat
+Output Directory: /home/bingxing2/ailab/wangkuncan
+Number of Tokens: 2048
+Max Tokens: 4096
+WARNING 04-28 22:52:21 _core_ext.py:180] Failed to import from vllm._core_C with ImportError('libc10_cuda.so: cannot open shared object file: No such file or directory')
+WARNING 04-28 22:52:28 _core_ext.py:180] Failed to import from vllm._core_C with ImportError('libc10_cuda.so: cannot open shared object file: No such file or directory')
+WARNING 04-28 22:52:35 _core_ext.py:180] Failed to import from vllm._core_C with ImportError('libc10_cuda.so: cannot open shared object file: No such file or directory')
+WARNING 04-28 22:52:42 _core_ext.py:180] Failed to import from vllm._core_C with ImportError('libc10_cuda.so: cannot open shared object file: No such file or directory')
+Model Path: l3lab/L1-Qwen-1.5B-Exact
+Datasets: aime gpqa mmlu_1000 lsat
+Output Directory: /home/bingxing2/ailab/wangkuncan
+Number of Tokens: 3600
+Max Tokens: 7200
+WARNING 04-28 22:52:50 _core_ext.py:180] Failed to import from vllm._core_C with ImportError('libc10_cuda.so: cannot open shared object file: No such file or directory')
+WARNING 04-28 22:52:57 _core_ext.py:180] Failed to import from vllm._core_C with ImportError('libc10_cuda.so: cannot open shared object file: No such file or directory')
+WARNING 04-28 22:53:04 _core_ext.py:180] Failed to import from vllm._core_C with ImportError('libc10_cuda.so: cannot open shared object file: No such file or directory')
+WARNING 04-28 22:53:11 _core_ext.py:180] Failed to import from vllm._core_C with ImportError('libc10_cuda.so: cannot open shared object file: No such file or directory')

@@ -1,0 +1,22 @@
+Generating test split:   0%|          | 0/14042 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 14042/14042 [00:00<00:00, 133579.53 examples/s]
+Generating validation split:   0%|          | 0/1531 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 1531/1531 [00:00<00:00, 14467.74 examples/s]
+Generating dev split:   0%|          | 0/285 [00:00<?, ? examples/s]Generating dev split: 100%|██████████| 285/285 [00:00<00:00, 47742.50 examples/s]
+Generating auxiliary_train split:   0%|          | 0/99842 [00:00<?, ? examples/s]Generating auxiliary_train split:  24%|██▍       | 24000/99842 [00:00<00:00, 214443.23 examples/s]Generating auxiliary_train split:  52%|█████▏    | 52000/99842 [00:00<00:00, 244454.50 examples/s]Generating auxiliary_train split:  88%|████████▊ | 88000/99842 [00:00<00:00, 293052.44 examples/s]Generating auxiliary_train split: 100%|██████████| 99842/99842 [00:00<00:00, 221211.59 examples/s]
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/soft/l1/./scripts/data/generate_mmlu.py", line 50, in <module>
+    pd.DataFrame(all_data).to_parquet(f'~/deepscaler/data_{num_tokens}/mmlu_1000.parquet')
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/pandas/util/_decorators.py", line 333, in wrapper
+    return func(*args, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/pandas/core/frame.py", line 3113, in to_parquet
+    return to_parquet(
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/pandas/io/parquet.py", line 480, in to_parquet
+    impl.write(
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/pandas/io/parquet.py", line 198, in write
+    path_or_handle, handles, filesystem = _get_path_or_handle(
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/pandas/io/parquet.py", line 140, in _get_path_or_handle
+    handles = get_handle(
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/pandas/io/common.py", line 749, in get_handle
+    check_parent_directory(str(handle))
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/pandas/io/common.py", line 616, in check_parent_directory
+    raise OSError(rf"Cannot save file into a non-existent directory: '{parent}'")
+OSError: Cannot save file into a non-existent directory: '/home/bingxing2/ailab/wangkuncan/deepscaler/data_512'

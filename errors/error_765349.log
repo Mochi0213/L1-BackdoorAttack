@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/soft/l1/IntegratedCode.py", line 79, in <module>
+    model = AutoModelForCausalLM.from_pretrained(
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/setup/lib/python3.10/site-packages/transformers/models/auto/auto_factory.py", line 571, in from_pretrained
+    return model_class.from_pretrained(
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/setup/lib/python3.10/site-packages/transformers/modeling_utils.py", line 279, in _wrapper
+    return func(*args, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/setup/lib/python3.10/site-packages/transformers/modeling_utils.py", line 4139, in from_pretrained
+    raise ValueError(
+ValueError: Using a `device_map` or `tp_plan` requires `accelerate`. You can install it with `pip install accelerate`

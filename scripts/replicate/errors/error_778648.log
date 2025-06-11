@@ -1,0 +1,74 @@
+++ export VLLM_ATTENTION_BACKEND=XFORMERS
+++ VLLM_ATTENTION_BACKEND=XFORMERS
+++ MODEL_PATH=/home/bingxing2/ailab/wangkuncan/soft/l1/DeepScaleR-1.5B-Preview
+++ NUM_TOKENS=512
+++ MAX_TOKENS=1024
+++ DATATYPES=("gpqa" "mmlu_1000" "lsat" "aime2025" "math" "amc" "aime" "olympiad_bench")
+++ OUTPUT_DIR='$/home/bingxing2/ailab/wangkuncan/soft/l1'
+++ [[ 8 -gt 0 ]]
+++ case $1 in
+++ MODEL_PATH=l3lab/L1-Qwen-1.5B-Exact
+++ shift 2
+++ [[ 6 -gt 0 ]]
+++ case $1 in
+++ NUM_TOKENS=512
+++ MAX_TOKENS=1024
+++ shift 2
+++ [[ 4 -gt 0 ]]
+++ case $1 in
+++ shift
+++ DATATYPES=()
+++ [[ 3 -gt 0 ]]
+++ [[ ! aime =~ ^-- ]]
+++ DATATYPES+=("$1")
+++ shift
+++ [[ 2 -gt 0 ]]
+++ [[ ! mmlu_1000 =~ ^-- ]]
+++ DATATYPES+=("$1")
+++ shift
+++ [[ 1 -gt 0 ]]
+++ [[ ! lsat =~ ^-- ]]
+++ DATATYPES+=("$1")
+++ shift
+++ [[ 0 -gt 0 ]]
+++ [[ 0 -gt 0 ]]
+++ echo 'Model Path: l3lab/L1-Qwen-1.5B-Exact'
+++ echo 'Datasets: aime' mmlu_1000 lsat
+++ echo 'Output Directory: $/home/bingxing2/ailab/wangkuncan/soft/l1'
+++ echo 'Number of Tokens: 512'
+++ echo 'Max Tokens: 1024'
+++ for DATA_TYPE in "${DATATYPES[@]}"
+++ python3 -m verl.trainer.main_generation trainer.nnodes=1 trainer.n_gpus_per_node=8 data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_512/aime.parquet 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_512/aime.parquet' data.n_samples=16 data.batch_size=2048 model.path=l3lab/L1-Qwen-1.5B-Exact rollout.temperature=0.6 rollout.response_length=1024 rollout.top_k=-1 rollout.top_p=0.95 rollout.gpu_memory_utilization=0.9 rollout.tensor_model_parallel_size=1
+2025-04-29 22:41:32,186	INFO worker.py:1843 -- Started a local Ray instance. View the dashboard at [1m[32m127.0.0.1:8265 [39m[22m
+Error executing job with overrides: ['trainer.nnodes=1', 'trainer.n_gpus_per_node=8', 'data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_512/aime.parquet', 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_512/aime.parquet', 'data.n_samples=16', 'data.batch_size=2048', 'model.path=l3lab/L1-Qwen-1.5B-Exact', 'rollout.temperature=0.6', 'rollout.response_length=1024', 'rollout.top_k=-1', 'rollout.top_p=0.95', 'rollout.gpu_memory_utilization=0.9', 'rollout.tensor_model_parallel_size=1']
+Traceback (most recent call last):
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 41, in main
+    run_generation(config)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 50, in run_generation
+    ray.get(main_task.remote(config))
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/auto_init_hook.py", line 21, in auto_init_wrapper
+    return fn(*args, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/client_mode_hook.py", line 103, in wrapper
+    return func(*args, **kwargs)
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/worker.py", line 2782, in get
+    values, debugger_breakpoint = worker.get_objects(object_refs, timeout=timeout)
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/ray/_private/worker.py", line 929, in get_objects
+    raise value.as_instanceof_cause()
+ray.exceptions.RayTaskError(FileNotFoundError): [36mray::main_task()[39m (pid=1026845, ip=173.3.140.221)
+  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/L1/lib/python3.10/site-packages/verl/trainer/main_generation.py", line 67, in main_task
+    dataset = pd.read_parquet(config.data.path)
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/pandas/io/parquet.py", line 667, in read_parquet
+    return impl.read(
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/pandas/io/parquet.py", line 267, in read
+    path_or_handle, handles, filesystem = _get_path_or_handle(
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/pandas/io/parquet.py", line 140, in _get_path_or_handle
+    handles = get_handle(
+  File "/home/bingxing2/ailab/wangkuncan/.local/lib/python3.10/site-packages/pandas/io/common.py", line 882, in get_handle
+    handle = open(handle, ioargs.mode)
+FileNotFoundError: [Errno 2] No such file or directory: '/home/bingxing2/ailab/wangkuncan/deepscaler/data_512/aime.parquet'
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
+++ for DATA_TYPE in "${DATATYPES[@]}"
+++ python3 -m verl.trainer.main_generation trainer.nnodes=1 trainer.n_gpus_per_node=8 data.path=/home/bingxing2/ailab/wangkuncan/deepscaler/data_512/mmlu_1000.parquet 'data.output_path=$/home/bingxing2/ailab/wangkuncan/soft/l1_512/mmlu_1000.parquet' data.n_samples=16 data.batch_size=2048 model.path=l3lab/L1-Qwen-1.5B-Exact rollout.temperature=0.6 rollout.response_length=1024 rollout.top_k=-1 rollout.top_p=0.95 rollout.gpu_memory_utilization=0.9 rollout.tensor_model_parallel_size=1
+2025-04-29 22:42:19,309	INFO worker.py:1843 -- Started a local Ray instance. View the dashboard at [1m[32m127.0.0.1:8265 [39m[22m
+slurmstepd: error: *** JOB 778648 ON paraai-n32-h-01-agent-131 CANCELLED AT 2025-04-29T22:44:03 ***
