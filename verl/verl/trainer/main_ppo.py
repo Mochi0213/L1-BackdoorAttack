@@ -24,39 +24,96 @@ from verl.trainer.ppo.ray_trainer import RayPPOTrainer
 from verl.trainer.ppo.reward import load_reward_manager
 from verl.utils.device import is_cuda_available
 
-def get_custom_reward_fn(config):
-    import importlib.util
-    import sys
+from verl import DataProto
+import torch
+from verl.utils.reward_score import gsm8k, math
+import sys
+sys.path.append('../../../deepscaler')
+from deepscaler.rewards.math_reward import deepscaler_reward_fn
 
-    reward_fn_config = config.get("custom_reward_function") or {}
-    file_path = reward_fn_config.get("path")
-    if not file_path:
-        return None
+def _select_rm_score_fn(data_source):
+    if data_source == 'openai/gsm8k':
+        return gsm8k.compute_score
+    elif data_source == 'lighteval/MATH':
+        return math.compute_score
+    else:
+        return deepscaler_reward_fn
 
-    if not os.path.exists(file_path):
-        raise FileNotFoundError(f"Reward function file '{file_path}' not found.")
 
-    spec = importlib.util.spec_from_file_location("custom_module", file_path)
-    module = importlib.util.module_from_spec(spec)
-    try:
-        sys.modules["custom_module"] = module
-        spec.loader.exec_module(module)
-    except Exception as e:
-        raise RuntimeError(f"Error loading module from '{file_path}': {e}") from e
+class RewardManager():
+    """The reward manager.
+    """
 
-    function_name = reward_fn_config.get("name")
-    if not hasattr(module, function_name):
-        raise AttributeError(f"Reward function '{function_name}' not found in '{file_path}'.")
+    def __init__(self, tokenizer, num_examine) -> None:
+        self.tokenizer = tokenizer
+        self.num_examine = num_examine  # the number of batches of decoded responses to print to the console
 
-    print(f"using customized reward function '{function_name}' from '{file_path}'")
-    raw_fn = getattr(module, function_name)
+    def __call__(self, data: DataProto):
+        """We will expand this function gradually based on the available datasets"""
 
-    reward_kwargs = dict(reward_fn_config.get("reward_kwargs", {}))
+        # If there is rm score, we directly return rm score. Otherwise, we compute via rm_score_fn
+        if 'rm_scores' in data.batch.keys():
+            return data.batch['rm_scores']
 
-    def wrapped_fn(*args, **kwargs):
-        return raw_fn(*args, **kwargs, **reward_kwargs)
+        reward_tensor = torch.zeros_like(data.batch['responses'], dtype=torch.float32)
 
-    return wrapped_fn
+        already_print_data_sources = {}
+
+        from concurrent.futures import ThreadPoolExecutor
+        from typing import Dict, Any
+        #import threading
+        # Thread-safe dict for tracking printed data sources
+        # print_lock = threading.Lock()
+        
+        def process_item(args):
+            i, data_item, already_print_data_sources = args
+            prompt_ids = data_item.batch['prompts']
+            prompt_length = prompt_ids.shape[-1]
+            
+            valid_prompt_length = data_item.batch['attention_mask'][:prompt_length].sum()
+            valid_prompt_ids = prompt_ids[-valid_prompt_length:]
+
+            response_ids = data_item.batch['responses'] 
+            valid_response_length = data_item.batch['attention_mask'][prompt_length:].sum()
+            valid_response_ids = response_ids[:valid_response_length]
+            # with open(f'xyz_valid_response_{random.randint(0, 1000000)}.txt', 'w') as f:
+            #     f.write(str(valid_response_length))
+            # breakpoint()
+
+            sequences = torch.cat((valid_prompt_ids, valid_response_ids))
+            # Lengths of each sequence
+             
+            sequences_str = self.tokenizer.decode(sequences)
+
+            ground_truth = data_item.non_tensor_batch['reward_model']['ground_truth']
+            num_tokens = data_item.non_tensor_batch['reward_model']['num_tokens']
+            # print('squence string', sequences_str[0])
+
+            # select rm_score
+            data_source = data_item.non_tensor_batch['data_source']
+            compute_score_fn = _select_rm_score_fn(data_source)
+            score = compute_score_fn(solution_str=sequences_str, ground_truth=ground_truth, num_tokens=num_tokens, valid_response_length=valid_response_length)
+            
+            # with print_lock:
+            #     if data_source not in already_print_data_sources:
+            #         already_print_data_sources[data_source] = 0
+
+            #     if already_print_data_sources[data_source] < self.num_examine:
+            #         already_print_data_sources[data_source] += 1
+            #         print(sequences_str)      
+            return i, score, valid_response_length
+
+        # Process items in parallel using ThreadPoolExecutor
+        with ThreadPoolExecutor(max_workers=96) as executor:
+            args = [(i, data[i], already_print_data_sources) for i in range(len(data))]
+            results = list(executor.map(process_item, args))
+
+        # Fill reward tensor with results
+        for i, score, valid_response_length in results:
+            reward_tensor[i, valid_response_length - 1] = score
+
+        return reward_tensor
+
 
 
 @hydra.main(config_path="config", config_name="ppo_trainer", version_base=None)
@@ -100,7 +157,7 @@ class TaskRunner:
         tokenizer = hf_tokenizer(local_path, trust_remote_code=trust_remote_code)
         processor = hf_processor(local_path, use_fast=True)  # used for multimodal LLM, could be none
 
-        # vllm early verify
+        # 确保在当前vllm版本中可以使用LoRA
         if config.actor_rollout_ref.rollout.name in ["vllm"]:
             from verl.utils.vllm_utils import is_version_ge
             if config.actor_rollout_ref.model.get('lora_rank', 0) > 0:
@@ -164,15 +221,14 @@ class TaskRunner:
             role_worker_mapping[Role.RefPolicy] = ray.remote(ActorRolloutRefWorker)
             mapping[Role.RefPolicy] = global_pool_id
 
-        reward_fn = load_reward_manager(config, tokenizer, num_examine=0, **config.reward_model.get("reward_kwargs", {}))
-        val_reward_fn = load_reward_manager(config, tokenizer, num_examine=1, **config.reward_model.get("reward_kwargs", {}))
+        # reward_fn = load_reward_manager(config, tokenizer, num_examine=0, **config.reward_model.get("reward_kwargs", {}))
+        # val_reward_fn = load_reward_manager(config, tokenizer, num_examine=1, **config.reward_model.get("reward_kwargs", {}))
+
+        reward_fn = RewardManager(tokenizer=tokenizer, num_examine=0)
+        # Note that we always use function-based RM for validation
+        val_reward_fn = RewardManager(tokenizer=tokenizer, num_examine=1)
         resource_pool_manager = ResourcePoolManager(resource_pool_spec=resource_pool_spec, mapping=mapping)
 
-        from verl.utils.dataset.rl_dataset import collate_fn
-
-        train_dataset = create_rl_dataset(config.data.train_files, config.data, tokenizer, processor)
-        val_dataset = create_rl_dataset(config.data.val_files, config.data, tokenizer, processor)
-        train_sampler = create_rl_sampler(config.data, train_dataset)
         trainer = RayPPOTrainer(
             config=config,
             tokenizer=tokenizer,
@@ -182,73 +238,15 @@ class TaskRunner:
             ray_worker_group_cls=ray_worker_group_cls,
             reward_fn=reward_fn,
             val_reward_fn=val_reward_fn,
-            train_dataset=train_dataset,
-            val_dataset=val_dataset,
-            collate_fn=collate_fn,
-            train_sampler=train_sampler,
-            device_name="cuda" if is_cuda_available else "npu",
+            # train_dataset=train_dataset,
+            # val_dataset=val_dataset,
+            # collate_fn=collate_fn,
+            # train_sampler=train_sampler,
+            # device_name="cuda" if is_cuda_available else "npu",
         )
         trainer.init_workers()
         trainer.fit()
 
-
-def create_rl_dataset(data_paths, data_config, tokenizer, processor):
-    """Create a dataset.
-
-    Arguments:
-        data_config: The data config.
-        tokenizer (Tokenizer): The tokenizer.
-        processor (Processor): The processor.
-
-    Returns:
-        dataset (Dataset): The dataset.
-    """
-    from torch.utils.data import Dataset
-
-    from verl.utils.dataset.rl_dataset import RLHFDataset
-
-    if "custom_cls" in data_config and data_config.custom_cls.get("path", None) is not None:
-        from verl.utils.import_utils import load_extern_type
-
-        dataset_cls = load_extern_type(data_config.custom_cls.path, data_config.custom_cls.name)
-        if not issubclass(dataset_cls, Dataset):
-            raise TypeError(f"The custom dataset class '{data_config.custom_cls.name}' from '{data_config.custom_cls.path}' must inherit from torch.utils.data.Dataset")
-    else:
-        dataset_cls = RLHFDataset
-    print(f"Using dataset class: {dataset_cls.__name__}")
-
-    dataset = dataset_cls(
-        data_files=data_paths,
-        tokenizer=tokenizer,
-        processor=processor,
-        config=data_config,
-    )
-
-    return dataset
-
-
-def create_rl_sampler(data_config, dataset):
-    """Create a sampler for the dataset.
-
-    Arguments:
-        data_config: The data config.
-        dataset (Dataset): The dataset.
-
-    Returns:
-        sampler (Sampler): The sampler.
-    """
-    import torch
-    from torch.utils.data import RandomSampler, SequentialSampler
-
-    # use sampler for better ckpt resume
-    if data_config.shuffle:
-        train_dataloader_generator = torch.Generator()
-        train_dataloader_generator.manual_seed(data_config.get("seed", 1))
-        sampler = RandomSampler(data_source=dataset, generator=train_dataloader_generator)
-    else:
-        sampler = SequentialSampler(data_source=dataset)
-
-    return sampler
 
 
 if __name__ == "__main__":
