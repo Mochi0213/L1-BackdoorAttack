@@ -1,12 +1,0 @@
-Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:04<00:04,  4.37s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:07<00:00,  3.78s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:07<00:00,  3.87s/it]
-Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:01<00:01,  1.24s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:01<00:00,  1.24it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:01<00:00,  1.15it/s]
-Traceback (most recent call last):
-  File "/home/bingxing2/ailab/wangkuncan/soft/l1/IntegratedCode.py", line 162, in <module>
-    output_ids = model.generate(
-  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/setup/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
-    return func(*args, **kwargs)
-  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/setup/lib/python3.10/site-packages/transformers/generation/utils.py", line 1989, in generate
-    result = self._sample(
-  File "/home/bingxing2/ailab/wangkuncan/.conda/envs/setup/lib/python3.10/site-packages/transformers/generation/utils.py", line 2969, in _sample
-    next_tokens = torch.multinomial(probs, num_samples=1).squeeze(1)
-RuntimeError: probability tensor contains either `inf`, `nan` or element < 0
